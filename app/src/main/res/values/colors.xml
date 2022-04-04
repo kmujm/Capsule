@@ -10,10 +10,10 @@
 
     <!-- custom colors -->
     <color name="cost">#E04834</color>
-    <color name="primary">FFCC47</color>
-    <color name="disabled">D6D6D6</color>
-    <color name="text">2E2E2E</color>
-    <color name="BG_gray">EEEDEC</color>
-    <color name="BG">F8F7F6</color>
-    <color name="secondary">8D7661</color>
+    <color name="primary">#FFCC47</color>
+    <color name="disabled">#D6D6D6</color>
+    <color name="text">#2E2E2E</color>
+    <color name="BG_gray">#EEEDEC</color>
+    <color name="BG">#F8F7F6</color>
+    <color name="secondary">#8D7661</color>
 </resources>
