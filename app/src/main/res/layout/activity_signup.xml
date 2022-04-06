@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+
+  <TextView
+    android:id="@+id/signupTitleTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="35dp"
+    android:layout_marginTop="100dp"
+    android:text="@string/signup_title"
+    android:textColor="@color/black"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/signupSubTitleTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:text="@string/signup_subtitle"
+    android:textColor="@color/text"
+    android:textSize="12sp"
+    app:layout_constraintStart_toStartOf="@id/signupTitleTextView"
+    app:layout_constraintTop_toBottomOf="@id/signupTitleTextView" />
+
+  <TextView
+    android:id="@+id/emailTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="186dp"
+    android:text="@string/signup_email_textview"
+    android:textColor="@color/black"
+    app:layout_constraintStart_toStartOf="@id/signupSubTitleTextView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/emailEditText"
+    android:layout_width="0dp"
+    android:layout_height="42dp"
+    android:layout_marginTop="216dp"
+    android:layout_marginEnd="31dp"
+    android:background="@drawable/edittext_background"
+    android:hint="@string/signup_editText_hint_string"
+    android:inputType="textEmailAddress"
+    android:lines="1"
+    android:paddingStart="20dp"
+    android:textColor="@color/black"
+    android:textColorHint="@color/secondary"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="@id/emailTextView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+    android:id="@+id/emailEditTextAlertImageView"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:layout_marginTop="225dp"
+    android:layout_marginEnd="10dp"
+    android:src="@drawable/alert_mark"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="@id/emailEditText"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:visibility="visible" />
+
+  <androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/checkEmailButton"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="288dp"
+    android:background="@drawable/inactivate_button_background"
+    android:enabled="false"
+    android:text="@string/signup_checkemail_button"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="@id/emailEditText"
+    app:layout_constraintStart_toStartOf="@id/emailEditText"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/emailCheckMessageTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="342dp"
+    android:gravity="center"
+    android:textSize="12sp"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="@id/checkEmailButton"
+    app:layout_constraintStart_toStartOf="@id/checkEmailButton"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="사용 가능한 이메일입니다"
+    tools:visibility="visible" />
+
+
+  <TextView
+    android:id="@+id/passwordTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="390dp"
+    android:text="@string/singup_password_label_textview"
+    android:textColor="@color/black"
+    app:layout_constraintStart_toStartOf="@id/signupSubTitleTextView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/passwordEditText"
+    android:layout_width="0dp"
+    android:layout_height="42dp"
+    android:layout_marginTop="421dp"
+    android:layout_marginEnd="31dp"
+    android:background="@drawable/edittext_background"
+    android:hint="@string/signup_password_hint_string"
+    android:inputType="textVisiblePassword"
+    android:lines="1"
+    android:maxLength="20"
+    android:paddingStart="20dp"
+    android:textColor="@color/black"
+    android:textColorHint="@color/secondary"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="@id/emailTextView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageButton
+    android:id="@+id/passwordEyeButton"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:layout_marginTop="430dp"
+    android:layout_marginEnd="10dp"
+    android:src="@drawable/eye_open"
+    app:layout_constraintEnd_toEndOf="@id/passwordEditText"
+    app:layout_constraintTop_toTopOf="parent" />
+
+
+  <TextView
+    android:id="@+id/checkPasswordTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="486dp"
+    android:text="@string/signup_checkpassword_label_string"
+    android:textColor="@color/black"
+    app:layout_constraintStart_toStartOf="@id/signupSubTitleTextView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/checkPasswordEditText"
+    android:layout_width="0dp"
+    android:layout_height="42dp"
+    android:layout_marginTop="517dp"
+    android:layout_marginEnd="31dp"
+    android:background="@drawable/edittext_background"
+    android:hint="@string/signup_password_hint_string"
+    android:inputType="textPassword"
+    android:lines="1"
+    android:maxLength="20"
+    android:paddingStart="20dp"
+    android:textColor="@color/black"
+    android:textColorHint="@color/secondary"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="@id/emailTextView"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+    android:id="@+id/passwordEditTextAlertImageView"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:layout_marginTop="526dp"
+    android:layout_marginEnd="10dp"
+    android:src="@drawable/alert_mark"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="@id/checkPasswordEditText"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:visibility="visible" />
+
+  <TextView
+    android:id="@+id/checkPasswordMessageTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="571dp"
+    android:gravity="center"
+    android:textSize="12sp"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="@id/checkEmailButton"
+    app:layout_constraintStart_toStartOf="@id/checkEmailButton"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="비밀번호를 다시 확인해주세요!"
+    tools:visibility="visible" />
+
+  <androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/signupSubmitButton"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="613dp"
+    android:background="@drawable/inactivate_button_background"
+    android:text="@string/signup_submit_button_string"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="@id/emailEditText"
+    app:layout_constraintStart_toStartOf="@id/emailEditText"
+    app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

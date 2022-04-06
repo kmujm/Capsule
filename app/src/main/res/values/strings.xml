@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Capsule</string>
+  <string name="signup_title">회원가입</string>
+  <string name="signup_subtitle">캡슐과 오늘부터 1일</string>
+  <string name="signup_email_textview">이메일</string>
+  <string name="signup_checkemail_button">중복 확인</string>
+  <string name="singup_password_label_textview">비밀번호</string>
+  <string name="signup_password_hint_string">8~20자리 영문,숫자 조합</string>
+  <string name="signup_editText_hint_string">이메일을 입력해주세요</string>
+  <string name="signup_checkpassword_label_string">비밀번호 확인</string>
+  <string name="signup_submit_button_string">완료</string>
 </resources>
