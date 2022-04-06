@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="96dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="253dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="22sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/app_slogan"
+        android:layout_width="67dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="4dp"
+        android:text="YOUR LIFE"
+        android:textAlignment="center"
+        android:textColor="#878787"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
+
+    <EditText
+        android:id="@+id/login_email"
+        android:layout_width="297dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/email_hint"
+        android:paddingStart="20dp"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_slogan" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="297dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_email" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="9dp"
+        android:src="@drawable/eye_open"
+        app:layout_constraintLeft_toLeftOf="@+id/login_password"
+        app:layout_constraintTop_toTopOf="@+id/login_password" />
+
+    <CheckBox
+        android:id="@+id/auto_login_checkbox"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/BG_gray"
+        android:buttonTint="@color/BG_gray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password" />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="22dp"
+        android:text="자동 로그인"
+        android:textColor="@color/text"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="297dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/inactivate_button_background"
+        android:text="@string/login_button"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_password" />
+
+    <Button
+        android:id="@+id/signup_button"
+        android:layout_width="297dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_signup_button"
+        android:text="@string/login_signup"
+        android:textColor="@color/text"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
