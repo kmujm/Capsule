@@ -157,7 +157,7 @@
     android:layout_marginEnd="31dp"
     android:background="@drawable/edittext_background"
     android:hint="@string/signup_password_hint_string"
-    android:inputType="textPassword"
+    android:inputType="textPassword|text"
     android:lines="1"
     android:maxLength="20"
     android:paddingStart="20dp"

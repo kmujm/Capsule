@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import com.example.capsule.databinding.ActivitySignupBinding
 import java.util.regex.Pattern
 
@@ -59,7 +58,7 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
-        // 이메일 중복확인 버튼 클릭 리스터
+        // 이메일 중복확인 버튼 클릭 리스러
         binding.checkEmailButton.setOnClickListener {
             val curEmail = binding.emailEditText.text.toString()
             // TODO 파이어베이스에서 이메일 리스트를 가져와서 현재 이메일과 비교함
@@ -81,6 +80,9 @@ class SignupActivity : AppCompatActivity() {
         // 비밀번호 정규식 확인 리스너
         binding.checkPasswordEditText.addTextChangedListener(object :TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // 다시 원상복귀 해주기
+                binding.checkPasswordEditText.background = getDrawable(R.drawable.edittext_background)
+                hidePasswordAlertIconAndMessage()
 
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -107,6 +109,7 @@ class SignupActivity : AppCompatActivity() {
             // 두개가 일치하는지 확인
             if (isSamePassword().not()) {
                 showPasswordErrorMessage()
+                binding.checkPasswordEditText.background = getDrawable(R.drawable.edittext_alert_background)
                 isPasswordPass = false
                 return@setOnClickListener
             }
@@ -125,19 +128,21 @@ class SignupActivity : AppCompatActivity() {
     private fun clearPasswordEditView() {
         binding.passwordEditText.setOnClickListener {
             binding.passwordEditText.setText("")
-            hidePasswordAlertIcon()
+            hidePasswordAlertIconAndMessage()
         }
 
         binding.checkPasswordEditText.setOnClickListener {
             binding.checkPasswordEditText.setText("")
-            hidePasswordAlertIcon()
+            hidePasswordAlertIconAndMessage()
         }
     }
 
-    private fun hidePasswordAlertIcon() {
+    private fun hidePasswordAlertIconAndMessage() {
         binding.passwordEditTextAlertImageView.isVisible = false
+        binding.checkPasswordMessageTextView.isVisible = false
     }
 
+    // AlertIcon, 비밀번호 에러메시지, 빨간색 줄 띄우기
     private fun showPasswordErrorMessage() {
         binding.checkPasswordMessageTextView.setText(CHECK_PASSWORD_ERROR_MESSAGE)
         binding.checkPasswordMessageTextView.setTextColor(ContextCompat.getColor(this,R.color.cost))
@@ -192,6 +197,8 @@ class SignupActivity : AppCompatActivity() {
 
     private fun showEmailEditTextAlertIcon() {
         binding.emailEditTextAlertImageView.isVisible = true
+        // 에딧테스트 빨간색 테두리 변경
+        binding.emailEditText.background = getDrawable(R.drawable.edittext_alert_background)
     }
 
     private fun showEmailCheckPassMessage() {
@@ -216,7 +223,14 @@ class SignupActivity : AppCompatActivity() {
         // 이메일 정규식 판별을 위한 이벤트 리스너
         binding.emailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                isEmailPass = false
+                hideEmailPassOrErrorMessage()
+                hideEmailEditTextAlertIcon()
 
+                // 배경색 원위치
+                binding.emailEditText.background = getDrawable(R.drawable.edittext_background)
+
+                Log.d(TAG,isEmailPass.toString())
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -229,11 +243,7 @@ class SignupActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                isEmailPass = false
-                hideEmailPassOrErrorMessage()
-                hideEmailEditTextAlertIcon()
 
-                Log.d(TAG,isEmailPass.toString())
             }
 
         })
