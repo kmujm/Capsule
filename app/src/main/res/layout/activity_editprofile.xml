@@ -51,14 +51,15 @@
         app:layout_constraintTop_toBottomOf="@+id/profile" />
     
     <EditText
-        android:paddingRight="20dp"
-        android:background="@drawable/edittext_background"
         android:id="@+id/edit_nickname"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="35dp"
+        android:background="@drawable/edittext_background"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nickname"/>
@@ -96,42 +97,32 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="30dp"
-        android:text="아이디"
+        android:text="이메일"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_nickname" />
 
     <EditText
-        android:background="@drawable/edittext_background"
+        android:textColor=""
         android:id="@+id/edit_id"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="35dp"
+        android:background="@drawable/edittext_background"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/id"/>
 
     <TextView
-        android:id="@+id/invalid_id"
+        android:id="@+id/email_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="사용할 수 없는 아이디입니다."
-        android:textColor="@color/cost"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_id"/>
-
-    <TextView
-        android:id="@+id/valid_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="사용 가능한 아이디입니다."
+        android:text="변경할 수 없는 항목입니다."
         android:textColor="@color/secondary"
         android:textSize="12sp"
         android:visibility="gone"
@@ -141,15 +132,16 @@
         tools:visibility="visible"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:background="@drawable/inactivate_button_background"
-        android:text="완료"
-        android:layout_marginEnd="30dp"
+        android:id="@+id/complete_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"
-        app:layout_constraintTop_toBottomOf="@id/edit_id"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/inactivate_button_background"
+        android:text="완료"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/edit_id"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
