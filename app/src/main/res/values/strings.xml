@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Capsule</string>
+    <string name="setting_title">설정</string>
+    <string name="setting_info">개인 정보</string>
+    <string name="setting_pw_reset">비밀번호 재설정</string>
+    <string name="setting_capsule_reset">캡슐 리셋</string>
+    <string name="setting_logout">로그아웃</string>
+    <string name="setting_withdrawal">회원 탈퇴</string>
 </resources>
