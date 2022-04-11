@@ -77,6 +77,8 @@ class EditProfileActivity : AppCompatActivity() {
                 //TODO alert dialog를 띄운다.
             }
         }
+
+        //TODO 이메일 서버에서 가져와서 보여주기
     }
 
     // nickname의 유효성 검사

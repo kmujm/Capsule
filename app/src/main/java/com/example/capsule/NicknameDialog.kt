@@ -74,6 +74,7 @@ class NicknameDialog(private val context: Context){
 
     fun show(){
         dialog = builder.create()
+        dialog?.setCancelable(false)
         dialog?.show()
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
     }
