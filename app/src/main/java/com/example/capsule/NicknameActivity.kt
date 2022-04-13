@@ -57,32 +57,39 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
         initbackButton()
 
     }
+
     private fun initbackButton() {
+        backButton.setOnClickListener {
+            finish()
+        }
 
     }
 
     private fun initsubmitButton() {
-        nicknameText = nickName.text.toString().trim()
-        Log.d("NICKNAME!!!!", nicknameText)
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
-            if (task.isSuccessful) {
-                //  회원가입 성공
-                UID = auth.currentUser?.uid.toString()
-                Log.d("UID!!!!!", UID)
-                val user = hashMapOf(
-                    "Email" to email,
-                    "Nickname" to nicknameText
-                )
-                db.collection("users").document(UID)
-                    .set(user)
-                    .addOnSuccessListener { Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show() }
-                    .addOnFailureListener { e -> Log.d("error", e.toString()) }
-            } else {
-                // 회원가입 실패
-                Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
-            }
+        submitButton.setOnClickListener {
+            nicknameText = nickName.text.toString()
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        //  회원가입 성공
+                        UID = auth.currentUser?.uid.toString()
+                        Log.d("UID!!!!!", UID)
+                        val user = hashMapOf(
+                            "Email" to email,
+                            "Nickname" to nicknameText
+                        )
+                        db.collection("users").document(UID)
+                            .set(user)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e -> Log.d("error", e.toString()) }
+                    } else {
+                        // 회원가입 실패
+                        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
-
     }
 
 
