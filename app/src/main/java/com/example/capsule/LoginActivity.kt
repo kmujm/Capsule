@@ -11,8 +11,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckBox
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity(), TextWatcher {
+    private lateinit var auth: FirebaseAuth
+
     private val emailText: EditText by lazy {
         findViewById(R.id.loginEmail)
     }
@@ -38,6 +43,9 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        auth = Firebase.auth
+
         setPasswordShowingState()
         emailText.addTextChangedListener(this)
         passwordText.addTextChangedListener(this)
@@ -98,12 +106,22 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
             val emailFromUser = emailText.text.toString()
             val passWordFromUser = passwordText.text.toString()
 
-            if (emailFromUser == TEST_EMAIL && passWordFromUser == TEST_PASSWORD) {
-                // 다음 페이지로 이동!
-            } else {
-                initAlertDialog()
-                setError()
-            }
+            auth.signInWithEmailAndPassword(emailFromUser, passWordFromUser)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        finish()
+                    } else {
+                        initAlertDialog()
+                        setError()
+                    }
+                }
+
+//            if (emailFromUser == TEST_EMAIL && passWordFromUser == TEST_PASSWORD) {
+//                // 다음
+//            } else {
+//                initAlertDialog()
+//                setError()
+//            }
         }
     }
 
@@ -116,13 +134,16 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
         val passWordFromUser = passwordText.text.toString()
         if (!emailFromUser.isNullOrBlank() && !passWordFromUser.isNullOrBlank()) {
             loginButton.background = getDrawable(R.drawable.activate_button_background)
+            loginButton.isEnabled = true
         } else if (emailFromUser.isNullOrBlank()) {
             emailText.background = getDrawable(R.drawable.edittext_background)
-
+            loginButton.isEnabled = false
         } else if (passWordFromUser.isNullOrBlank()) {
             passwordText.background = getDrawable(R.drawable.edittext_background)
+            loginButton.isEnabled = false
         } else {
             loginButton.background = getDrawable(R.drawable.inactivate_button_background)
+            loginButton.isEnabled = false
         }
     }
 
