@@ -120,14 +120,13 @@ class SignupActivity : AppCompatActivity() {
 
             // 다음 두 상태 검사 후 다음 인탠트로 넘겨줌
             if(( isEmailPass && isPasswordPass).not()) return@setOnClickListener
-
+            Log.d(TAG,"닉네임 페이지로 이동!")
             val intent = Intent(this,NicknameActivity::class.java).apply {
                 putExtra("userEmail", binding.emailEditText.text.toString())
                 putExtra("userPassword", binding.passwordEditText.text.toString())
             }
-            Log.d(TAG,"닉네임 페이지로 이동!")
             startActivity(intent)
-            finish()
+
 
 
 

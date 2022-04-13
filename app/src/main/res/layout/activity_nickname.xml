@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/signupText"
-        android:layout_width="81dp"
+        android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginStart="35dp"
         android:layout_marginTop="100dp"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/message"
-        android:layout_width="208dp"
+        android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:layout_marginStart="35dp"
         android:layout_marginEnd="117dp"

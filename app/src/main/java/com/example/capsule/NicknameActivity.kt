@@ -3,6 +3,7 @@ package com.example.capsule
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,13 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nickname)
         nickName.addTextChangedListener(this)
+
+        val email = intent.getStringExtra("userEmail")
+        val password = intent.getStringExtra("userPassword")
+
+        Log.d("NICKNAMEACTIVITY",email.toString())
+        Log.d("NICKNAMEACTIVITY",password.toString())
+
     }
 
 
