@@ -12,15 +12,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.capsule.databinding.ActivitySignupBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
 
-private lateinit var binding: ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySignupBinding
     private var isEmailPass = false
     private var isPasswordPass = false
     private var isStateShowingPassword = true
-
+    private val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,68 +31,68 @@ class SignupActivity : AppCompatActivity() {
         // view binding
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initDetctEmailEditText()
+        initCheckPasswordPattern()
         initView()
-
-
     }
 
     private fun initView() {
         // 제출버튼 OFF상태로 초기화
         offSubmitButton()
         clearPasswordEditView()
+        initPasswordEyeButton()
+        initCheckEmailButton()
+        initSignupSubmitButton()
 
-        // 비밀번호 SHOW ON/OFF 클릭 리스너
-        binding.passwordEyeButton.setOnClickListener {
-            if(isStateShowingPassword){ // 비밀번호 보이기 모드 -> 안보이기 모드
-                binding.passwordEyeButton.apply {
-                    isStateShowingPassword = false
-                    background = getDrawable(R.drawable.eye_close)
-                }
-                binding.passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT or  InputType.TYPE_TEXT_VARIATION_PASSWORD)
+    }
 
-            }else { // 비밀번호 안보이기 모드 -> 보이기 모드
-                binding.passwordEyeButton.apply {
-                    isStateShowingPassword = true
-                    background = getDrawable(R.drawable.eye_open)
-                }
-                binding.passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+
+    // 완료버튼 눌렀을때 리스너
+    private fun initSignupSubmitButton() {
+        binding.signupSubmitButton.setOnClickListener {
+            Log.d(TAG, "SUBMIT ON CLICKED!!")
+            // 두개가 일치하는지 확인
+            if (isSamePassword().not()) {
+                showPasswordErrorMessage()
+                binding.checkPasswordEditText.background =
+                    getDrawable(R.drawable.edittext_alert_background)
+                isPasswordPass = false
+                return@setOnClickListener
             }
-        }
 
-        // 이메일 중복확인 버튼 클릭 리스러
-        binding.checkEmailButton.setOnClickListener {
-            val curEmail = binding.emailEditText.text.toString()
-            // TODO 파이어베이스에서 이메일 리스트를 가져와서 현재 이메일과 비교함
-            if( curEmail == TEST_EMAIL ) {
-                // 중복이 일 시
-                showEmailCheckErrorMessage()
-                showEmailEditTextAlertIcon()
-                offCheckEmailButton()
-                offSubmitButton()
-                isEmailPass = false
-            }else {
-                // 중복이 아닐 시
-                isEmailPass = true
-                showEmailCheckPassMessage()
-                onCheckEamilButton()
+            // 비밀번호 정규식 확인
+            if (isPasswordPattern().not()) return@setOnClickListener
+
+            // 다음 두 상태 검사 후 다음 인탠트로 넘겨줌
+            if ((isEmailPass && isPasswordPass).not()) return@setOnClickListener
+            Log.d(TAG, "닉네임 페이지로 이동!")
+            val intent = Intent(this, NicknameActivity::class.java).apply {
+                putExtra("userEmail", binding.emailEditText.text.toString())
+                putExtra("userPassword", binding.passwordEditText.text.toString())
             }
-        }
+            startActivity(intent)
 
-        // 비밀번호 정규식 확인 리스너
-        binding.checkPasswordEditText.addTextChangedListener(object :TextWatcher {
+
+        }
+    }
+
+    private fun initCheckPasswordPattern() {
+        binding.checkPasswordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // 다시 원상복귀 해주기
-                binding.checkPasswordEditText.background = getDrawable(R.drawable.edittext_background)
+                binding.checkPasswordEditText.background =
+                    getDrawable(R.drawable.edittext_background)
                 hidePasswordAlertIconAndMessage()
 
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val currentPasswordEditText = binding.passwordEditText.text.toString()
                 val currentPasswordCheckEditText = binding.checkPasswordEditText.text.toString()
-                when{
-                    currentPasswordEditText.isNullOrBlank().not() && currentPasswordCheckEditText.isNullOrBlank().not() && isEmailPass  -> {
+                when {
+                    currentPasswordEditText.isNullOrBlank()
+                        .not() && currentPasswordCheckEditText.isNullOrBlank()
+                        .not() && isEmailPass -> {
                         // 비밀번호입력창이 비어있지 않고, 비밀번호 확인창이 비어있지 않은 경우
                         // 완료 버튼을 활성화
                         onSubmitButton()
@@ -100,39 +102,79 @@ class SignupActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
 
-        // 완료버튼 눌렀을때 리스너
-        binding.signupSubmitButton.setOnClickListener {
-            Log.d(TAG,"SUBMIT ON CLICKED!!")
-            // 두개가 일치하는지 확인
-            if (isSamePassword().not()) {
-                showPasswordErrorMessage()
-                binding.checkPasswordEditText.background = getDrawable(R.drawable.edittext_alert_background)
-                isPasswordPass = false
-                return@setOnClickListener
+    private fun initCheckEmailButton() {
+        // 이메일 중복확인 버튼 클릭 리스러
+        binding.checkEmailButton.setOnClickListener {
+
+            // 중복상태인지 확인하는 변수
+            if (isEmailOverLab()) {
+                // 중복이 일 시
+                showEmailCheckErrorMessage()
+                showEmailEditTextAlertIcon()
+                offCheckEmailButton()
+                offSubmitButton()
+                isEmailPass = false
+            } else {
+                // 중복이 아닐 시
+                isEmailPass = true
+                showEmailCheckPassMessage()
+                onCheckEamilButton()
             }
-
-            // 비밀번호 정규식 확인
-            if(isPasswordPattern().not()) return@setOnClickListener
-
-            // 다음 두 상태 검사 후 다음 인탠트로 넘겨줌
-            if(( isEmailPass && isPasswordPass).not()) return@setOnClickListener
-            Log.d(TAG,"닉네임 페이지로 이동!")
-            val intent = Intent(this,NicknameActivity::class.java).apply {
-                putExtra("userEmail", binding.emailEditText.text.toString())
-                putExtra("userPassword", binding.passwordEditText.text.toString())
-            }
-            startActivity(intent)
-
-
-
-
-
         }
+    }
 
+    // 비동기 처리 해줘야함?
+    private fun isEmailOverLab(): Boolean {
+        val curEmail = binding.emailEditText.text.toString()
+        var isOverLab = false
+
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    if (curEmail == document.data.get("Email").toString()) {
+                        isOverLab = true
+                        Log.d(TAG, "${curEmail}은 이미 존재합니다!")
+                        break
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+                return@addOnFailureListener
+            }
+
+
+
+        Log.d(TAG, "I'M HERE!!")
+        Log.d(TAG, "isOverLab : ${isOverLab}")
+        return isOverLab
+    }
+
+    private fun initPasswordEyeButton() {
+        // 비밀번호 SHOW ON/OFF 클릭 리스너
+        binding.passwordEyeButton.setOnClickListener {
+            if (isStateShowingPassword) { // 비밀번호 보이기 모드 -> 안보이기 모드
+                binding.passwordEyeButton.apply {
+                    isStateShowingPassword = false
+                    background = getDrawable(R.drawable.eye_close)
+                }
+                binding.passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+
+            } else { // 비밀번호 안보이기 모드 -> 보이기 모드
+                binding.passwordEyeButton.apply {
+                    isStateShowingPassword = true
+                    background = getDrawable(R.drawable.eye_open)
+                }
+                binding.passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+            }
+        }
     }
 
     private fun clearPasswordEditView() {
@@ -155,14 +197,15 @@ class SignupActivity : AppCompatActivity() {
     // AlertIcon, 비밀번호 에러메시지, 빨간색 줄 띄우기
     private fun showPasswordErrorMessage() {
         binding.checkPasswordMessageTextView.setText(CHECK_PASSWORD_ERROR_MESSAGE)
-        binding.checkPasswordMessageTextView.setTextColor(ContextCompat.getColor(this,R.color.cost))
-        binding.checkPasswordMessageTextView.isVisible= true
+        binding.checkPasswordMessageTextView.setTextColor(ContextCompat.getColor(this,
+            R.color.cost))
+        binding.checkPasswordMessageTextView.isVisible = true
 
         binding.passwordEditTextAlertImageView.isVisible = true
     }
 
 
-    private fun isPasswordPattern() : Boolean{
+    private fun isPasswordPattern(): Boolean {
         val curPassword = binding.passwordEditText.text.toString()
         val passwordPattern = Pattern.compile(PASSWORD_PATTERN)
         val matcher = passwordPattern.matcher(curPassword)
@@ -175,14 +218,14 @@ class SignupActivity : AppCompatActivity() {
         return false
     }
 
-    private fun isSamePassword() : Boolean{
+    private fun isSamePassword(): Boolean {
         val curPassword = binding.passwordEditText.text.toString()
         val checkPassword = binding.checkPasswordEditText.text.toString()
         if (curPassword == checkPassword) {
-            Log.d(TAG,"IS SAME!!")
+            Log.d(TAG, "IS SAME!!")
             return true
         }
-        Log.d(TAG,"IS NOT SAME!!")
+        Log.d(TAG, "IS NOT SAME!!")
         return false
     }
 
@@ -212,11 +255,12 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun showEmailCheckPassMessage() {
-        binding.emailCheckMessageTextView.apply{
+        binding.emailCheckMessageTextView.apply {
             setText(CHECK_EMAIL_PASS_MESSAGE)
             isVisible = true
         }
-        binding.emailCheckMessageTextView.setTextColor(ContextCompat.getColor(this,R.color.secondary))
+        binding.emailCheckMessageTextView.setTextColor(ContextCompat.getColor(this,
+            R.color.secondary))
     }
 
     private fun showEmailCheckErrorMessage() {
@@ -224,7 +268,7 @@ class SignupActivity : AppCompatActivity() {
             isVisible = true
             setText(CHECK_EMAIL_ERROR_MESSAGE)
         }
-        binding.emailCheckMessageTextView.setTextColor(ContextCompat.getColor(this,R.color.cost))
+        binding.emailCheckMessageTextView.setTextColor(ContextCompat.getColor(this, R.color.cost))
     }
 
 
@@ -240,14 +284,14 @@ class SignupActivity : AppCompatActivity() {
                 // 배경색 원위치
                 binding.emailEditText.background = getDrawable(R.drawable.edittext_background)
 
-                Log.d(TAG,isEmailPass.toString())
+                Log.d(TAG, isEmailPass.toString())
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val editText = binding.emailEditText.text.toString()
-                if(isEmailPattern(email = editText)){
+                if (isEmailPattern(email = editText)) {
                     onCheckEamilButton()
-                }else {
+                } else {
                     offCheckEmailButton()
                 }
             }
@@ -265,7 +309,7 @@ class SignupActivity : AppCompatActivity() {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun offCheckEmailButton() {
-        binding.checkEmailButton.apply{
+        binding.checkEmailButton.apply {
             isEnabled = false
             background = getDrawable(R.drawable.inactivate_button_background)
         }
@@ -281,10 +325,10 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //이메일 정규식 검사, 이메일이라면 true 아니라면 false 반환 함수
-    private fun isEmailPattern(email : String?): Boolean {
+    private fun isEmailPattern(email: String?): Boolean {
         val pattern = android.util.Patterns.EMAIL_ADDRESS
         if (email.isNullOrEmpty()) return false
-        when{
+        when {
             pattern.matcher(email).matches() -> return true
             else -> return false
         }
@@ -296,6 +340,7 @@ class SignupActivity : AppCompatActivity() {
         private const val CHECK_EMAIL_ERROR_MESSAGE = "사용 할 수 없는 이메일입니다."
         private const val CHECK_EMAIL_PASS_MESSAGE = "사용 가능한 이메일입니다."
         private const val CHECK_PASSWORD_ERROR_MESSAGE = "비밀번호를 다시 확인해주세요."
+
         // 영문, 숫자 8 ~ 20자 패턴
         private const val PASSWORD_PATTERN = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{8,20}$"
     }
