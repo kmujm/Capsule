@@ -1,6 +1,7 @@
 package com.example.capsule
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -120,7 +121,17 @@ class SignupActivity : AppCompatActivity() {
             // 다음 두 상태 검사 후 다음 인탠트로 넘겨줌
             if(( isEmailPass && isPasswordPass).not()) return@setOnClickListener
 
-            Toast.makeText(this,"닉네임 페이지로 이동합니다",Toast.LENGTH_SHORT).show()
+            val intent = Intent(this,NicknameActivity::class.java).apply {
+                putExtra("userEmail", binding.emailEditText.text.toString())
+                putExtra("userPassword", binding.passwordEditText.text.toString())
+            }
+            Log.d(TAG,"닉네임 페이지로 이동!")
+            startActivity(intent)
+            finish()
+
+
+
+
         }
 
     }
