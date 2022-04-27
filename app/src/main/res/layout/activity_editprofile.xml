@@ -77,7 +77,7 @@
 
     <EditText
         android:textSize="14sp"
-        android:id="@+id/edit_id"
+        android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginStart="35dp"
@@ -100,6 +100,6 @@
         android:text="완료"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_id"/>
+        app:layout_constraintTop_toBottomOf="@id/edit_email"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
