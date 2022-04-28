@@ -111,51 +111,38 @@ class SignupActivity : AppCompatActivity() {
     private fun initCheckEmailButton() {
         // 이메일 중복확인 버튼 클릭 리스러
         binding.checkEmailButton.setOnClickListener {
+            val curEmail = binding.emailEditText.text.toString()
 
-            // 중복상태인지 확인하는 변수
-            if (isEmailOverLab()) {
-                // 중복이 일 시
-                showEmailCheckErrorMessage()
-                showEmailEditTextAlertIcon()
-                offCheckEmailButton()
-                offSubmitButton()
-                isEmailPass = false
-            } else {
-                // 중복이 아닐 시
-                isEmailPass = true
-                showEmailCheckPassMessage()
-                onCheckEamilButton()
-            }
+            db.collection("users")
+                .whereEqualTo("Email", curEmail)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (doc in documents) {
+                        Log.d(TAG, "${doc.id} => ${doc.data}")
+                        if (doc.data.get("Email").toString() == curEmail) {
+//                            Toast.makeText(this, "사용 불가능한 이메일 입니다", Toast.LENGTH_SHORT).show()
+                            // 중복일 시
+                            showEmailCheckErrorMessage()
+                            showEmailEditTextAlertIcon()
+                            offCheckEmailButton()
+                            offSubmitButton()
+                            isEmailPass = false
+                            return@addOnSuccessListener
+                        }
+                    }
+                    // 중복이 아닐 시
+//                    Toast.makeText(this, "사용 가능한 이메일 입니다", Toast.LENGTH_SHORT).show()
+                    isEmailPass = true
+                    showEmailCheckPassMessage()
+                    onCheckEamilButton()
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "Error getting documents: ", exception)
+                    return@addOnFailureListener
+                }
         }
     }
 
-    // 비동기 처리 해줘야함?
-    private fun isEmailOverLab(): Boolean {
-        val curEmail = binding.emailEditText.text.toString()
-        var isOverLab = false
-
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    if (curEmail == document.data.get("Email").toString()) {
-                        isOverLab = true
-                        Log.d(TAG, "${curEmail}은 이미 존재합니다!")
-                        break
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error getting documents: ", exception)
-                return@addOnFailureListener
-            }
-
-
-
-        Log.d(TAG, "I'M HERE!!")
-        Log.d(TAG, "isOverLab : ${isOverLab}")
-        return isOverLab
-    }
 
     private fun initPasswordEyeButton() {
         // 비밀번호 SHOW ON/OFF 클릭 리스너
