@@ -87,12 +87,51 @@ class EditProfileActivity : AppCompatActivity() {
         // 완료 버튼이 눌렸을 경우
         completeButton.setOnClickListener {
             val nickname = editNickname.text.toString()
-            if (isNicknameValid(nickname) && isNicknameUsable(nickname)) { // 닉네임이 유효한 경우
-                editNickname.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                editNickname.background = this.resources.getDrawable(R.drawable.edittext_background)
-                // alert dialog를 띄운다.
-                val ad = NicknameDialog(this).setTitle("닉네임 설정")
-                    .setMessage(editNickname.text.toString() + "은 사용 가능한 닉네임이에요!")
+            checkNickname(nickname, uid)
+        }
+    }
+
+    // nickname의 유효성 검사
+    private fun isNicknameValid(nickname : String) : Boolean{
+        return nickname.isNotEmpty() && nickname.length <= 10 // 글자 수 제한에 맞는지 확인
+    }
+
+    // 닉네임이 변경 가능한지 확인
+    private fun checkNickname(nickname: String, uid : String){
+        if(isNicknameValid(nickname)){
+            var flag = true
+            db.collection("users").get().addOnSuccessListener {
+                for (document in it) {
+                    val temp = document.data?.get("Nickname").toString()
+                    Log.d("log", temp)
+                    Log.d("log", (temp == nickname).toString())
+                    if (temp == nickname) {
+                        flag = false
+                        val alert = editNickname.context.resources.getDrawable(R.drawable.alert_mark)
+                        editNickname.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            alert,
+                            null
+                        ) // alert_mark를 edittext의 오른쪽 부분에 나타나게 함
+                        editNickname.background =
+                            this.resources.getDrawable(R.drawable.edittext_alert_background)
+                        // alert dialog를 띄운다.
+                        val ad = NicknameDialog(this).setTitle("닉네임 설정")
+                            .setMessage(editNickname.text.toString() + "은 사용 불가능한 닉네임이에요!")
+                        ad.setPositiveButton("확인") {
+                            ad.dismiss()
+                        }.show()
+                        completeButton.background =
+                            this.resources.getDrawable(R.drawable.inactivate_button_background)
+                    }
+                }
+                if(flag){
+                    editNickname.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                    editNickname.background = this.resources.getDrawable(R.drawable.edittext_background)
+                    // alert dialog를 띄운다.
+                    val ad = NicknameDialog(this).setTitle("닉네임 설정")
+                        .setMessage(editNickname.text.toString() + "은 사용 가능한 닉네임이에요!")
                     ad.setPositiveButton("확인") {
                         // 수정한 닉네임 서버에 저장
                         val newNickname = mutableMapOf<String, Any>()
@@ -107,49 +146,27 @@ class EditProfileActivity : AppCompatActivity() {
                             }
                         }
                     }.show()
-            } else { // 닉네임이 유효하지 않은 경우
-                val alert = editNickname.context.resources.getDrawable(R.drawable.alert_mark)
-                editNickname.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    null,
-                    alert,
-                    null
-                ) // alert_mark를 edittext의 오른쪽 부분에 나타나게 함
-                editNickname.background =
-                    this.resources.getDrawable(R.drawable.edittext_alert_background)
-                // alert dialog를 띄운다.
-                val ad = NicknameDialog(this).setTitle("닉네임 설정")
-                    .setMessage(editNickname.text.toString() + "은 사용 불가능한 닉네임이에요!")
-                ad.setPositiveButton("확인") {
-                    ad.dismiss()
-                }.show()
-                completeButton.background =
-                    this.resources.getDrawable(R.drawable.inactivate_button_background)
-            }
-        }
-    }
-    // nickname의 유효성 검사
-    private fun isNicknameValid(nickname : String) : Boolean{
-        return nickname.isNotEmpty() && nickname.length <= 10 // 글자 수 제한에 맞는지 확인
-    }
-
-    // 닉네임이 사용 가능한지 확인
-    private fun isNicknameUsable(nickname: String) : Boolean{
-        // 사용중인 닉네임인지 확인
-        // TODO 동기 처리 필요
-        var result = true
-        db.collection("users").get().addOnSuccessListener {
-            for(document in it){
-                val temp = document.data?.get("Nickname").toString()
-                Log.d("log", temp)
-                Log.d("log", (temp == nickname).toString())
-                if(temp == nickname) {
-                    result = false
                 }
             }
+        } else{
+            val alert = editNickname.context.resources.getDrawable(R.drawable.alert_mark)
+            editNickname.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                null,
+                alert,
+                null
+            ) // alert_mark를 edittext의 오른쪽 부분에 나타나게 함
+            editNickname.background =
+                this.resources.getDrawable(R.drawable.edittext_alert_background)
+            // alert dialog를 띄운다.
+            val ad = NicknameDialog(this).setTitle("닉네임 설정")
+                .setMessage(editNickname.text.toString() + "은 사용 불가능한 닉네임이에요!")
+            ad.setPositiveButton("확인") {
+                ad.dismiss()
+            }.show()
+            completeButton.background =
+                this.resources.getDrawable(R.drawable.inactivate_button_background)
         }
-        Log.d("result", result.toString())
-        return result
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean { // 현재 포커스된 뷰의 영역이 아닌 다른 곳을 클릭 시 키보드를 내리고 포커스 해제
