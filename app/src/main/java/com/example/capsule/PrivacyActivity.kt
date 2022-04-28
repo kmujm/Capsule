@@ -17,6 +17,9 @@ class PrivacyActivity : AppCompatActivity() {
     private val userEmail: EditText by lazy {
         findViewById(R.id.PrivacyEmail)
     }
+    private val backButton: Button by lazy {
+        findViewById(R.id.btn_SettingBack)
+    }
 
     private lateinit var auth: FirebaseAuth
     private val db : FirebaseFirestore = Firebase.firestore
@@ -25,6 +28,9 @@ class PrivacyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_privacy)
 
+        backButton.setOnClickListener {
+            finish()
+        }
         auth = Firebase.auth
         val uid = auth.currentUser?.uid ?: "ProfileTest"
 
@@ -37,7 +43,6 @@ class PrivacyActivity : AppCompatActivity() {
                 userEmail.setText(email.toString())
                 userName.setText(nickname.toString())
             }
-
         }
 
     }
