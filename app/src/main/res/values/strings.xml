@@ -6,4 +6,9 @@
     <string name="setting_capsule_reset">캡슐 리셋</string>
     <string name="setting_logout">로그아웃</string>
     <string name="setting_withdrawal">회원 탈퇴</string>
+
+    <string name="privacy_title">개인정보</string>
+    <string name="privacy_my_capsule">MY 캡슐</string>
+    <string name="privacy_fav_capsule">최애 캡슐</string>
+    <string name="privacy_edit_profile">프로필 수정</string>
 </resources>
