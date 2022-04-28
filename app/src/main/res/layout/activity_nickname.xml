@@ -90,6 +90,7 @@
         android:text="1자 이상으로 지정해주세요."
         android:textColor="@color/secondary"
         android:textSize="12sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
