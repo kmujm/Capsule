@@ -9,8 +9,8 @@
         android:id="@+id/btn_PrivacyBack"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="44dp"
         android:layout_marginStart="18dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/back_button"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,49 +45,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="USERNAME"
+        android:background="@null"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:background="@null"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyProfileImage">
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyProfileImage"
+        tools:text="USERNAME">
     </EditText>
     <EditText
         android:id="@+id/PrivacyEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="user@naver.com"
+        android:background="@null"
+        android:gravity="center"
         android:textColor="@color/secondary"
         android:textSize="15sp"
-        android:gravity="center"
-        android:background="@null"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyUserName">
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyUserName"
+        tools:text="user@naver.com">
     </EditText>
 
     <ImageButton
         android:id="@+id/PrivacyVideo"
-        android:src="@drawable/video_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
         android:layout_marginStart="100dp"
+        android:layout_marginTop="45dp"
+        android:background="#00ff0000"
+        android:src="@drawable/video_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
-        android:background="#00ff0000"
         >
     </ImageButton>
     <TextView
         android:id="@+id/PrivacyVideoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginStart="90dp"
+        android:layout_marginTop="6dp"
         android:text="@string/privacy_my_capsule"
         android:textColor="@color/black"
         android:textSize="13sp"
@@ -99,8 +99,8 @@
         android:id="@+id/PrivacyLine1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="35dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/division_line_vertical"
         app:layout_constraintLeft_toRightOf="@id/PrivacyVideo"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail">
@@ -108,22 +108,22 @@
 
     <ImageButton
         android:id="@+id/PrivacyFavorite"
-        android:src="@drawable/heart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
         android:layout_marginStart="35dp"
+        android:layout_marginTop="45dp"
+        android:background="#00ff0000"
+        android:src="@drawable/heart"
         app:layout_constraintLeft_toRightOf="@id/PrivacyLine1"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
-        android:background="#00ff0000"
         >
     </ImageButton>
     <TextView
         android:id="@+id/PrivacyFavoriteTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginStart="19dp"
+        android:layout_marginTop="6dp"
         android:text="@string/privacy_fav_capsule"
         android:textColor="@color/black"
         android:textSize="13sp"
@@ -135,8 +135,8 @@
         android:id="@+id/PrivacyLine2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="35dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/division_line_vertical"
         app:layout_constraintLeft_toRightOf="@id/PrivacyFavorite"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail">
@@ -144,22 +144,22 @@
 
     <ImageButton
         android:id="@+id/PrivacyEditProfile"
-        android:src="@drawable/edit_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
         android:layout_marginStart="35dp"
+        android:layout_marginTop="45dp"
+        android:background="#00ff0000"
+        android:src="@drawable/edit_icon"
         app:layout_constraintLeft_toRightOf="@id/PrivacyLine2"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
-        android:background="#00ff0000"
         >
     </ImageButton>
     <TextView
         android:id="@+id/PrivacyEditProfileTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginStart="19dp"
+        android:layout_marginTop="6dp"
         android:text="@string/privacy_edit_profile"
         android:textColor="@color/black"
         android:textSize="13sp"

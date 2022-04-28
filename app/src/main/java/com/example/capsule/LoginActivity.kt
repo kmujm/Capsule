@@ -1,11 +1,15 @@
 package com.example.capsule
 
+import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -52,11 +56,14 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
         setAutoLoginCheck()
         initLoginButton()
         initSignupButton()
-
     }
 
     private fun initSignupButton() {
         // 회원가입 페이지로 이동!
+        signupButton.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setPasswordShowingState() {
@@ -109,7 +116,8 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
             auth.signInWithEmailAndPassword(emailFromUser, passWordFromUser)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        finish()
+                        val intent = Intent(this, SettingActivity::class.java)
+                        startActivity(intent)
                     } else {
                         initAlertDialog()
                         setError()
@@ -149,6 +157,23 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
 
     override fun afterTextChanged(p0: Editable?) {
         // TODO("Not yet implemented")
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean { // 현재 포커스된 뷰의 영역이 아닌 다른 곳을 클릭 시 키보드를 내리고 포커스 해제
+        val focusView = currentFocus
+        if (focusView != null) {
+            val rect = Rect()
+            focusView.getGlobalVisibleRect(rect)
+            val x = ev.x.toInt()
+            val y = ev.y.toInt()
+            if (!rect.contains(x, y)) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                if (imm != null) imm.hideSoftInputFromWindow(focusView.windowToken, 0)
+                focusView.clearFocus()
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 
     companion object {

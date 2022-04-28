@@ -203,13 +203,15 @@
       android:layout_width="0dp"
       android:layout_height="40dp"
       android:layout_marginTop="613dp"
+      android:layout_marginBottom="30dp"
       android:background="@drawable/inactivate_button_background"
       android:text="@string/signup_submit_button_string"
       android:textSize="14sp"
       android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="@id/emailEditText"
       app:layout_constraintStart_toStartOf="@id/emailEditText"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

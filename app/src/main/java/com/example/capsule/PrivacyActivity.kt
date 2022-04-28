@@ -1,7 +1,10 @@
 package com.example.capsule
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -18,24 +21,34 @@ class PrivacyActivity : AppCompatActivity() {
         findViewById(R.id.PrivacyEmail)
     }
     private val backButton: Button by lazy {
-        findViewById(R.id.btn_SettingBack)
+        findViewById(R.id.btn_PrivacyBack)
+    }
+    private val privacyEditProfile : ImageButton by lazy{
+        findViewById(R.id.PrivacyEditProfile)
     }
 
     private lateinit var auth: FirebaseAuth
-    private val db : FirebaseFirestore = Firebase.firestore
+    private val db: FirebaseFirestore = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_privacy)
 
+        initPrivacyEditProfileButton()
+
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         auth = Firebase.auth
         val uid = auth.currentUser?.uid ?: "ProfileTest"
 
-        db.document("users/${uid}").get().addOnCompleteListener{ task ->
-            if(task.isSuccessful){
+        db.document("users/${uid}").get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 val document = task.result
                 val email = document.data?.get("Email")
                 val nickname = document.data?.get("Nickname")
@@ -44,16 +57,12 @@ class PrivacyActivity : AppCompatActivity() {
                 userName.setText(nickname.toString())
             }
         }
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        // 화면 새로고침
-        finish()
-        overridePendingTransition(0, 0)
-        val intent = intent
-        startActivity(intent)
-        overridePendingTransition(0, 0)
+    private fun initPrivacyEditProfileButton(){
+        privacyEditProfile.setOnClickListener {
+            val intent = Intent(this, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

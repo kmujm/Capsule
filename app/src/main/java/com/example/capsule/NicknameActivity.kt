@@ -3,15 +3,15 @@ package com.example.capsule
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -88,7 +88,7 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
                             Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { e -> Log.d("error", e.toString()) }
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                 } else {
                     // 회원가입 실패
@@ -157,5 +157,22 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
     }
 
     override fun afterTextChanged(p0: Editable?) {
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean { // 현재 포커스된 뷰의 영역이 아닌 다른 곳을 클릭 시 키보드를 내리고 포커스 해제
+        val focusView = currentFocus
+        if (focusView != null) {
+            val rect = Rect()
+            focusView.getGlobalVisibleRect(rect)
+            val x = ev.x.toInt()
+            val y = ev.y.toInt()
+            if (!rect.contains(x, y)) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                if (imm != null) imm.hideSoftInputFromWindow(focusView.windowToken, 0)
+                focusView.clearFocus()
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }
