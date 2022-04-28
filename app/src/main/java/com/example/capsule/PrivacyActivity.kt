@@ -1,15 +1,14 @@
 package com.example.capsule
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import com.google.firebase.ktx.Firebase
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 
 class PrivacyActivity : AppCompatActivity() {
     private val userName: EditText by lazy {
@@ -41,5 +40,15 @@ class PrivacyActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 화면 새로고침
+        finish()
+        overridePendingTransition(0, 0)
+        val intent = intent
+        startActivity(intent)
+        overridePendingTransition(0, 0)
     }
 }
