@@ -1,6 +1,7 @@
 package com.example.capsule
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +19,7 @@ class PrivacyActivity : AppCompatActivity() {
         findViewById(R.id.PrivacyEmail)
     }
     private val backButton: Button by lazy {
-        findViewById(R.id.btn_SettingBack)
+        findViewById(R.id.btn_PrivacyBack)
     }
 
     private lateinit var auth: FirebaseAuth
@@ -45,15 +46,5 @@ class PrivacyActivity : AppCompatActivity() {
             }
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // 화면 새로고침
-        finish()
-        overridePendingTransition(0, 0)
-        val intent = intent
-        startActivity(intent)
-        overridePendingTransition(0, 0)
     }
 }

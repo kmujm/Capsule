@@ -70,101 +70,70 @@
         app:layout_constraintTop_toBottomOf="@+id/PrivacyUserName">
     </EditText>
 
-    <ImageButton
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/PrivacyVideo"
-        android:src="@drawable/video_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginStart="100dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
-        android:background="#00ff0000"
-        >
-    </ImageButton>
-    <TextView
-        android:id="@+id/PrivacyVideoTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginStart="90dp"
+        android:drawableTop="@drawable/video_icon"
         android:text="@string/privacy_my_capsule"
         android:textColor="@color/black"
-        android:textSize="13sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyVideo">
-    </TextView>
-
-    <ImageView
-        android:id="@+id/PrivacyLine1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="35dp"
-        android:src="@drawable/division_line_vertical"
-        app:layout_constraintLeft_toRightOf="@id/PrivacyVideo"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail">
-    </ImageView>
-
-    <ImageButton
-        android:id="@+id/PrivacyFavorite"
-        android:src="@drawable/heart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        android:layout_marginStart="35dp"
-        app:layout_constraintLeft_toRightOf="@id/PrivacyLine1"
+        android:layout_marginStart="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
-        android:background="#00ff0000"
+        android:background="#00ff0000">
+    </Button>
+
+    <View
+        android:id="@+id/PrivacyLine1"
+        android:layout_width="2dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toRightOf="@id/PrivacyVideo"
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
+        android:background="@color/disabled"
         >
-    </ImageButton>
-    <TextView
-        android:id="@+id/PrivacyFavoriteTitle"
+    </View>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginStart="19dp"
+        android:id="@+id/PrivacyFavorite"
+        android:drawableTop="@drawable/heart"
         android:text="@string/privacy_fav_capsule"
         android:textColor="@color/black"
-        android:textSize="13sp"
-        app:layout_constraintLeft_toRightOf="@id/PrivacyLine1"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyFavorite">
-    </TextView>
-
-    <ImageView
-        android:id="@+id/PrivacyLine2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="35dp"
-        android:src="@drawable/division_line_vertical"
-        app:layout_constraintLeft_toRightOf="@id/PrivacyFavorite"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail">
-    </ImageView>
-
-    <ImageButton
-        android:id="@+id/PrivacyEditProfile"
-        android:src="@drawable/edit_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toRightOf="@id/PrivacyLine1"
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
+        android:background="#00ff0000">
+    </Button>
+
+    <View
+        android:id="@+id/PrivacyLine2"
+        android:layout_width="2dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toRightOf="@id/PrivacyFavorite"
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
+        android:background="@color/disabled"
+        >
+    </View>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/PrivacyEditProfile"
+        android:drawableTop="@drawable/edit_icon"
+        android:text="@string/privacy_fav_capsule"
+        android:textColor="@color/black"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="10dp"
         app:layout_constraintLeft_toRightOf="@id/PrivacyLine2"
         app:layout_constraintTop_toBottomOf="@+id/PrivacyEmail"
-        android:background="#00ff0000"
-        >
-    </ImageButton>
-    <TextView
-        android:id="@+id/PrivacyEditProfileTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginStart="19dp"
-        android:text="@string/privacy_edit_profile"
-        android:textColor="@color/black"
-        android:textSize="13sp"
-        app:layout_constraintLeft_toRightOf="@id/PrivacyLine2"
-        app:layout_constraintTop_toBottomOf="@+id/PrivacyEditProfile">
-    </TextView>
+        android:background="#00ff0000">
+    </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
