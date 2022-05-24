@@ -23,4 +23,9 @@
     <string name="signup_editText_hint_string">이메일을 입력해주세요</string>
     <string name="signup_checkpassword_label_string">비밀번호 확인</string>
     <string name="signup_submit_button_string">완료</string>
+  <string name="string_make_capsule">캡슐 만들기</string>
+  <string name="string_dc_subTitle">인식한 것</string>
+  <string name="string_dc_message">캡슐로 만들고 싶은 키워드를 터치해주세요.</string>
+  <string name="string_dc_endtitle">원하는 제품이 인식되지 않았나요?</string>
+  <string name="string_dc_retry"><u>다시 인식하기</u></string>
 </resources>

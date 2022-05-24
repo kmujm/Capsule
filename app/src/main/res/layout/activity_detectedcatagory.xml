@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:id="@+id/dcDetectedImageView"
+      android:layout_width="0dp"
+      android:layout_height="406dp"
+      android:background="@color/secondary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+      android:id="@+id/dcBackButton"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginStart="18dp"
+      android:layout_marginTop="44dp"
+      android:background="@drawable/back_white_button"
+      app:backgroundTint="@null"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/dcTitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="55dp"
+      android:layout_marginTop="40dp"
+      android:text="@string/string_make_capsule"
+      android:textColor="@color/white"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/dcSubtitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="31dp"
+      android:layout_marginTop="40dp"
+      android:text="@string/string_dc_subTitle"
+      android:textColor="@color/black"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/dcDetectedImageView" />
+
+    <TextView
+      android:id="@+id/dcTouchkeywordmsgTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="@string/string_dc_message"
+      android:textColor="@color/black"
+      app:layout_constraintStart_toStartOf="@id/dcSubtitleTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcSubtitleTextView" />
+
+
+    <Button
+      android:id="@+id/dcFasionButton"
+      android:layout_width="0dp"
+      android:layout_height="60dp"
+      android:layout_marginTop="33dp"
+      android:layout_marginEnd="31dp"
+      android:background="@drawable/dialog_round_bg"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcTouchkeywordmsgTextView"
+      android:translationZ="1dp"
+      tools:backgroundTint="@color/primary" />
+
+    <TextView
+      android:id="@+id/dcFashionCountText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="19dp"
+      android:textColor="@color/black"
+      android:textSize="16sp"
+      app:layout_constraintBottom_toBottomOf="@id/dcFasionButton"
+      app:layout_constraintEnd_toEndOf="@id/dcFasionButton"
+      app:layout_constraintTop_toTopOf="@id/dcFasionButton"
+      android:translationZ="2dp"
+      tools:text="1" />
+
+
+    <Button
+      android:id="@+id/dcFoodButton"
+      android:layout_width="0dp"
+      android:layout_height="60dp"
+      android:layout_marginTop="11dp"
+      android:layout_marginEnd="31dp"
+      android:background="@drawable/dialog_round_bg"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcFasionButton"
+      tools:backgroundTint="@color/primary" />
+
+    <TextView
+      android:id="@+id/dcFoodCountText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="19dp"
+      android:textColor="@color/black"
+      android:textSize="16sp"
+      app:layout_constraintBottom_toBottomOf="@id/dcFoodButton"
+      app:layout_constraintEnd_toEndOf="@id/dcFoodButton"
+      app:layout_constraintTop_toTopOf="@id/dcFoodButton"
+      android:translationZ="2dp"
+      tools:text="1" />
+
+    <Button
+      android:id="@+id/dcLivingButton"
+      android:layout_width="0dp"
+      android:layout_height="60dp"
+      android:layout_marginTop="11dp"
+      android:layout_marginEnd="31dp"
+      android:background="@drawable/dialog_round_bg"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcFoodButton"
+      tools:backgroundTint="@color/disabled" />
+
+    <TextView
+      android:id="@+id/dcLivingCountText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="19dp"
+      android:textColor="@color/black_half_transparent"
+      android:textSize="16sp"
+      app:layout_constraintBottom_toBottomOf="@id/dcLivingButton"
+      app:layout_constraintEnd_toEndOf="@id/dcLivingButton"
+      app:layout_constraintTop_toTopOf="@id/dcLivingButton"
+      android:translationZ="2dp"
+      tools:text="0" />
+
+    <Button
+      android:id="@+id/dcPlaceButton"
+      android:layout_width="0dp"
+      android:layout_height="60dp"
+      android:layout_marginTop="11dp"
+      android:layout_marginEnd="31dp"
+      android:background="@drawable/dialog_round_bg"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcLivingButton"
+      tools:backgroundTint="@color/disabled" />
+
+    <TextView
+      android:id="@+id/dcPlaceCountText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:textColor="@color/black"
+      android:textSize="16sp"
+      android:translationZ="2dp"
+      app:layout_constraintBottom_toBottomOf="@id/dcPlaceButton"
+      app:layout_constraintEnd_toEndOf="@id/dcPlaceButton"
+      app:layout_constraintTop_toTopOf="@id/dcPlaceButton"
+      app:layout_constraintVertical_bias="0.526"
+      tools:text="0" />
+
+    <Button
+      android:id="@+id/dcPlantButton"
+      android:layout_width="0dp"
+      android:layout_height="60dp"
+      android:layout_marginTop="11dp"
+      android:layout_marginEnd="31dp"
+      android:background="@drawable/dialog_round_bg"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcPlaceButton"
+      tools:backgroundTint="@color/disabled" />
+
+    <TextView
+      android:id="@+id/dcPlantCountText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="19dp"
+      android:textColor="@color/black"
+      android:textSize="16sp"
+      app:layout_constraintBottom_toBottomOf="@id/dcPlantButton"
+      app:layout_constraintEnd_toEndOf="@id/dcPlantButton"
+      app:layout_constraintTop_toTopOf="@id/dcPlantButton"
+      android:translationZ="2dp"
+      tools:text="0" />
+
+    <TextView
+      android:id="@+id/endTitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="41dp"
+      android:text="@string/string_dc_endtitle"
+      android:textColor="@color/black_half_transparent"
+      android:textSize="14sp"
+      app:layout_constraintStart_toStartOf="@id/dcPlantButton"
+      app:layout_constraintTop_toBottomOf="@id/dcPlantButton" />
+
+    <TextView
+      android:id="@+id/dcRetryTextButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:layout_marginBottom="56dp"
+      android:text="@string/string_dc_retry"
+      android:textColor="@color/black"
+      android:textSize="14sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="@id/endTitleTextView"
+      app:layout_constraintTop_toBottomOf="@id/endTitleTextView" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
