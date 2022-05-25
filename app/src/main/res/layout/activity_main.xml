@@ -34,9 +34,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:background="#FFEB3B"
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="550dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/mainPage" />

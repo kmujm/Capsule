@@ -31,7 +31,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
     private var mCurrentPhotoPath = ""
     private lateinit var mCurrentPhotoUri : Uri
 
-    val picture : ImageView by lazy{
+    private val picture : ImageView by lazy{
         findViewById(R.id.picture)
     }
 

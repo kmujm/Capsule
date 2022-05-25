@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun initObjectDetectionButton(){
         objectDetectionButton.setOnClickListener {
             val intent = Intent(this, ObjectDetectionActivity::class.java)
+            startActivity(intent)
         }
     }
 }
