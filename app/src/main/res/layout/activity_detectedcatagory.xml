@@ -66,133 +66,15 @@
       app:layout_constraintTop_toBottomOf="@id/dcSubtitleTextView" />
 
 
-    <Button
-      android:id="@+id/dcFasionButton"
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/dcCatagoryRecyclerView"
       android:layout_width="0dp"
-      android:layout_height="60dp"
+      android:layout_height="360dp"
       android:layout_marginTop="33dp"
-      android:layout_marginEnd="31dp"
-      android:background="@drawable/dialog_round_bg"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
-      app:layout_constraintTop_toBottomOf="@id/dcTouchkeywordmsgTextView"
-      android:translationZ="1dp"
-      tools:backgroundTint="@color/primary" />
-
-    <TextView
-      android:id="@+id/dcFashionCountText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="19dp"
-      android:textColor="@color/black"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="@id/dcFasionButton"
-      app:layout_constraintEnd_toEndOf="@id/dcFasionButton"
-      app:layout_constraintTop_toTopOf="@id/dcFasionButton"
-      android:translationZ="2dp"
-      tools:text="1" />
-
-
-    <Button
-      android:id="@+id/dcFoodButton"
-      android:layout_width="0dp"
-      android:layout_height="60dp"
-      android:layout_marginTop="11dp"
-      android:layout_marginEnd="31dp"
-      android:background="@drawable/dialog_round_bg"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
-      app:layout_constraintTop_toBottomOf="@id/dcFasionButton"
-      tools:backgroundTint="@color/primary" />
-
-    <TextView
-      android:id="@+id/dcFoodCountText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="19dp"
-      android:textColor="@color/black"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="@id/dcFoodButton"
-      app:layout_constraintEnd_toEndOf="@id/dcFoodButton"
-      app:layout_constraintTop_toTopOf="@id/dcFoodButton"
-      android:translationZ="2dp"
-      tools:text="1" />
-
-    <Button
-      android:id="@+id/dcLivingButton"
-      android:layout_width="0dp"
-      android:layout_height="60dp"
-      android:layout_marginTop="11dp"
-      android:layout_marginEnd="31dp"
-      android:background="@drawable/dialog_round_bg"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
-      app:layout_constraintTop_toBottomOf="@id/dcFoodButton"
-      tools:backgroundTint="@color/disabled" />
-
-    <TextView
-      android:id="@+id/dcLivingCountText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="19dp"
-      android:textColor="@color/black_half_transparent"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="@id/dcLivingButton"
-      app:layout_constraintEnd_toEndOf="@id/dcLivingButton"
-      app:layout_constraintTop_toTopOf="@id/dcLivingButton"
-      android:translationZ="2dp"
-      tools:text="0" />
-
-    <Button
-      android:id="@+id/dcPlaceButton"
-      android:layout_width="0dp"
-      android:layout_height="60dp"
-      android:layout_marginTop="11dp"
-      android:layout_marginEnd="31dp"
-      android:background="@drawable/dialog_round_bg"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
-      app:layout_constraintTop_toBottomOf="@id/dcLivingButton"
-      tools:backgroundTint="@color/disabled" />
-
-    <TextView
-      android:id="@+id/dcPlaceCountText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:textColor="@color/black"
-      android:textSize="16sp"
-      android:translationZ="2dp"
-      app:layout_constraintBottom_toBottomOf="@id/dcPlaceButton"
-      app:layout_constraintEnd_toEndOf="@id/dcPlaceButton"
-      app:layout_constraintTop_toTopOf="@id/dcPlaceButton"
-      app:layout_constraintVertical_bias="0.526"
-      tools:text="0" />
-
-    <Button
-      android:id="@+id/dcPlantButton"
-      android:layout_width="0dp"
-      android:layout_height="60dp"
-      android:layout_marginTop="11dp"
-      android:layout_marginEnd="31dp"
-      android:background="@drawable/dialog_round_bg"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@id/dcTouchkeywordmsgTextView"
-      app:layout_constraintTop_toBottomOf="@id/dcPlaceButton"
-      tools:backgroundTint="@color/disabled" />
-
-    <TextView
-      android:id="@+id/dcPlantCountText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="19dp"
-      android:textColor="@color/black"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="@id/dcPlantButton"
-      app:layout_constraintEnd_toEndOf="@id/dcPlantButton"
-      app:layout_constraintTop_toTopOf="@id/dcPlantButton"
-      android:translationZ="2dp"
-      tools:text="0" />
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/dcTouchkeywordmsgTextView" />
 
     <TextView
       android:id="@+id/endTitleTextView"
@@ -202,8 +84,8 @@
       android:text="@string/string_dc_endtitle"
       android:textColor="@color/black_half_transparent"
       android:textSize="14sp"
-      app:layout_constraintStart_toStartOf="@id/dcPlantButton"
-      app:layout_constraintTop_toBottomOf="@id/dcPlantButton" />
+      app:layout_constraintStart_toStartOf="@id/dcSubtitleTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcCatagoryRecyclerView" />
 
     <TextView
       android:id="@+id/dcRetryTextButton"
