@@ -36,9 +36,7 @@ class CapsuleDataAdapter(private val CapsuleList: ArrayList<CapsuleData>):Recycl
         private val capsuleTitle = v.findViewById<TextView>(R.id.CapsuleTitle)
         private val capsuleDate = v.findViewById<TextView>(R.id.CapsuleDate)
 
-
         fun bind(item: CapsuleData) {
-            Log.i("title", item.title)
             Glide.with(itemView).load(item.photo).into(capsulePhoto);
             capsuleTitle.text = item.title
             capsuleDate.text = item.date
