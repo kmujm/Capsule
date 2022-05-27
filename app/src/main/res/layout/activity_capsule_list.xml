@@ -60,10 +60,10 @@
         android:layout_width="367dp"
         android:layout_height="39dp"
         android:layout_marginTop="19dp"
-        android:layout_marginLeft="23dp"
+        android:layout_marginLeft="15dp"
         app:iconifiedByDefault="false"
-        android:textSize="14sp"
-        app:queryHint="검색"
+        app:queryBackground="@null"
+        app:queryHint="@string/capsule_list_hint_string"
         android:background="@color/BG_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SubTitleText">
@@ -74,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="14dp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CapsuleSearch">
