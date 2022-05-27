@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -25,6 +26,7 @@ class CapsuleListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_capsule_list)
 
             if (user != null) {
@@ -69,5 +71,12 @@ class CapsuleListActivity : AppCompatActivity() {
         }
         val capsuleAdapter = CapsuleDataAdapter(CapsuleList)
         recyclerView.adapter = capsuleAdapter
+
+        // 리사이클러뷰에 스와이프, 드래그 기능 달기
+        val swipeHelperCallback = SwipeHelperCallback(capsuleAdapter).apply {
+            // 스와이프한 뒤 고정시킬 위치 지정
+            setClamp(resources.displayMetrics.widthPixels.toFloat() / 5)    // 1080 / 5
+        }
+        ItemTouchHelper(swipeHelperCallback).attachToRecyclerView(recyclerView)
     }
 }

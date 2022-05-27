@@ -1,14 +1,10 @@
 package com.example.capsule
 
-import android.content.Context
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -28,7 +24,12 @@ class CapsuleDataAdapter(private val CapsuleList: ArrayList<CapsuleData>):Recycl
         holder.apply {
             bind(item)
         }
+    }
 
+    // position 위치의 데이터를 삭제 후 어댑터 갱신
+    fun removeData(position: Int) {
+        CapsuleList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     inner class ItemViewHolder(v: View): RecyclerView.ViewHolder(v) {
@@ -36,10 +37,16 @@ class CapsuleDataAdapter(private val CapsuleList: ArrayList<CapsuleData>):Recycl
         private val capsuleTitle = v.findViewById<TextView>(R.id.CapsuleTitle)
         private val capsuleDate = v.findViewById<TextView>(R.id.CapsuleDate)
 
+        private val capsuleRemove = v.findViewById<Button>(R.id.tvRemove)
         fun bind(item: CapsuleData) {
             Glide.with(itemView).load(item.photo).into(capsulePhoto);
             capsuleTitle.text = item.title
             capsuleDate.text = item.date
+
+            // 삭제 버튼 클릭
+            capsuleRemove.setOnClickListener {
+                removeData(this.layoutPosition)
+            }
         }
     }
 }
