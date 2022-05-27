@@ -29,7 +29,7 @@ class CatagoryAdapter(val mCardClickListener : (String) -> Unit) :
             if(item.count == 0 ) {
                 cardView.setCardBackgroundColor(itemView.context.getResources().getColor(R.color.disabled))
                 icon.background = ContextCompat.getDrawable(itemView.context,R.drawable.half_white_round_bg)
-                icon.setColorFilter(itemView.context.getResources().getColor(R.color.icon_transparnet_half),
+                icon.setColorFilter(itemView.context.getResources().getColor(R.color.main_image_wrapper_gradaion),
                     PorterDuff.Mode.SRC_IN)
 
 

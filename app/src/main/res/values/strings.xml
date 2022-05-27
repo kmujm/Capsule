@@ -28,4 +28,8 @@
   <string name="string_dc_message">캡슐로 만들고 싶은 키워드를 터치해주세요.</string>
   <string name="string_dc_endtitle">원하는 제품이 인식되지 않았나요?</string>
   <string name="string_dc_retry"><u>다시 인식하기</u></string>
+  <string name="string_pc_title_hint">제목을 입력해주세요!</string>
+  <string name="string_post_edit_text_hint">캡슐로 등록할 사진들을 확인한 후 \n나의경험, 느낀 점 등을 글로 정리해보세요.</string>
+  <string name="string_button_complete">완료</string>
+  <string name="string_main">MAIN</string>
 </resources>
