@@ -22,6 +22,7 @@ class CapsuleListActivity : AppCompatActivity() {
     lateinit var date:String     // capsule date
     lateinit var title:String    // capsule title
     lateinit var photoUri: Uri   // capsule detectImage
+    private var registerUri: MutableList<String> = mutableListOf()  // capsule registerImage 배열
     private var capsuleKey: MutableList<String> = mutableListOf()   // capsule key 들만 모아놓은 배열
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +53,7 @@ class CapsuleListActivity : AppCompatActivity() {
                 date = it.child("date").getValue<String>().toString()
                 title = it.child("title").getValue<String>().toString()
                 photoUri = it.child("detectImage").getValue<String>()!!.toUri()
+
                 // 캡슐 하나 저장 -> cnt+=1
                 cnt+=1
                 // CapsuleList에 유저의 모든 캡슐 정보 저장
@@ -69,7 +71,7 @@ class CapsuleListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView by lazy {
             findViewById(R.id.CapsuleList)
         }
-        val capsuleAdapter = CapsuleDataAdapter(CapsuleList)
+        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList)
         recyclerView.adapter = capsuleAdapter
 
         // 리사이클러뷰에 스와이프, 드래그 기능 달기

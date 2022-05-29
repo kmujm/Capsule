@@ -1,6 +1,8 @@
 package com.example.capsule
 
-import android.util.Log
+import android.app.Dialog
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +10,9 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class CapsuleDataAdapter(private val CapsuleList: ArrayList<CapsuleData>):RecyclerView.Adapter<CapsuleDataAdapter.ItemViewHolder>() {
+
+class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<CapsuleData>):RecyclerView.Adapter<CapsuleDataAdapter.ItemViewHolder>() {
+    val context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.capsule_item, parent, false)
@@ -38,14 +42,41 @@ class CapsuleDataAdapter(private val CapsuleList: ArrayList<CapsuleData>):Recycl
         private val capsuleDate = v.findViewById<TextView>(R.id.CapsuleDate)
 
         private val capsuleRemove = v.findViewById<Button>(R.id.tvRemove)
+
         fun bind(item: CapsuleData) {
             Glide.with(itemView).load(item.photo).into(capsulePhoto);
             capsuleTitle.text = item.title
             capsuleDate.text = item.date
 
-            // 삭제 버튼 클릭
+            // 쓰레기통 버튼 클릭
             capsuleRemove.setOnClickListener {
-                removeData(this.layoutPosition)
+                val dlg = Dialog(context)
+
+                dlg.setContentView(R.layout.capsule_delete_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
+                dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+                dlg.window?.setBackgroundDrawable(Drawable.createFromPath("@drawable/alert_dialog_background"))
+                // dialog title 지정
+                var title: TextView = dlg.findViewById(R.id.title)
+                title.text = "캡슐 삭제"
+
+                // dialog message 지정
+                var message : TextView = dlg.findViewById(R.id.content)
+                message.text = "'${item.title}' 캡슐이 삭제됩니다."
+
+                // 취소 버튼 클릭
+                var btnCancel : Button = dlg.findViewById(R.id.cancel)
+                btnCancel.setOnClickListener {
+                    dlg.dismiss()
+                }
+
+                // 삭제 버튼 클릭
+                var btnDelete : Button = dlg.findViewById(R.id.delete)
+                btnDelete.setOnClickListener {
+                    dlg.dismiss()
+                    // 현재 position의 아이템 삭제
+                    removeData(this.layoutPosition)
+                }
+                dlg.show()
             }
         }
     }
