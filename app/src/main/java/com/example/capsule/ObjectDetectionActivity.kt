@@ -32,6 +32,8 @@ import java.util.*
 
 class ObjectDetectionActivity : AppCompatActivity() {
 
+    private var categoryList = mutableListOf(0 /* 패션 */, 0 /* 음식 */, 0 /* 리빙 */, 0 /* 장소 */, 0 /* 식물 */)
+
     private var mCurrentPhotoPath = ""
     private lateinit var mCurrentPhotoUri : Uri
 
@@ -212,10 +214,19 @@ class ObjectDetectionActivity : AppCompatActivity() {
 
         objectDetector.process(image)
             .addOnSuccessListener { detectedObjects ->
+                categoryList = mutableListOf(0 /* 패션 */, 0 /* 음식 */, 0 /* 리빙 */, 0 /* 장소 */, 0 /* 식물 */) // 결과값 리셋
                 for (detectedObject in detectedObjects) {
                     graphicOverlay.add(ObjectGraphic(graphicOverlay, detectedObject))
                     if(detectedObject.labels.isNotEmpty()){
                         Log.d("object Detected!!", detectedObject.labels[0].text)
+                        // 물체 인식 결과값을 넘겨주는 코드
+                        when(detectedObject.labels[0].text){
+                            "Fashion good"-> categoryList[0]++
+                            "Food" -> categoryList[1]++
+                            "Home good" -> categoryList[2]++
+                            "place" -> categoryList[3]++
+                            "plant" -> categoryList[4]++
+                        }
                     }
                 }
                 graphicOverlay.postInvalidate()

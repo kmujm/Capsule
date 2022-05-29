@@ -86,6 +86,7 @@ class ObjectGraphic constructor(
             labelPaints[colorID]
         )
         yLabelOffset += TEXT_SIZE
+        /*
         canvas.drawText(
             "Tracking ID: " + detectedObject.trackingId,
             rect.left,
@@ -93,6 +94,7 @@ class ObjectGraphic constructor(
             textPaints[colorID]
         )
         yLabelOffset += lineHeight
+        */
         for (label in detectedObject.labels) {
             canvas.drawText(
                 label.text,
