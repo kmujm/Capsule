@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -21,6 +22,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.objects.ObjectDetection
+import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -31,8 +35,16 @@ class ObjectDetectionActivity : AppCompatActivity() {
     private var mCurrentPhotoPath = ""
     private lateinit var mCurrentPhotoUri : Uri
 
+    private val image : InputImage by lazy{
+        InputImage.fromFilePath(this, mCurrentPhotoUri)
+    }
+
     private val picture : ImageView by lazy{
         findViewById(R.id.picture)
+    }
+
+    private val graphicOverlay : GraphicOverlay by lazy{
+        findViewById(R.id.graphic_overlay)
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
@@ -183,7 +195,34 @@ class ObjectDetectionActivity : AppCompatActivity() {
     }
 
     private fun initDetection(filePath: String){
-        //
+        val options = ObjectDetectorOptions.Builder()
+            .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE)
+            .enableMultipleObjects()
+            .enableClassification()
+            .build()
+
+        val resizedBitmap = BitmapFactory.decodeFile(File(filePath).absolutePath)
+
+        graphicOverlay!!.clear()
+        graphicOverlay!!.setImageSourceInfo(
+            resizedBitmap.width, resizedBitmap.height, false
+        )
+
+        val objectDetector = ObjectDetection.getClient(options)
+
+        objectDetector.process(image)
+            .addOnSuccessListener { detectedObjects ->
+                for (detectedObject in detectedObjects) {
+                    graphicOverlay.add(ObjectGraphic(graphicOverlay, detectedObject))
+                    if(detectedObject.labels.isNotEmpty()){
+                        Log.d("object Detected!!", detectedObject.labels[0].text)
+                    }
+                }
+                graphicOverlay.postInvalidate()
+            }
+            .addOnFailureListener { e ->
+                Log.d("fail", "fail to process Image")
+            }
     }
 
     companion object{
