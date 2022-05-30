@@ -13,7 +13,7 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-/** Draw the detected object info in preview.  */
+/** graphicOverlay 위에 인식된 물체 정보 표시  */
 class ObjectGraphic constructor(
     overlay: GraphicOverlay,
     private val detectedObject: DetectedObject
@@ -41,7 +41,6 @@ class ObjectGraphic constructor(
     }
 
     override fun draw(canvas: Canvas) {
-        // Decide color based on object tracking ID
         val colorID =
             if (detectedObject.trackingId == null) 0
             else abs(detectedObject.trackingId!! % NUM_COLORS)
@@ -50,7 +49,7 @@ class ObjectGraphic constructor(
         val lineHeight = TEXT_SIZE + STROKE_WIDTH
         var yLabelOffset = -lineHeight
 
-        // Calculate width and height of label box
+        // 라벨 박스의 높이와 너비 계산
         for (label in detectedObject.labels) {
             textWidth =
                 max(textWidth, textPaints[colorID].measureText(label.text))
@@ -67,7 +66,7 @@ class ObjectGraphic constructor(
             yLabelOffset -= 2 * lineHeight
         }
 
-        // Draws the bounding box.
+        // 박스 그리기
         val rect = RectF(detectedObject.boundingBox)
         val x0 = translateX(rect.left)
         val x1 = translateX(rect.right)
@@ -77,7 +76,7 @@ class ObjectGraphic constructor(
         rect.bottom = translateY(rect.bottom)
         canvas.drawRect(rect, boxPaints[colorID])
 
-        // Draws other object info.
+        // 물체 정보 표시
         canvas.drawRect(
             rect.left - STROKE_WIDTH,
             rect.top + yLabelOffset,
@@ -95,6 +94,23 @@ class ObjectGraphic constructor(
         )
         yLabelOffset += lineHeight
         */
+        var category : String = ""
+        when(detectedObject.labels[0].text){
+            "Fashion good"-> category = "패션"
+            "Food" -> category = "음식"
+            "Home good" -> category = "리빙"
+            "place" -> category = "장소"
+            "plant" -> category = "식물"
+        }
+
+        canvas.drawText(
+            category,
+            rect.left,
+            rect.top + yLabelOffset,
+            textPaints[colorID]
+        )
+        /*
+        yLabelOffset += lineHeight
         for (label in detectedObject.labels) {
             canvas.drawText(
                 label.text,
@@ -114,11 +130,10 @@ class ObjectGraphic constructor(
                 textPaints[colorID]
             )
             yLabelOffset += lineHeight
-        }
+        */
 
-        if(detectedObject.labels.isNotEmpty()) {
-            Log.d("draw detected OBJ info", detectedObject.labels[0].text)
-        }
+        Log.d("draw detected OBJ info", detectedObject.labels[0].text)
+
     }
 
     companion object {

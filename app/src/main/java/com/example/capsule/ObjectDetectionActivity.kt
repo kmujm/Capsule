@@ -216,8 +216,9 @@ class ObjectDetectionActivity : AppCompatActivity() {
             .addOnSuccessListener { detectedObjects ->
                 categoryList = mutableListOf(0 /* 패션 */, 0 /* 음식 */, 0 /* 리빙 */, 0 /* 장소 */, 0 /* 식물 */) // 결과값 리셋
                 for (detectedObject in detectedObjects) {
-                    graphicOverlay.add(ObjectGraphic(graphicOverlay, detectedObject))
                     if(detectedObject.labels.isNotEmpty()){
+                        //인식된 물체에 카테고리가 부여된 경우에만 graphicOverlay에 표시
+                        graphicOverlay.add(ObjectGraphic(graphicOverlay, detectedObject))
                         Log.d("object Detected!!", detectedObject.labels[0].text)
                         // 물체 인식 결과값을 넘겨주는 코드
                         when(detectedObject.labels[0].text){
