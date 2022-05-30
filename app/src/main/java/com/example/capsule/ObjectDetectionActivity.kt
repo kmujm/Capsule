@@ -37,6 +37,8 @@ class ObjectDetectionActivity : AppCompatActivity() {
     private var mCurrentPhotoPath = ""
     private lateinit var mCurrentPhotoUri : Uri
 
+    private var isNew = false
+
     private val image : InputImage by lazy{
         InputImage.fromFilePath(this, mCurrentPhotoUri)
     }
@@ -53,8 +55,16 @@ class ObjectDetectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.activity_objectdetection)
 
-        checkPermission()
-        captureCamera()
+        isNew = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(isNew){ // 처음 시작할 경우 카메라 촬영 화면으로 전환
+            isNew = false
+            checkPermission()
+            captureCamera()
+        }
     }
 
     private fun captureCamera(){
