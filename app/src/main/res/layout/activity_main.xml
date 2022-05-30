@@ -66,23 +66,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
+        android:text="Enjoy your capsule life"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greeting"
-        tools:text="Enjoy your capsule life"/>
+        app:layout_constraintTop_toBottomOf="@id/greeting"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/objectDetectionButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/capsule_button_background"
         android:drawableStart="@drawable/camera_icon"
         android:drawableEnd="@drawable/right_icon"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingEnd="20dp"
         android:text="캡슐 만들기"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/subtitle" />
@@ -90,18 +91,41 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/capsuleListButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/capsule_button_background"
         android:drawableStart="@drawable/archive_icon"
         android:drawableEnd="@drawable/right_icon"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingEnd="20dp"
         android:text="내 캡슐 목록"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/objectDetectionButton" />
+
+    <TextView
+        android:id="@+id/recent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="최근 등록"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backgroundImage" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFCC47"
+        app:layout_constraintEnd_toEndOf="@id/recent"
+        app:layout_constraintStart_toStartOf="@id/recent"
+        app:layout_constraintTop_toBottomOf="@id/recent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
