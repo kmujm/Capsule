@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -124,8 +127,9 @@
         android:layout_height="3dp"
         android:layout_marginTop="5dp"
         android:background="#FFCC47"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/recent"
-        app:layout_constraintStart_toStartOf="@id/recent"
-        app:layout_constraintTop_toBottomOf="@id/recent"/>
+        app:layout_constraintStart_toStartOf="@id/recent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
