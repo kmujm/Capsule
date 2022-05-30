@@ -39,6 +39,9 @@ class CapsuleListActivity : AppCompatActivity() {
                         it.value.toString().replace("[", "").replace("]", "").replace(" ", "")
                             .split(",") as MutableList<String>
                     capsuleKey.removeAt(0)    // 맨 앞 null delete
+
+                    // capsule을 추가하면 오름차순으로 정렬되므로 ,capsulekey 순서랑 매핑하기 위헤 capsulekey도 오름차 순으로 정렬해줌
+                    capsuleKey.sort()
                     initValue(uid)
                 }
             }
@@ -60,18 +63,18 @@ class CapsuleListActivity : AppCompatActivity() {
                 CapsuleList.add(CapsuleData(title,date,photoUri))
                 // capsule key 개수만큼 리스트에 저장되었으면 initRecycler 호출
                 if (cnt == capsuleKey.size) {
-                    initRecycler()
+                    initRecycler(uid)
                 }
             }
         }
     }
 
-    private fun initRecycler() {
+    private fun initRecycler(uid:String) {
         // adaper 와 recyclerView 연결
         val recyclerView: RecyclerView by lazy {
             findViewById(R.id.CapsuleList)
         }
-        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList)
+        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList, capsuleKey, uid)
         recyclerView.adapter = capsuleAdapter
 
         // 리사이클러뷰에 스와이프, 드래그 기능 달기

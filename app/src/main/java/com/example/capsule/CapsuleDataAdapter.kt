@@ -3,15 +3,19 @@ package com.example.capsule
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
-class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<CapsuleData>):RecyclerView.Adapter<CapsuleDataAdapter.ItemViewHolder>() {
+class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<CapsuleData>, private val CapsuleKey: MutableList<String>, private val uid: String ):RecyclerView.Adapter<CapsuleDataAdapter.ItemViewHolder>() {
+
     val context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -32,7 +36,16 @@ class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<Ca
 
     // position 위치의 데이터를 삭제 후 어댑터 갱신
     fun removeData(position: Int) {
+        val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = mDatabase.getReference("Users")
         CapsuleList.removeAt(position)
+
+        // 내가 클릭한 위치 = capsuleKey[position] 데이터 삭제
+        Log.i("capsuleKey", CapsuleKey[position])
+
+        myRef.child(uid).child(CapsuleKey[position]).removeValue()
+        myRef.child(uid).child(CapsuleKey[position]).setValue(null)
+
         notifyItemRemoved(position)
     }
 
