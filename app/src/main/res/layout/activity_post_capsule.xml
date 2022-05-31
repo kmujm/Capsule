@@ -92,6 +92,7 @@
       app:layout_constraintTop_toBottomOf="@id/pcImageRecyclerView"
       app:lineColor="@color/edit_text_underline"
       app:lineTextGap="15.0"
+      android:maxLength="10"
       app:lineWidth="1.0" />
 
     <TextView

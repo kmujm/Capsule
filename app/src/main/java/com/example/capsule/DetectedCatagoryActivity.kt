@@ -17,7 +17,7 @@ class DetectedCatagoryActivity : AppCompatActivity(){
     private val engTitleList = mutableListOf<String>(ENG_FASHION, ENG_FOOD, ENG_LIVING, ENG_PLACE, ENG_PLANT)
 
     // 인탠트에서 받아오는 리스트
-    private val list = mutableListOf<Int>(1,4,1,0,0)
+    private val list = mutableListOf<Int>(1,0,0,0,0)
 
     private val cRecyclerView by lazy {
         findViewById<RecyclerView>(R.id.dcCatagoryRecyclerView)
