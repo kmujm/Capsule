@@ -32,12 +32,12 @@ class DetectedCatagoryActivity : AppCompatActivity(){
     }
 
     private val detectedImageView by lazy {
-        findViewById<ImageView>(R.id.dcDetectedImageView)
+        findViewById<ImageView>(R.id.picture)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detectedcatagory)
+        setContentView(R.layout.activity_objectdetection)
 
         // 데이터를 받았을때 리팩토링 해야함
 

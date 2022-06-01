@@ -13,7 +13,9 @@ import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.objects.ObjectDetection
@@ -32,12 +36,23 @@ import java.util.*
 
 class ObjectDetectionActivity : AppCompatActivity() {
 
+    private lateinit var cAdapter : CatagoryAdapter
+    private val catagoryList = mutableListOf<CatagoryItem>()
+
+    private val korTitleList = mutableListOf<String>(KOR_FASHION,KOR_FOOD,KOR_LIVING,KOR_PLACE,KOR_PLANT)
+    private val engTitleList = mutableListOf<String>(ENG_FASHION,ENG_FOOD,ENG_LIVING,ENG_PLACE,ENG_PLANT)
+
+
     private var categoryList = mutableListOf(0 /* 패션 */, 0 /* 음식 */, 0 /* 리빙 */, 0 /* 장소 */, 0 /* 식물 */)
 
     private var mCurrentPhotoPath = ""
     private lateinit var mCurrentPhotoUri : Uri
 
     private var isNew = false
+
+    private val backButton by lazy {
+        findViewById<Button>(R.id.dcBackButton)
+    }
 
     private val image : InputImage by lazy{
         InputImage.fromFilePath(this, mCurrentPhotoUri)
@@ -51,11 +66,23 @@ class ObjectDetectionActivity : AppCompatActivity() {
         findViewById(R.id.graphic_overlay)
     }
 
+    private val cRecyclerView by lazy {
+        findViewById<RecyclerView>(R.id.dcCatagoryRecyclerView)
+    }
+
+    private val retryTextButton by lazy {
+        findViewById<TextView>(R.id.dcRetryTextButton)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_objectdetection)
 
         isNew = true
+
+        // 데이터를 받았을때 리팩토링 해야함
+        initRetryTextButton()
+        initBackButton()
     }
 
     override fun onResume() {
@@ -244,14 +271,64 @@ class ObjectDetectionActivity : AppCompatActivity() {
                 }
                 Log.d("object detection result", categoryList.toString())
                 graphicOverlay.postInvalidate()
+                refactoryingIntentData(categoryList)
+                initCatagoryRecyclerView()
             }
             .addOnFailureListener { e ->
                 Log.d("fail", "fail to process Image")
             }
     }
 
+    private fun initBackButton() {
+        backButton.setOnClickListener {
+            finish()
+        }
+    }
+
+    // 어댑터에 넘겨줄 리스트를, 형식에 맞게 전환
+    private fun refactoryingIntentData(list : MutableList<Int>){
+
+        for ( i in 0..4 ) {
+            val item = CatagoryItem(korTitleList[i],engTitleList[i],list[i])
+            catagoryList.add(item)
+        }
+    }
+
+    private fun initCatagoryRecyclerView() {
+        cRecyclerView.layoutManager = LinearLayoutManager(this)
+        // 선택된 카테고리 넘겨줌
+        cAdapter = CatagoryAdapter { selectedCatagory ->
+            val selectedGalleryActivity = Intent(this,MainActivity::class.java)
+            selectedGalleryActivity.putExtra(DetectedCatagoryActivity.INTENT_KEY_SELECTED_CATAGORY,selectedCatagory)
+            startActivity(selectedGalleryActivity)
+        }
+        cRecyclerView.adapter = cAdapter
+        cAdapter.submitList(catagoryList)
+    }
+
+    private fun initRetryTextButton() {
+        retryTextButton.setOnClickListener {
+            finish()
+        }
+    }
+
     companion object{
         var REQUEST_TAKE_PHOTO = 1000
         var MY_PERMISSION_STORAGE = 2000
+
+        // 인텐트 키
+        const val INTENT_KEY_SELECTED_CATAGORY = "selectedCatagory"
+
+        //  카테고리 이름
+        const val KOR_FASHION = "패션"
+        const val KOR_FOOD = "음식"
+        const val KOR_LIVING = "리빙"
+        const val KOR_PLACE = "장소"
+        const val KOR_PLANT = "식물"
+        const val ENG_FASHION = "Fashion goods"
+        const val ENG_FOOD = "Foods"
+        const val ENG_LIVING = "Living"
+        const val ENG_PLACE = "Place"
+        const val ENG_PLANT = "Plants"
     }
 }
