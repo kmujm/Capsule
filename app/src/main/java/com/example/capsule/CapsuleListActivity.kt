@@ -8,6 +8,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
@@ -22,7 +23,6 @@ class CapsuleListActivity : AppCompatActivity() {
     lateinit var date:String     // capsule date
     lateinit var title:String    // capsule title
     lateinit var photoUri: Uri   // capsule detectImage
-    private var registerUri: MutableList<String> = mutableListOf()  // capsule registerImage 배열
     private var capsuleKey: MutableList<String> = mutableListOf()   // capsule key 들만 모아놓은 배열
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,22 +30,20 @@ class CapsuleListActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_capsule_list)
 
-            if (user != null) {
-                var uid = user!!.uid
-                // todo: .child(uid)로 수정
-                myRef.child("asdfifeiofjn1233").child("capsuleKey").get().addOnSuccessListener {
-                    // capsule key 만 모아놓은 리스트 생성
-                    capsuleKey =
-                        it.value.toString().replace("[", "").replace("]", "").replace(" ", "")
-                            .split(",") as MutableList<String>
-                    capsuleKey.removeAt(0)    // 맨 앞 null delete
-
-                    // capsule을 추가하면 오름차순으로 정렬되므로 ,capsulekey 순서랑 매핑하기 위헤 capsulekey도 오름차 순으로 정렬해줌
-                    capsuleKey.sort()
-                    initValue(uid)
+        if (user != null) {
+            var uid = user!!.uid
+            // todo: .child(uid)로 수정
+            // capsule key들만 모아놓은 배열 생성
+            myRef.child("asdfifeiofjn1233").get().addOnSuccessListener {
+                it.children.forEach {
+                    capsuleKey.add(it.key.toString())
                 }
+                // key 배열 중 INFO 삭제
+                capsuleKey.removeAt(0)
+                initValue(uid)
             }
         }
+    }
 
     private fun initValue(uid:String) {
         var cnt = 0

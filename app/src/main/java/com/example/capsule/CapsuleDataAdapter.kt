@@ -40,11 +40,9 @@ class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<Ca
         val myRef: DatabaseReference = mDatabase.getReference("Users")
         CapsuleList.removeAt(position)
 
+        // TODO: 스토리지 이미지 삭제
         // 내가 클릭한 위치 = capsuleKey[position] 데이터 삭제
-        // TODO: 스토리지 이미지 삭제 필요
-        Log.i("capsuleKey", CapsuleKey[position])
         myRef.child("${uid}").child("${CapsuleKey[position]}").removeValue()
-
         notifyItemRemoved(position)
     }
 
@@ -85,7 +83,6 @@ class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<Ca
                 var btnDelete : Button = dlg.findViewById(R.id.delete)
                 btnDelete.setOnClickListener {
                     dlg.dismiss()
-                    // 현재 position의 아이템 삭제
                     removeData(this.layoutPosition)
                 }
                 dlg.show()
