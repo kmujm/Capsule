@@ -298,7 +298,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
         cRecyclerView.layoutManager = LinearLayoutManager(this)
         // 선택된 카테고리 넘겨줌
         cAdapter = CatagoryAdapter { selectedCatagory ->
-            val selectedGalleryActivity = Intent(this,MainActivity::class.java)
+            val selectedGalleryActivity = Intent(this,GetDetectedImageActivity::class.java)
             selectedGalleryActivity.putExtra(DetectedCatagoryActivity.INTENT_KEY_SELECTED_CATAGORY,selectedCatagory)
             startActivity(selectedGalleryActivity)
         }
@@ -325,10 +325,10 @@ class ObjectDetectionActivity : AppCompatActivity() {
         const val KOR_LIVING = "리빙"
         const val KOR_PLACE = "장소"
         const val KOR_PLANT = "식물"
-        const val ENG_FASHION = "Fashion goods"
-        const val ENG_FOOD = "Foods"
-        const val ENG_LIVING = "Living"
+        const val ENG_FASHION = "Fashion good"
+        const val ENG_FOOD = "Food"
+        const val ENG_LIVING = "Home good"
         const val ENG_PLACE = "Place"
-        const val ENG_PLANT = "Plants"
+        const val ENG_PLANT = "Plant"
     }
 }

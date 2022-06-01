@@ -18,7 +18,8 @@
       android:background="@color/secondary"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/dcTitleTextView" />
+      app:layout_constraintTop_toBottomOf="@+id/dcTitleTextView"
+        android:scaleType="fitXY"/>
 
     <com.example.capsule.GraphicOverlay
         android:id="@+id/graphic_overlay"

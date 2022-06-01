@@ -41,10 +41,10 @@ class ImageSelectActivity : AppCompatActivity() {
     private fun initSubmitBtn() {
         submitButton.setOnClickListener {
             Log.d(TAG, "완료 버튼 누름!")
-//            val intent = Intent(this, LoginActivity::class.java)
-//            intent.putStringArrayListExtra("passData",ArrayList(passData))
-//            startActivity(intent)
-//            this.finish()
+            val intent = Intent(this, PostCapsuleActivity::class.java)
+            //intent.putStringArrayListExtra("passData",ArrayList(passData))
+            startActivity(intent)
+            this.finish()
         }
     }
 

@@ -26,7 +26,9 @@ import java.util.jar.Manifest
 
 class GetDetectedImageActivity : Activity() {
     // keyword to detect
-    private val keyword = "Fashion good"
+    private val keyword : String by lazy{
+        intent.getStringExtra(DetectedCatagoryActivity.INTENT_KEY_SELECTED_CATAGORY).toString()
+    }
 
     companion object {
         private const val READ_EXTERNAL_STORAGE_REQUEST = 0x1045
