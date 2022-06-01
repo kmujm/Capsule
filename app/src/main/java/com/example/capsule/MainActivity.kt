@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView

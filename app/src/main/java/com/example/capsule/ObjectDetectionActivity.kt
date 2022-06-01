@@ -51,8 +51,8 @@ class ObjectDetectionActivity : AppCompatActivity() {
         findViewById(R.id.graphic_overlay)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_objectdetection)
 
         isNew = true
@@ -64,6 +64,8 @@ class ObjectDetectionActivity : AppCompatActivity() {
             isNew = false
             checkPermission()
             captureCamera()
+        } else{
+            changePicture(mCurrentPhotoPath)
         }
     }
 
@@ -240,6 +242,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
                         }
                     }
                 }
+                Log.d("object detection result", categoryList.toString())
                 graphicOverlay.postInvalidate()
             }
             .addOnFailureListener { e ->
