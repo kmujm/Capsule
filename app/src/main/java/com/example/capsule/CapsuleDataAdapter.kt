@@ -2,12 +2,14 @@ package com.example.capsule
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
@@ -30,7 +32,7 @@ class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<Ca
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = CapsuleList[position]
         holder.apply {
-            bind(item)
+            bind(item, position)
         }
     }
 
@@ -53,10 +55,19 @@ class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<Ca
 
         private val capsuleRemove = v.findViewById<Button>(R.id.tvRemove)
 
-        fun bind(item: CapsuleData) {
+        fun bind(item: CapsuleData, position: Int) {
             Glide.with(itemView).load(item.photo).into(capsulePhoto);
             capsuleTitle.text = item.title
             capsuleDate.text = item.date
+
+            // capsule 클릭하면 캡슐 보여주는 액티비티로 이동
+            capsulePhoto.setOnClickListener {
+                val intent= Intent(context, ShowCapsuleActivity::class.java)
+                // capsule key 전달
+                Log.i("AdapterKey", "${CapsuleKey[position]}")
+                intent.putExtra("capsuleKey", "${CapsuleKey[position]}")
+                context.startActivity(intent)
+            }
 
             // 쓰레기통 버튼 클릭
             capsuleRemove.setOnClickListener {

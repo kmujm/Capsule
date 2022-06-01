@@ -1,8 +1,10 @@
 package com.example.capsule
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -27,8 +29,8 @@ class CapsuleListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_capsule_list)
+
 
         if (user != null) {
             var uid = user!!.uid
