@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+      android:id="@+id/pcBackButton"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginStart="18dp"
+      android:layout_marginTop="44dp"
+      android:background="@drawable/back_button"
+      app:backgroundTint="@null"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/pcTitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="55dp"
+      android:layout_marginTop="40dp"
+      android:text="@string/string_make_capsule"
+      android:textColor="@color/black"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+      android:id="@+id/pcTitleEditText"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:layout_marginEnd="23dp"
+      android:background="@android:color/transparent"
+      android:hint="@string/string_pc_title_hint"
+      android:textColor="@color/black"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/pcBackButton"
+      app:layout_constraintTop_toBottomOf="@id/pcTitleTextView" />
+
+    <TextView
+      android:id="@+id/pcPostedDateTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="9dp"
+      android:textColor="@color/black_half_transparent"
+      android:textSize="12sp"
+      app:layout_constraintStart_toStartOf="@id/pcTitleEditText"
+      app:layout_constraintTop_toBottomOf="@id/pcTitleEditText"
+      android:text="2022.05.13" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/pcImageRecyclerView"
+      android:paddingStart="0dp"
+      android:paddingEnd="0dp"
+      android:layout_width="0dp"
+      android:layout_height="160dp"
+      android:layout_marginTop="33dp"
+      android:scrollbarFadeDuration="0"
+      android:scrollbars="horizontal"
+      android:scrollbarSize="6dp"
+      android:scrollbarThumbHorizontal="@drawable/scrollbar_recycler_size_color"
+      app:layout_constraintEnd_toEndOf="@id/pcTitleEditText"
+      app:layout_constraintStart_toStartOf="@id/pcTitleEditText"
+      app:layout_constraintTop_toBottomOf="@id/pcPostedDateTextView" />
+
+    <com.shivampip.LinedEditText
+      android:id="@+id/pcPostEditText"
+      android:layout_width="0dp"
+      android:layout_height="262dp"
+      android:layout_marginTop="33dp"
+      android:background="@drawable/edittext_custom_round_bg"
+      android:gravity="top"
+      android:hint="@string/string_post_edit_text_hint"
+      android:padding="10dp"
+      android:textColor="@color/black"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="@id/pcTitleEditText"
+      app:layout_constraintStart_toStartOf="@id/pcTitleEditText"
+      app:layout_constraintTop_toBottomOf="@id/pcImageRecyclerView"
+      app:lineColor="@color/edit_text_underline"
+      app:lineTextGap="15.0"
+      android:maxLength="250"
+      app:lineWidth="1.0" />
+
+    <TextView
+      android:id="@+id/pcCountTextTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:textColor="@color/icon_transparnet_half"
+      android:textSize="12sp"
+      app:layout_constraintEnd_toEndOf="@id/pcPostEditText"
+      app:layout_constraintTop_toBottomOf="@id/pcPostEditText"
+      android:text="0/250" />
+
+    <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/pcSubmitAppCompatButton"
+      android:layout_width="0dp"
+      android:layout_height="40dp"
+      android:layout_marginStart="32dp"
+      android:layout_marginTop="66dp"
+      android:layout_marginEnd="32dp"
+      android:layout_marginBottom="92dp"
+      android:background="@drawable/activate_button_background"
+      android:backgroundTint="@color/primary"
+      android:text="@string/string_button_complete"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/pcCountTextTextView" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

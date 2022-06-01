@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:id="@+id/picture"
+      android:layout_width="0dp"
+      android:layout_height="406dp"
+        android:layout_marginTop="20dp"
+      android:background="@color/secondary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dcTitleTextView" />
+
+    <com.example.capsule.GraphicOverlay
+        android:id="@+id/graphic_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/picture"
+        app:layout_constraintEnd_toEndOf="@+id/picture"
+        app:layout_constraintStart_toStartOf="@+id/picture"
+        app:layout_constraintTop_toTopOf="@+id/picture"/>
+
+    <Button
+      android:id="@+id/dcBackButton"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginStart="18dp"
+      android:layout_marginTop="44dp"
+      android:background="@drawable/back_white_button"
+      app:backgroundTint="@color/black"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dcTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/string_make_capsule"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/dcSubtitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="31dp"
+      android:layout_marginTop="40dp"
+      android:text="@string/string_dc_subTitle"
+      android:textColor="@color/black"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/picture" />
+
+    <TextView
+      android:id="@+id/dcTouchkeywordmsgTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="@string/string_dc_message"
+      android:textColor="@color/black"
+      app:layout_constraintStart_toStartOf="@id/dcSubtitleTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcSubtitleTextView" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/dcCatagoryRecyclerView"
+      android:layout_width="0dp"
+      android:layout_height="360dp"
+      android:layout_marginTop="33dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/dcTouchkeywordmsgTextView" />
+
+    <TextView
+      android:id="@+id/endTitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="41dp"
+      android:text="@string/string_dc_endtitle"
+      android:textColor="@color/black_half_transparent"
+      android:textSize="14sp"
+      app:layout_constraintStart_toStartOf="@id/dcSubtitleTextView"
+      app:layout_constraintTop_toBottomOf="@id/dcCatagoryRecyclerView" />
+
+    <TextView
+      android:id="@+id/dcRetryTextButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:layout_marginBottom="56dp"
+      android:text="@string/string_dc_retry"
+      android:textColor="@color/black"
+      android:textSize="14sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="@id/endTitleTextView"
+      app:layout_constraintTop_toBottomOf="@id/endTitleTextView" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
