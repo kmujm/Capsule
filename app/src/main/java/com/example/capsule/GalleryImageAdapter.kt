@@ -1,6 +1,9 @@
 package com.example.capsule
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.media.Image
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,11 +18,11 @@ import com.bumptech.glide.Glide
 
 class GalleryImageAdapter(
     private val context: Context,
-    private val mData: ArrayList<String>
+    private val mData: MutableList<ImageData>,
+
 ) :
     RecyclerView.Adapter<GalleryImageAdapter.ViewHolder>() {
     private val uriArrayList = mData
-    private val itemSelectedList = mutableListOf<String>()
 
     inner class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -37,12 +40,12 @@ class GalleryImageAdapter(
     }
 
     override fun onBindViewHolder(holder: GalleryImageAdapter.ViewHolder, position: Int) {
-        if (uriArrayList?.get(position) == "1") {
+        if (uriArrayList[position].contentUri == "1") {
             Glide.with(holder.imageView).load(R.drawable.ic_gallery_btn)
                 .into(holder.imageView)
         } else {
             Glide.with(holder.imageView)
-                .load(uriArrayList?.get(position))
+                .load(uriArrayList[position].contentUri)
                 .thumbnail(0.33f)
                 .centerCrop()
                 .into(holder.imageView)
@@ -54,9 +57,15 @@ class GalleryImageAdapter(
         }
     }
 
-    private fun selectItem(holder: GalleryImageAdapter.ViewHolder, item: String, position: Int) {
-        itemSelectedList.add(uriArrayList[position])
-        Log.d("와 안되누", itemSelectedList.toString())
+    private fun selectItem(holder: GalleryImageAdapter.ViewHolder, item: ImageData, position: Int) {
+        if (item.selected) {
+            item.selected = false
+            holder.imageView.clearColorFilter()
+        } else {
+            item.selected = true
+            holder.imageView.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+        }
+        Log.d("제발 원하는대로 좀 해주라...", uriArrayList.toString())
 
 
     }
