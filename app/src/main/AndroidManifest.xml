@@ -14,6 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Capsule">
+        <activity
+            android:name=".GetDetectedImageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ImageSelectActivity"
+            android:exported="true" />
       
         <meta-data
             android:name="com.google.android.actions"
@@ -33,6 +39,12 @@
             android:exported="false" />
         <activity
             android:name=".SettingActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".LoginActivity"
             android:exported="true"/>
         <activity
             android:name=".EditProfileActivity"
@@ -46,7 +58,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity" />
         <activity android:name=".ObjectDetectionActivity" />
       
         <activity
