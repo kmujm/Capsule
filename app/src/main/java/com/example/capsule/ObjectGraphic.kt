@@ -44,27 +44,9 @@ class ObjectGraphic constructor(
         val colorID =
             if (detectedObject.trackingId == null) 0
             else abs(detectedObject.trackingId!! % NUM_COLORS)
-        var textWidth =
-            textPaints[colorID].measureText("Tracking ID: " + detectedObject.trackingId)
+        val textWidth = textPaints[colorID].measureText("패션")
         val lineHeight = TEXT_SIZE + STROKE_WIDTH
         var yLabelOffset = -lineHeight
-
-        // 라벨 박스의 높이와 너비 계산
-        for (label in detectedObject.labels) {
-            textWidth =
-                max(textWidth, textPaints[colorID].measureText(label.text))
-            textWidth = max(
-                textWidth,
-                textPaints[colorID].measureText(
-                    String.format(
-                        Locale.US,
-                        LABEL_FORMAT,
-                        label.confidence * 100
-                    )
-                )
-            )
-            yLabelOffset -= 2 * lineHeight
-        }
 
         // 박스 그리기
         val rect = RectF(detectedObject.boundingBox)
