@@ -22,7 +22,6 @@ class EditProfileActivity : AppCompatActivity() {
     private val db : FirebaseFirestore = Firebase.firestore
     private lateinit var auth: FirebaseAuth
 
-
     private val backButton : ImageButton by lazy{
         findViewById(R.id.back_button)
     }

@@ -59,4 +59,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //깃허브 EditText노트패드 라이브러리
+//    implementation 'com.github.Sanaebadi97:NotePad:1.0.0'
+    implementation 'com.github.shivampip:LinedEditText:6e5e019dee'
 }

@@ -16,4 +16,12 @@
     <color name="BG_gray">#EEEDEC</color>
     <color name="BG">#F8F7F6</color>
     <color name="secondary">#8D7661</color>
+    <color name="black_half_transparent">#80000000</color>
+    <color name="white_half_transparnet">#80FFFFFF</color>
+    <color name="catagory_icon_brown">#926033</color>
+    <color name="icon_transparnet_half">#802E2E2E</color>
+    <color name="edit_text_underline">#D6D6D6</color>
+    <color name="edit_text_color">#4D2E2E2E</color>
+    <color name="main_image_wrapper_gradaion">#7C7C7C</color>
+
 </resources>
