@@ -74,7 +74,8 @@ class CapsuleListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView by lazy {
             findViewById(R.id.CapsuleList)
         }
-        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList, capsuleKey, uid)
+        // TODO: uid 전달로 변경
+        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList, capsuleKey, "asdfifeiofjn1233")
         recyclerView.adapter = capsuleAdapter
 
         // 리사이클러뷰에 스와이프, 드래그 기능 달기
