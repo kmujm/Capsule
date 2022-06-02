@@ -84,6 +84,8 @@ class DetectedCatagoryActivity : AppCompatActivity(){
 
     private fun initRetryTextButton() {
         retryTextButton.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }

@@ -183,15 +183,17 @@ class PostCapsuleActivity : AppCompatActivity() {
                     // 파일 업로드 성공 시
                     storage.reference.child("object/photo").child(fileName).downloadUrl
                         .addOnSuccessListener { url ->
-                            Log.d(LOG, "url  : ${url}")
+                            Log.d(LOG, "스토리지 업로드 성공 : ${index}")
                             uploadURLList.add(url.toString())
                             if( index == imageListFromIntent.size -1 ) {
+                                // 마지막이면 리얼타임디비에 업로드해야함
                                 mSuccessHandler()
                             }
                         }
                 } else {
                     // 파일 업로드 실패 시
                     mErrorHandler()
+                    Log.d(LOG, "스토리지 업로드 실패 : ${index}")
                 }
             }
         // 여기서 이미지 업로드에 성공하면, 컴플리트 리스너를 달아주고 그 안에서 성공 콜백함수 실행 !
@@ -206,7 +208,7 @@ class PostCapsuleActivity : AppCompatActivity() {
         // push로 키값을 한번에 주기 때문에, 데이터들을 묶어서 업로드 해야하기 때문에 익명객체 생성 후 업로드
         val parseRegisterImage = mutableListOf<String>()
         uploadURLList.forEachIndexed { index, item ->
-            if(index == 0 ) {}
+            if(index == 0 ) {/* 0번은 메인이미지이거든~~ */}
             else {
                 parseRegisterImage.add(item)
             }
@@ -241,9 +243,9 @@ class PostCapsuleActivity : AppCompatActivity() {
         progressBar.isGone = false
         progressBar.isVisible = true
 
-        // 배경 어둡게
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-            WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        // 배경 어둡게 이거 어떻게 함
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
+//            WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         // 레이아웃 터치 막기
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
@@ -254,8 +256,8 @@ class PostCapsuleActivity : AppCompatActivity() {
 
         // 레이아웃 터치 풀기
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        // 배경 어둡게 풀기
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+        // 배경 어둡게 풀기 이거 어떻게 함
+//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
 
 
 
