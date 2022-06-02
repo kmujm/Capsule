@@ -2,9 +2,11 @@
 
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/pcMainLayout"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
+
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -54,24 +56,24 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="9dp"
+      android:text="2022.05.13"
       android:textColor="@color/black_half_transparent"
       android:textSize="12sp"
       app:layout_constraintStart_toStartOf="@id/pcTitleEditText"
-      app:layout_constraintTop_toBottomOf="@id/pcTitleEditText"
-      android:text="2022.05.13" />
+      app:layout_constraintTop_toBottomOf="@id/pcTitleEditText" />
 
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/pcImageRecyclerView"
-      android:paddingStart="0dp"
-      android:paddingEnd="0dp"
       android:layout_width="0dp"
       android:layout_height="160dp"
       android:layout_marginTop="33dp"
+      android:paddingStart="0dp"
+      android:paddingEnd="0dp"
       android:scrollbarFadeDuration="0"
-      android:scrollbars="horizontal"
       android:scrollbarSize="6dp"
       android:scrollbarThumbHorizontal="@drawable/scrollbar_recycler_size_color"
+      android:scrollbars="horizontal"
       app:layout_constraintEnd_toEndOf="@id/pcTitleEditText"
       app:layout_constraintStart_toStartOf="@id/pcTitleEditText"
       app:layout_constraintTop_toBottomOf="@id/pcPostedDateTextView" />
@@ -84,6 +86,7 @@
       android:background="@drawable/edittext_custom_round_bg"
       android:gravity="top"
       android:hint="@string/string_post_edit_text_hint"
+      android:maxLength="250"
       android:padding="10dp"
       android:textColor="@color/black"
       android:textSize="16sp"
@@ -92,7 +95,6 @@
       app:layout_constraintTop_toBottomOf="@id/pcImageRecyclerView"
       app:lineColor="@color/edit_text_underline"
       app:lineTextGap="15.0"
-      android:maxLength="250"
       app:lineWidth="1.0" />
 
     <TextView
@@ -100,11 +102,11 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="10dp"
+      android:text="0/250"
       android:textColor="@color/icon_transparnet_half"
       android:textSize="12sp"
       app:layout_constraintEnd_toEndOf="@id/pcPostEditText"
-      app:layout_constraintTop_toBottomOf="@id/pcPostEditText"
-      android:text="0/250" />
+      app:layout_constraintTop_toBottomOf="@id/pcPostEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/pcSubmitAppCompatButton"
@@ -123,6 +125,16 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/pcCountTextTextView" />
+
+    <ProgressBar
+      android:id="@+id/pcProgressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 
   </androidx.constraintlayout.widget.ConstraintLayout>

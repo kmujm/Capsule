@@ -6,12 +6,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +26,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.shivampip.LinedEditText
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,6 +38,8 @@ class PostCapsuleActivity : AppCompatActivity() {
     private lateinit var nowTime: String
     private lateinit var db: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var mainImageFromIntent : String
+    private lateinit var imageListFromIntent : MutableList<ImageItem>
 
     private val imageRecyclerView by lazy { findViewById<RecyclerView>(R.id.pcImageRecyclerView) }
     private val nowTimeTextView by lazy { findViewById<TextView>(R.id.pcPostedDateTextView) }
@@ -37,6 +47,13 @@ class PostCapsuleActivity : AppCompatActivity() {
     private val titleEditText by lazy { findViewById<EditText>(R.id.pcTitleEditText) }
     private val countTextView by lazy { findViewById<TextView>(R.id.pcCountTextTextView) }
     private val submitButton by lazy { findViewById<AppCompatButton>(R.id.pcSubmitAppCompatButton) }
+    private val progressBar by lazy { findViewById<ProgressBar>(R.id.pcProgressBar) }
+    private val mainLayout by lazy { findViewById<NestedScrollView>(R.id.pcMainLayout) }
+    private val storage by lazy {
+        Firebase.storage
+    }
+
+    private val uploadURLList = mutableListOf<String>()
 
 
     private val LOG = "PostCapsuleActivity"
@@ -44,21 +61,16 @@ class PostCapsuleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_capsule)
-        // 정민 데이터 전달 확인 해본 코드
-        val mData = intent.getStringArrayListExtra("passData")
-        Log.d("받아온 값", mData.toString())
-
-
-        // TODO 내가 넘겨받았다고 가정하는 데이터
-        // 메인이미지uri와, 서브 이미지uri, -> 뭐가 메인이고 뭐가 서브인지 구분되게 들어와야함
-        // 선택한 카테고리
 
         // db and auth init
         // TODO auth 널체크후, db 레퍼런스 잡아주기
         db = Firebase.database.reference.child("Users").child(GET_AUTH_ID)
         auth = Firebase.auth
 
-
+        // TODO 내가 넘겨받았다고 가정하는 데이터
+        // 메인이미지uri와, 서브 이미지uri, -> 뭐가 메인이고 뭐가 서브인지 구분되게 들어와야함
+        // 선택한 카테고리
+        initIntentDataAndList()
         initAndCountText()
         initAndSetNowTime()
         initRecyclerView()
@@ -67,6 +79,29 @@ class PostCapsuleActivity : AppCompatActivity() {
         initSubmitButton()
 
 
+    }
+
+    private fun initIntentDataAndList() {
+//        uploadURLList.clear()
+        // 받아온 인탠트 리스트 만들어주기
+        val mData = intent.getStringArrayListExtra("passData")
+        Log.d("받아온 값", mData.toString())
+        // 메인 이미지 가져왔다는 가정
+        mainImageFromIntent = mData.let{
+            it!!.first()
+        }
+        // TODO 메인 이미지를 먼저 추가해줌
+        imageListFromIntent = mutableListOf()
+        imageListFromIntent.add(ImageItem(mainImageFromIntent,true))
+
+        // 서브 이미지 추가
+        mData?.let{ list ->
+            list.forEach {
+                imageListFromIntent.add(
+                    ImageItem(it,false)
+                )
+            }
+        }
     }
 
     private fun initAndCountText() {
@@ -100,16 +135,7 @@ class PostCapsuleActivity : AppCompatActivity() {
         }
         iAdapter = ImageAdpater()
         imageRecyclerView.adapter = iAdapter
-
-        val dummyData = mutableListOf<ImageItem>(
-            ImageItem("1", true),
-            ImageItem("1", false),
-            ImageItem("1", false),
-            ImageItem("1", false),
-            ImageItem("1", false),
-            ImageItem("1", false)
-        )
-        iAdapter.submitList(dummyData)
+        iAdapter.submitList(imageListFromIntent)
     }
 
     private fun initSubmitButton() {
@@ -126,23 +152,50 @@ class PostCapsuleActivity : AppCompatActivity() {
 //                startActivity(intent)
 //                finish()
 //            }
-
+            startProgressBar()
             if (titleEditText.text.isNullOrBlank()) {
                 Toast.makeText(this, "제목을 입력해 주세요", Toast.LENGTH_SHORT).show()
             } else {
-                uploadImageToStorage(
-                    mSuccessHandler = { uploadToRealTimeDB() },
-                    mErrorHandler = {
-                        Toast.makeText(this, "사진 저장에 실패 했습니다", Toast.LENGTH_SHORT).show()
-                    })
+                imageListFromIntent.forEachIndexed { index, imageItem ->
+                    Log.d(LOG, "imageListFromIntent for each Called ${it}")
+                    uploadImageToStorage( index,imageItem.uri,
+                        mSuccessHandler = {
+                            uploadToRealTimeDB()
+                                          },
+                        mErrorHandler = {
+                            Toast.makeText(this, "사진 저장에 실패 했습니다", Toast.LENGTH_SHORT).show()
+                        })
+                }
+
+
             }
         }
     }
 
-    private fun uploadImageToStorage(mSuccessHandler: () -> Unit, mErrorHandler: () -> Unit) {
+    private fun uploadImageToStorage( index : Int, stringURI : String, mSuccessHandler: () -> Unit, mErrorHandler: () -> Unit) {
         Log.d(LOG, "uploadImageToStorage called !!")
+        val fileName = "${GET_AUTH_ID}_${System.currentTimeMillis()}"
+        storage.reference.child("object/photo").child(fileName)
+            .putFile(stringURI.toUri())
+            .addOnCompleteListener{
+                if (it.isSuccessful) {
+                    Log.d(LOG, "isSuccessful !")
+                    // 파일 업로드 성공 시
+                    storage.reference.child("object/photo").child(fileName).downloadUrl
+                        .addOnSuccessListener { url ->
+                            Log.d(LOG, "url  : ${url}")
+                            uploadURLList.add(url.toString())
+                            if( index == imageListFromIntent.size -1 ) {
+                                mSuccessHandler()
+                            }
+                        }
+                } else {
+                    // 파일 업로드 실패 시
+                    mErrorHandler()
+                }
+            }
         // 여기서 이미지 업로드에 성공하면, 컴플리트 리스너를 달아주고 그 안에서 성공 콜백함수 실행 !
-        mSuccessHandler()
+
 
     }
 
@@ -151,6 +204,14 @@ class PostCapsuleActivity : AppCompatActivity() {
         // categoty , content, date, detectImage(메인), registerImage(서브), title
         Log.d(LOG, "uploadToDB Called!!")
         // push로 키값을 한번에 주기 때문에, 데이터들을 묶어서 업로드 해야하기 때문에 익명객체 생성 후 업로드
+        val parseRegisterImage = mutableListOf<String>()
+        uploadURLList.forEachIndexed { index, item ->
+            if(index == 0 ) {}
+            else {
+                parseRegisterImage.add(item)
+            }
+        }
+
         val forUploadObject = object {
             val content = editText.text.toString()
             val title = titleEditText.text.toString()
@@ -160,10 +221,44 @@ class PostCapsuleActivity : AppCompatActivity() {
             val category = "Fashion goods"
 
             // 인탠트로 받아온 이미지 url 넣어주기
-            val detectImage = "main-image-URL"
-            val registerImage = mutableListOf<String>("url123", "url1234", "url1234")
+            val detectImage = uploadURLList[0].toString()
+            val registerImage = parseRegisterImage
         }
-        db.push().setValue(forUploadObject)
+        db.push().setValue(forUploadObject).addOnCompleteListener {
+            if(it.isSuccessful) {
+                Toast.makeText(this,"캡슐 저장에 성공했습니다",Toast.LENGTH_SHORT).show()
+            }else {
+                Toast.makeText(this,"캡슐 저장에 실패했습니다",Toast.LENGTH_SHORT).show()
+            }
+            stopProgressBar()
+        }
+
+
+
+    }
+
+    private fun startProgressBar() {
+        progressBar.isGone = false
+        progressBar.isVisible = true
+
+        // 배경 어둡게
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
+            WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        // 레이아웃 터치 막기
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+    }
+
+    private fun stopProgressBar() {
+        progressBar.isGone = true
+
+        // 레이아웃 터치 풀기
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        // 배경 어둡게 풀기
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+
+
+
 
     }
 
