@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : ArrayList<RecentCapsuleItem>) : RecyclerView.Adapter<RecentCapsuleAdapter.CustomViewHolder>(){
+class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : MutableList<RecentCapsuleItem>) : RecyclerView.Adapter<RecentCapsuleAdapter.CustomViewHolder>(){
 
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val capsuleDate = itemView.findViewById<TextView>(R.id.capsule_date)

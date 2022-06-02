@@ -11,8 +11,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+
+    private val recentCapsuleList = mutableListOf<RecentCapsuleItem>() // 최근 등록 캡슐들을 저장하는 리스트
 
     val alarmButton : ImageButton by lazy{
         findViewById(R.id.alarm)
@@ -54,6 +58,14 @@ class MainActivity : AppCompatActivity() {
         greeting.text = spannableString
 
         initObjectDetectionButton()
+
+        val rv_recentCapsule :RecyclerView = findViewById(R.id.rv_recentCapsule)
+
+        rv_recentCapsule.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        rv_recentCapsule.setHasFixedSize(true)
+
+        val mAdapter = RecentCapsuleAdapter(this, recentCapsuleList)
+        rv_recentCapsule.adapter = mAdapter
     }
 
     private fun initObjectDetectionButton(){
