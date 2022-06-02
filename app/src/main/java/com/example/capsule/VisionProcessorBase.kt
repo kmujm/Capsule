@@ -9,8 +9,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.GuardedBy
 import androidx.annotation.RequiresApi
-import androidx.camera.core.ExperimentalGetImage
-import androidx.camera.core.ImageProxy
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task

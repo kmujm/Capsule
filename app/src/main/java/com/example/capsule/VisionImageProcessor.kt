@@ -1,7 +1,6 @@
 package com.example.capsule
 
 import android.graphics.Bitmap
-import androidx.camera.core.ImageProxy
 import com.google.mlkit.common.MlKitException
 import java.nio.ByteBuffer
 

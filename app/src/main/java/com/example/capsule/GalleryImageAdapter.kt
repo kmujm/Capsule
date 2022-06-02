@@ -3,30 +3,39 @@ package com.example.capsule
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.media.Image
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
-import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class GalleryImageAdapter(
     private val context: Context,
     private val mData: MutableList<ImageData>,
-
 ) :
     RecyclerView.Adapter<GalleryImageAdapter.ViewHolder>() {
     private val uriArrayList = mData
 
-    inner class ViewHolder(itemView: View) :
+    private lateinit var mListener: onItemClickListener
+
+    interface onItemClickListener {
+        fun onItemClick(position: Int, holder: ImageView)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        mListener = listener
+    }
+
+    inner class ViewHolder(itemView: View, listener: onItemClickListener) :
         RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.image_adapter)
+
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition, imageView)
+            }
+        }
 
     }
 
@@ -36,7 +45,7 @@ class GalleryImageAdapter(
     ): GalleryImageAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.gallery_image_adapter, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(v, mListener)
     }
 
     override fun onBindViewHolder(holder: GalleryImageAdapter.ViewHolder, position: Int) {
@@ -50,24 +59,6 @@ class GalleryImageAdapter(
                 .centerCrop()
                 .into(holder.imageView)
         }
-
-        val item = uriArrayList[position]
-        holder.imageView.setOnClickListener {
-            selectItem(holder, item, position)
-        }
-    }
-
-    private fun selectItem(holder: GalleryImageAdapter.ViewHolder, item: ImageData, position: Int) {
-        if (item.selected) {
-            item.selected = false
-            holder.imageView.clearColorFilter()
-        } else {
-            item.selected = true
-            holder.imageView.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
-        }
-        Log.d("제발 원하는대로 좀 해주라...", uriArrayList.toString())
-
-
     }
 
     override fun getItemCount(): Int {
