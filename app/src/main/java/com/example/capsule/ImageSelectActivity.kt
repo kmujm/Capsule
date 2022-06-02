@@ -1,14 +1,15 @@
 package com.example.capsule
 
 import android.content.Intent
-import android.media.Image
+import android.graphics.Color
+import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.util.ArrayList
 
 class ImageSelectActivity : AppCompatActivity() {
     val TAG = "ImageSelectActivity"
@@ -33,9 +34,32 @@ class ImageSelectActivity : AppCompatActivity() {
         }
         passData.add(mData.toString())
         initView()
-        selectImage()
         initSubmitBtn()
+        selectImage()
 
+    }
+
+    private fun selectImage() {
+        mAdapter.setOnItemClickListener(object : GalleryImageAdapter.onItemClickListener {
+            override fun onItemClick(position: Int, holder: ImageView) {
+                if (position == 0) {
+                    //갤러리로
+                } else {
+                    if (ImageList[position].selected) {
+                        ImageList[position].selected = false
+                        holder.clearColorFilter()
+                    } else {
+                        ImageList[position].selected = true
+                        holder.setColorFilter(
+                            Color.parseColor("#BDBDBD"),
+                            PorterDuff.Mode.MULTIPLY
+                        )
+                    }
+
+                }
+            }
+
+        })
     }
 
     private fun initSubmitBtn() {
@@ -57,8 +81,6 @@ class ImageSelectActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 2)
     }
 
-    private fun selectImage() {
-    }
 }
 
 
