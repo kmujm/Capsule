@@ -2,6 +2,7 @@ package com.example.capsule
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
@@ -13,34 +14,45 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var database : DatabaseReference
+    private lateinit var userId : String
+
     private val recentCapsuleList = mutableListOf<RecentCapsuleItem>() // 최근 등록 캡슐들을 저장하는 리스트
 
-    val alarmButton : ImageButton by lazy{
+    private val alarmButton : ImageButton by lazy{
         findViewById(R.id.alarm)
     }
 
-    val mainPageButton : ImageButton by lazy{
+    private val mainPageButton : ImageButton by lazy{
         findViewById(R.id.mainPage)
     }
 
-    val settingButton : ImageButton by lazy{
+    private val settingButton : ImageButton by lazy{
         findViewById(R.id.settings)
     }
 
-    val greeting : TextView by lazy{
+    private val greeting : TextView by lazy{
         findViewById(R.id.greeting)
     }
 
-    var username = "USERNAME" // 임시 사용
+    private lateinit var username :String
 
-    val objectDetectionButton : Button by lazy{
+    private val objectDetectionButton : Button by lazy{
         findViewById(R.id.objectDetectionButton)
     }
 
-    val CapsuleListButton : Button by lazy{
+    private val CapsuleListButton : Button by lazy{
         findViewById(R.id.capsuleListButton)
     }
 
@@ -48,24 +60,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val content = "${username} 님,\n오늘도 캡슐하세요!"
-        val spannableString = SpannableString(content)
-        val start_idx = 0
-        val end_idx = username.length
+        database = Firebase.database.reference
 
-        spannableString.setSpan(StyleSpan(Typeface.BOLD), start_idx, end_idx, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        greeting.text = spannableString
-
+        initGreeting()
         initObjectDetectionButton()
-
-        val rv_recentCapsule :RecyclerView = findViewById(R.id.rv_recentCapsule)
-
-        rv_recentCapsule.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-        rv_recentCapsule.setHasFixedSize(true)
-
-        val mAdapter = RecentCapsuleAdapter(this, recentCapsuleList)
-        rv_recentCapsule.adapter = mAdapter
+        initRecyclerView()
     }
 
     private fun initObjectDetectionButton(){
@@ -75,5 +74,56 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initGreeting(){
+        val user = Firebase.auth.currentUser
+        if(user != null){
+            userId = Firebase.auth.currentUser!!.uid
+            database.child("Users").child(userId).child("Info").child("nickname").get().addOnSuccessListener {
+                username = it.value.toString()
+            }.addOnFailureListener {
+                Log.d("firebase", "Fail getting user nickname data", it)
+            }
+        } else{
+            username = "USERNAME"
+        }
 
+        val content = "${username} 님,\n오늘도 캡슐하세요!"
+        val spannableString = SpannableString(content)
+        val start_idx = 0
+        val end_idx = username.length
+
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), start_idx, end_idx, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        greeting.text = spannableString
+    }
+
+    private fun initRecyclerView(){
+        val rv_recentCapsule :RecyclerView = findViewById(R.id.rv_recentCapsule)
+
+        rv_recentCapsule.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        rv_recentCapsule.setHasFixedSize(true)
+
+        val mAdapter = RecentCapsuleAdapter(this, recentCapsuleList)
+        rv_recentCapsule.adapter = mAdapter
+
+        val myRef = database.child("Users").child(userId).child("Capsules")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                recentCapsuleList.clear()
+                for(data in p0.children){
+                    val pictureList = mutableListOf<Uri>()
+                    p0.child("registerImage").children.forEach(){
+                        pictureList.add(it as Uri)
+                    }
+                    val capsule = RecentCapsuleItem(data.child("date").value.toString(), data.child("title").value.toString(), pictureList, data.child("date").key.toString())
+                    recentCapsuleList.add(capsule)
+                }
+                mAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("firebase", "캡슐을 가져오는데 실패했습니다.")
+            }
+        })
+    }
 }

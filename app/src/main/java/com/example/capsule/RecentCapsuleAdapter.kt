@@ -24,14 +24,15 @@ class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : Muta
         return CustomViewHolder(view).apply{
             itemView.setOnClickListener {
                 // TODO 누르면 화면 전환
+                // TODO 2. 캡슐 보기 화면으로 인텐트에 캡슐키 담아 전환
             }
         }
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.capsuleDate.text = RecentCapsuleList.get(position).capsuleDate.toString()
+        holder.capsuleDate.text = RecentCapsuleList.get(position).capsuleDate
         holder.capsuleTitle.text = RecentCapsuleList.get(position).capsuleTitle
-        holder.morePicture.text = "+$RecentCapsuleList.get(position).pictureList.size"
+        holder.morePicture.text = "+${RecentCapsuleList.get(position).pictureList.size-3}"
         holder.img1.setImageURI(RecentCapsuleList.get(position).pictureList[0])
         holder.img2.setImageURI(RecentCapsuleList.get(position).pictureList[1])
         holder.img3.setImageURI(RecentCapsuleList.get(position).pictureList[2])

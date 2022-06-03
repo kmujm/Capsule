@@ -4,7 +4,8 @@ import android.net.Uri
 import java.util.*
 
 data class RecentCapsuleItem (
-    val capsuleDate : Date,
+    val capsuleDate : String,
     val capsuleTitle : String,
-    val pictureList : MutableList<Uri>
+    val pictureList : MutableList<Uri>,
+    val capsuleKey : String
     )
