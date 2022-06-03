@@ -1,5 +1,6 @@
 package com.example.capsule
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
@@ -8,13 +9,9 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -23,6 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -48,7 +48,7 @@ class PostCapsuleActivity : AppCompatActivity() {
     private val countTextView by lazy { findViewById<TextView>(R.id.pcCountTextTextView) }
     private val submitButton by lazy { findViewById<AppCompatButton>(R.id.pcSubmitAppCompatButton) }
     private val progressBar by lazy { findViewById<ProgressBar>(R.id.pcProgressBar) }
-    private val mainLayout by lazy { findViewById<NestedScrollView>(R.id.pcMainLayout) }
+    private val backButton by lazy { findViewById<Button>(R.id.pcBackButton)}
     private val storage by lazy {
         Firebase.storage
     }
@@ -74,11 +74,20 @@ class PostCapsuleActivity : AppCompatActivity() {
         initAndCountText()
         initAndSetNowTime()
         initRecyclerView()
+        initBackButton()
 
         // TODO 저장 버튼 눌렀을때 해야 할 것 -> IMAGE 푸시해서 url 받아오기 성공시
         initSubmitButton()
 
 
+    }
+
+    private fun initBackButton() {
+        backButton.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun initIntentDataAndList() {
@@ -226,14 +235,28 @@ class PostCapsuleActivity : AppCompatActivity() {
             val detectImage = uploadURLList[0].toString()
             val registerImage = parseRegisterImage
         }
-        db.push().setValue(forUploadObject).addOnCompleteListener {
+        val newCapusuleKey = db.push().key.toString()
+        Log.d(LOG,newCapusuleKey)
+        db.child(newCapusuleKey).setValue(forUploadObject).addOnCompleteListener {
             if(it.isSuccessful) {
+                Log.d(LOG,"push Successful, it : ${it}")
                 Toast.makeText(this,"캡슐 저장에 성공했습니다",Toast.LENGTH_SHORT).show()
+
+                //TODO 다은이랑 합치면 주석 풀기 ==> 추가된 캡슐키 넘겨줌
+//                val intent = Intent(this,ShowCapsuleActivity::class.java)
+//                intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
+//                startActivity(intent)
+//                finish()
+
+
+                stopProgressBar()
             }else {
                 Toast.makeText(this,"캡슐 저장에 실패했습니다",Toast.LENGTH_SHORT).show()
+                stopProgressBar()
             }
-            stopProgressBar()
+
         }
+
 
 
 
@@ -284,6 +307,7 @@ class PostCapsuleActivity : AppCompatActivity() {
 
     companion object {
         const val GET_AUTH_ID = "abcd123123"
+        const val EXTRA_KEY_SHOWCAPSULE = "capsuleKey"
     }
 
 
