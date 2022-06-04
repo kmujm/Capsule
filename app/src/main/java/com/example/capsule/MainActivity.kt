@@ -117,8 +117,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 가져온 캡슐 키로 캡슐을 조회하여 recyclerView에 보여주는 코드
-        for(key in capsuleKey){
+        // 가져온 캡슐 키로 캡슐을 조회하여 recyclerView에 보여주는는 코드
+       for(key in capsuleKey){
             myRef.child(key).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
                     recentCapsuleList.clear()

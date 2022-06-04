@@ -298,8 +298,9 @@ class ObjectDetectionActivity : AppCompatActivity() {
         cRecyclerView.layoutManager = LinearLayoutManager(this)
         // 선택된 카테고리 넘겨줌
         cAdapter = CatagoryAdapter { selectedCatagory ->
-            val selectedGalleryActivity = Intent(this,GetDetectedImageActivity::class.java)
-            selectedGalleryActivity.putExtra(DetectedCatagoryActivity.INTENT_KEY_SELECTED_CATAGORY,selectedCatagory)
+            val selectedGalleryActivity = Intent(this,GetDetectedImageActivity::class.java).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            selectedGalleryActivity.putExtra(INTENT_KEY_SELECTED_CATAGORY,selectedCatagory)
+            selectedGalleryActivity.putExtra(INTENT_KEY_MAIN_IMAGE, mCurrentPhotoUri) // 사용자가 찍은 사진의 uri를 넘겨줌
             startActivity(selectedGalleryActivity)
         }
         cRecyclerView.adapter = cAdapter
@@ -318,6 +319,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
 
         // 인텐트 키
         const val INTENT_KEY_SELECTED_CATAGORY = "selectedCatagory"
+        const val INTENT_KEY_MAIN_IMAGE = "mainImage"
 
         //  카테고리 이름
         const val KOR_FASHION = "패션"
