@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         val capsuleKey = mutableListOf<String>()
         myRef.get().addOnSuccessListener {
             it.children.forEach{
-                if(it.key.toString() != "Info"){
+                if(it.key.toString() != "Info" && capsuleKey.size < 5){
                     capsuleKey.add(it.key.toString())
                 }
             }
