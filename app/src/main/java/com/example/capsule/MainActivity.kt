@@ -106,24 +106,37 @@ class MainActivity : AppCompatActivity() {
         val mAdapter = RecentCapsuleAdapter(this, recentCapsuleList)
         rv_recentCapsule.adapter = mAdapter
 
-        val myRef = database.child("Users").child(userId).child("Capsules")
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                recentCapsuleList.clear()
-                for(data in p0.children){
-                    val pictureList = mutableListOf<Uri>()
-                    p0.child("registerImage").children.forEach(){
-                        pictureList.add(it as Uri)
-                    }
-                    val capsule = RecentCapsuleItem(data.child("date").value.toString(), data.child("title").value.toString(), pictureList, data.child("date").key.toString())
-                    recentCapsuleList.add(capsule)
+        val myRef = database.child("Users").child(userId)
+        // 각 유저 데이터베이스 밑에 존재하는 캡슐 키를 가져오는 코드
+        val capsuleKey = mutableListOf<String>()
+        myRef.get().addOnSuccessListener {
+            it.children.forEach{
+                if(it.key.toString() != "Info"){
+                    capsuleKey.add(it.key.toString())
                 }
-                mAdapter.notifyDataSetChanged()
             }
+        }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("firebase", "캡슐을 가져오는데 실패했습니다.")
-            }
-        })
+        // 가져온 캡슐 키로 캡슐을 조회하여 recyclerView에 보여주는 코드
+        for(key in capsuleKey){
+            myRef.child(key).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot) {
+                    recentCapsuleList.clear()
+                    for(data in p0.children){
+                        val pictureList = mutableListOf<Uri>()
+                        p0.child("registerImage").children.forEach(){
+                            pictureList.add(it as Uri)
+                        }
+                        val capsule = RecentCapsuleItem(data.child("date").value.toString(), data.child("title").value.toString(), pictureList, data.child("date").key.toString())
+                        recentCapsuleList.add(capsule)
+                    }
+                    mAdapter.notifyDataSetChanged()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("firebase", "캡슐을 가져오는데 실패했습니다.")
+                }
+            })
+        }
     }
 }
