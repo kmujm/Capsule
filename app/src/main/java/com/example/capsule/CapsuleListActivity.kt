@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
+import com.google.protobuf.StringValue
 
 class CapsuleListActivity : AppCompatActivity() {
     private var CapsuleList = ArrayList<CapsuleData>()    // recyclerView 에 띄워줄 데이터 저장
@@ -31,18 +32,17 @@ class CapsuleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capsule_list)
 
-
         if (user != null) {
             var uid = user!!.uid
             // todo: .child(uid)로 수정
             // capsule key들만 모아놓은 배열 생성
             myRef.child("asdfifeiofjn1233").get().addOnSuccessListener {
                 it.children.forEach {
-                    capsuleKey.add(it.key.toString())
+                    if (it.key.toString() != "Info") {
+                        capsuleKey.add(it.key.toString())
+                    }
                 }
-                // key 배열 중 INFO 삭제
-                capsuleKey.removeAt(0)
-                initValue(uid)
+                 initValue(uid)
             }
         }
     }
