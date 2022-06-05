@@ -1,14 +1,14 @@
 package com.example.capsule
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 class GalleryImageAdapter(
     private val context: Context,
@@ -20,7 +20,7 @@ class GalleryImageAdapter(
     private lateinit var mListener: onItemClickListener
 
     interface onItemClickListener {
-        fun onItemClick(position: Int, holder: ImageView)
+        fun onItemClick(position: Int, holder: ImageView, check: ImageView)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
@@ -30,10 +30,11 @@ class GalleryImageAdapter(
     inner class ViewHolder(itemView: View, listener: onItemClickListener) :
         RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.image_adapter)
+        val check = itemView.findViewById<ImageView>(R.id.check_icon)
 
         init {
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition, imageView)
+                listener.onItemClick(adapterPosition, imageView, check)
             }
         }
 
@@ -51,12 +52,12 @@ class GalleryImageAdapter(
     override fun onBindViewHolder(holder: GalleryImageAdapter.ViewHolder, position: Int) {
         if (uriArrayList[position].contentUri == "1") {
             Glide.with(holder.imageView).load(R.drawable.ic_gallery_btn)
+                .transform(CenterCrop(), RoundedCorners(12))
                 .into(holder.imageView)
         } else {
             Glide.with(holder.imageView)
                 .load(uriArrayList[position].contentUri)
-                .thumbnail(0.33f)
-                .centerCrop()
+                .transform(CenterCrop(), RoundedCorners(12))
                 .into(holder.imageView)
         }
     }
