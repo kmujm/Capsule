@@ -151,6 +151,7 @@ class PostCapsuleActivity : AppCompatActivity() {
             // 이미지를 정상적으로 받아왔으면 리얼타임 데이터베이스에, 데이터들 업로드
             Log.d(LOG, "submitBtn Clicked!!")
             // 제목 null 체크
+            // TODO 로그인 구현시 널 체크
 //            if(auth.uid == null ) {
 //                // 로그인 상태가 아니기 때문에 에러 발생, 로그인 페이지로 돌림
 //                Toast.makeText(this,"로그인 정보가 올바르지 않습니다.",Toast.LENGTH_SHORT).show()
