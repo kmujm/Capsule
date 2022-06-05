@@ -64,7 +64,7 @@ class ImageSelectActivity : AppCompatActivity() {
         mAdapter.setOnItemClickListener(object : GalleryImageAdapter.onItemClickListener {
             override fun onItemClick(position: Int, holder: ImageView, check: ImageView) {
                 if (position == 0) {
-                    loadImagesFromGallery()
+                    openGallery()
                 } else {
                     if (ImageList[position].selected) {
                         ImageList[position].selected = false
@@ -83,6 +83,11 @@ class ImageSelectActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun openGallery() {
+        val intent = Intent(this, SelectPicActivity::class.java)
+        startActivity(intent)
     }
 
     private fun initBackBtn() {
@@ -116,49 +121,5 @@ class ImageSelectActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 2)
     }
 
-    private fun loadImagesFromGallery() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                100
-            )
-            return
-        }
-        if (Build.VERSION.SDK_INT < 19) {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.type = "image/*"
-            startActivityForResult(Intent.createChooser(intent, "select picture"), 1);
-        } else {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.type = "image/*"
-            startActivityForResult(Intent.createChooser(intent, "select picture"), 1)
-        }
-
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            val clipData = data!!.clipData
-            if (clipData != null) {
-                for (i in 0 until clipData.itemCount) {
-                    val imageUri: Uri = clipData.getItemAt(i).uri
-                    imageUriList.add(imageUri.toString()!!)
-                }
-            } else {
-                val imageUri: Uri? = data.data
-                imageUriList.add(imageUri.toString()!!)
-            }
-        }
-    }
 }
 

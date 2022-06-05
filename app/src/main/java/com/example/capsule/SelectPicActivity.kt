@@ -2,6 +2,7 @@ package com.example.capsule
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -9,6 +10,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -22,10 +24,15 @@ class SelectPicActivity : AppCompatActivity() {
         const val READ_EXTERNAL_STORAGE_REQUEST = 0x1045
         const val TAG = "SelectPicActivity"
     }
+
     private lateinit var mAdapter: SelectPicAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var totalSelectText: TextView
+    private lateinit var completeBtn: TextView
+    private var selectCnt = 0
 
     var Images = mutableListOf<ImageData>()
+    val passData = mutableSetOf<String>()
     var selectedviewList = arrayListOf<View>()
     var selectedimageUrlList = arrayListOf<String>() //선택된 이미지 리스트
     var selectCount = 0 //오른쪽 상단에 선택된 이미지의 개수
@@ -36,7 +43,10 @@ class SelectPicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_pic)
         recyclerView = findViewById(R.id.rv_gallery)
+        totalSelectText = findViewById(R.id.select_count)
+        completeBtn = findViewById(R.id.complete_button)
         openMediaStore()
+        initCompleteButton()
     }
 
     private fun openMediaStore() {
@@ -106,6 +116,7 @@ class SelectPicActivity : AppCompatActivity() {
             Log.d(TAG, "뭐가 더 먼저 된나ㅣ$Images")
             mAdapter = SelectPicAdapter(this, Images)
             initView()
+            pickImages()
         }
     }
 
@@ -147,14 +158,49 @@ class SelectPicActivity : AppCompatActivity() {
     }
 
     private fun pickImages() {
-//        mAdapter.setOnItemClickListener(object : SelectPicAdapter.onItemClickListener {
-//            override fun onItemClick(position: Int, holder: ImageView) {
-//                Images[position].selected = !Images[position].selected
-//            }
+        mAdapter.setOnItemClickListener(object : SelectPicAdapter.onItemClickListener {
+            override fun onItemClick(
+                position: Int,
+                holder: ImageView,
+                frame: ImageView,
+                circle: ImageView,
+                cnt: TextView
+            ) {
+                if (Images[position].selected) {
+                    selectCnt--
+                    totalSelectText.text = selectCnt.toString()
+                    Images[position].selected = false
+                    frame.visibility = ImageView.INVISIBLE
+                    circle.visibility = ImageView.INVISIBLE
 
 
-//        })
+                } else {
+                    selectCnt++
+                    totalSelectText.text = selectCnt.toString()
+                    Images[position].selected = true
+                    frame.visibility = ImageView.VISIBLE
+                    circle.visibility = ImageView.VISIBLE
+                }
+            }
+        })
     }
+
+    private fun initCompleteButton() {
+        completeBtn.setOnClickListener {
+            for (item in Images) {
+                if (item.selected) {
+                    passData.add(item.contentUri)
+                }
+            }
+            Log.d(TAG, "넘겨주는 값 $passData")
+            val intent = Intent(this, PostCapsuleActivity::class.java)
+            intent.putStringArrayListExtra("passData", ArrayList(passData))
+            startActivity(intent)
+            this.finish()
+        }
+
+    }
+
 
 }
 

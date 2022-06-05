@@ -1,6 +1,7 @@
 package com.example.capsule
 
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide.init
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.CoroutineScope
+import java.util.concurrent.TimeoutException
 
 class SelectPicAdapter(
     private val context: CoroutineScope,
@@ -27,19 +29,24 @@ class SelectPicAdapter(
     private lateinit var mListener: onItemClickListener
 
     interface onItemClickListener {
-        fun onItemClick(position: Int, holder: ImageView)
+        fun onItemClick(position: Int, holder: ImageView, frame: ImageView, circle: ImageView, cnt: TextView)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
         mListener = listener
     }
 
-    inner class ViewHolder(itemView: View) :
+    inner class ViewHolder(itemView: View, listener: onItemClickListener) :
         RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.imgGalleryItem)
         val imageFrame = itemView.findViewById<ImageView>(R.id.imgFrame)
         val imageCheck = itemView.findViewById<ImageView>(R.id.imgSelectBackGround)
         val cntCheck = itemView.findViewById<TextView>(R.id.tvSelectImageCount)
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(absoluteAdapterPosition, imageView, imageFrame, imageCheck, cntCheck)
+            }
+        }
 
 
     }
@@ -47,7 +54,7 @@ class SelectPicAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectPicAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_gallery, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(v, mListener)
     }
 
     override fun onBindViewHolder(holder: SelectPicAdapter.ViewHolder, position: Int) {
