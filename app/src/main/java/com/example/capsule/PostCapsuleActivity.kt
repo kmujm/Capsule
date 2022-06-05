@@ -94,11 +94,8 @@ class PostCapsuleActivity : AppCompatActivity() {
 //        uploadURLList.clear()
         // 받아온 인탠트 리스트 만들어주기
         val mData = intent.getStringArrayListExtra("passData")
+        mainImageFromIntent = intent.getStringExtra("mainImage").toString()
         Log.d("받아온 값", mData.toString())
-        // 메인 이미지 가져왔다는 가정
-        mainImageFromIntent = mData.let{
-            it!!.first()
-        }
         // TODO 메인 이미지를 먼저 추가해줌
         imageListFromIntent = mutableListOf()
         imageListFromIntent.add(ImageItem(mainImageFromIntent,true))
