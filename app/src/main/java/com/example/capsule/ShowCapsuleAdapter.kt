@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ShowCapsuleAdapter(context: Context, private val CapsuleDataList: ArrayList<ShowCapsuleData>):RecyclerView.Adapter<ShowCapsuleAdapter.ItemViewHolder>(){
 
-
     val context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -39,16 +38,10 @@ class ShowCapsuleAdapter(context: Context, private val CapsuleDataList: ArrayLis
     }
 
     inner class ItemViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        private val capsuleTitle = v.findViewById<TextView>(R.id.CapsuleTitle)
-        private val capsuleDate = v.findViewById<TextView>(R.id.CapsuleDate)
-        private val capsulePhoto = v.findViewById<ImageView>(R.id.CapsuleImage)
         private val capsuleRegPhoto = v.findViewById<ImageView>(R.id.CapsuleRegisterImage)
 
         fun bind(item: ShowCapsuleData, position: Int) {
-            Glide.with(itemView).load(item.photo).into(capsulePhoto);
-            capsuleTitle.text = item.title
-            capsuleDate.text = item.date
-            Glide.with(itemView).load(item.regPhoto[position]).into(capsuleRegPhoto);
+            Glide.with(itemView).load(item.regPhoto).into(capsuleRegPhoto);
         }
     }
 }

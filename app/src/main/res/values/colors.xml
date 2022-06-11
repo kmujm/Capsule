@@ -16,4 +16,5 @@
     <color name="BG_gray">#EEEDEC</color>
     <color name="BG">#F8F7F6</color>
     <color name="secondary">#8D7661</color>
+    <color name="edit_text_underline">#D6D6D6</color>
 </resources>

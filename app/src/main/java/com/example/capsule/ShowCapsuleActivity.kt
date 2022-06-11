@@ -3,7 +3,9 @@ package com.example.capsule
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -33,15 +35,16 @@ class ShowCapsuleActivity : AppCompatActivity() {
         // todo: .child(uid)로 수정
         myRef.child("asdfifeiofjn1233").child(capsuleKey.toString()).get().addOnSuccessListener {
             // capsule 별 date, title, detectImage 저장
-            date = it.child("date").getValue<String>().toString()
-            title = it.child("title").getValue<String>().toString()
-            photoUri = it.child("detectImage").getValue<String>()!!.toUri()
-            capsuleContent = it.child("content").getValue<String>().toString()
+//            date = it.child("date").getValue<String>().toString()
+//            title = it.child("title").getValue<String>().toString()
+//            photoUri = it.child("detectImage").getValue<String>()!!.toUri()
+//            capsuleContent = it.child("content").getValue<String>().toString()
             it.child("registerImage").children.forEach {
-                regPhotoUri.add(it.getValue().toString())
+                Log.i("infoTest", it.getValue().toString())
+
+                CapsuleDataList.add(ShowCapsuleData(it.getValue().toString().toUri()))
             }
 
-            CapsuleDataList.add(ShowCapsuleData(title, date, photoUri, regPhotoUri, capsuleContent))
             initRecycler(uid)
         }
     }
@@ -50,6 +53,9 @@ class ShowCapsuleActivity : AppCompatActivity() {
         // adaper 와 recyclerView 연결
         val recyclerView: RecyclerView by lazy {
             findViewById(R.id.CapsuleShow)
+        }
+        recyclerView.layoutManager = LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
         }
         // TODO: uid 전달로 변경
         val capsuleAdapter = ShowCapsuleAdapter(this, CapsuleDataList)
