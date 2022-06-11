@@ -26,6 +26,7 @@ class CapsuleListActivity : AppCompatActivity() {
     lateinit var date:String     // capsule date
     lateinit var title:String    // capsule title
     lateinit var photoUri: Uri   // capsule detectImage
+    lateinit var capsuleContent: String  // capsule content
     private var capsuleKey: MutableList<String> = mutableListOf()   // capsule key 들만 모아놓은 배열
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,11 +57,11 @@ class CapsuleListActivity : AppCompatActivity() {
                 date = it.child("date").getValue<String>().toString()
                 title = it.child("title").getValue<String>().toString()
                 photoUri = it.child("detectImage").getValue<String>()!!.toUri()
-
+                capsuleContent = it.child("content").getValue<String>().toString()
                 // 캡슐 하나 저장 -> cnt+=1
                 cnt+=1
                 // CapsuleList에 유저의 모든 캡슐 정보 저장
-                CapsuleList.add(CapsuleData(title,date,photoUri))
+                CapsuleList.add(CapsuleData(title,date,photoUri,capsuleContent))
                 // capsule key 개수만큼 리스트에 저장되었으면 initRecycler 호출
                 if (cnt == capsuleKey.size) {
                     initRecycler(uid)

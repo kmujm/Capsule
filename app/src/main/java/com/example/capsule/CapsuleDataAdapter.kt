@@ -63,13 +63,13 @@ class CapsuleDataAdapter(context: Context, private val CapsuleList: ArrayList<Ca
             // capsule 클릭하면 캡슐 보여주는 액티비티로 이동
             capsulePhoto.setOnClickListener {
                 val intent= Intent(context, ShowCapsuleActivity::class.java)
-                // capsule key, title, date, photo 전달
+                // capsule key, title, date, photo, content 전달
                 // photo: detect Image
                 intent.putExtra("capsuleKey", "${CapsuleKey[position]}")
                 intent.putExtra("capsuleTitle", item.title)
                 intent.putExtra("capsuleDate", item.date)
                 intent.putExtra("capsulePhoto", item.photo.toString())
-
+                intent.putExtra("capsuleContent", item.content)
                 context.startActivity(intent)
             }
 
