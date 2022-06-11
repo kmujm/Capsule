@@ -4,47 +4,58 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
 
 class ShowCapsuleActivity : AppCompatActivity() {
+    private val Ctitle: TextView by lazy {    // capsule title
+        findViewById(R.id.CapsuleTitle)
+    }
+    private val CDate: TextView by lazy {    // capsule date
+        findViewById(R.id.CapsuleDate)
+    }
+    private val CPhoto: ImageView by lazy {    // capsule detect Image
+        findViewById(R.id.CapsuleImage)
+    }
+
     private var CapsuleDataList = ArrayList<ShowCapsuleData>()    // recyclerView 에 띄워줄 데이터 저장
 
     private val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val myRef: DatabaseReference = mDatabase.getReference("Users")
     private var user = FirebaseAuth.getInstance().currentUser    // 현재 로그인한 유저
 
-    lateinit var date:String     // capsule date
-    lateinit var title:String    // capsule title
-    lateinit var photoUri: Uri   // capsule detectImage
     lateinit var capsuleContent: String   // capsule content
-    private var regPhotoUri: MutableList<String> = mutableListOf()   // capsule registerImage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_capsule)
 
+        // key, title, date, photo 받아옴
         val capsuleKey = intent.getStringExtra("capsuleKey")
+        val capsuleTitle = intent.getStringExtra("capsuleTitle")
+        val capsuleDate = intent.getStringExtra("capsuleDate")
+        val capsulePhoto = intent.getStringExtra("capsulePhoto") // capsule detectImage
+
         var uid = user!!.uid
+
+        // title, date, detect Image 띄워줌
+        Ctitle.setText(capsuleTitle.toString())
+        CDate.setText(capsuleDate.toString())
+        Glide.with(this).load(capsulePhoto?.toUri()).into(CPhoto);
 
         // todo: .child(uid)로 수정
         myRef.child("asdfifeiofjn1233").child(capsuleKey.toString()).get().addOnSuccessListener {
-            // capsule 별 date, title, detectImage 저장
-//            date = it.child("date").getValue<String>().toString()
-//            title = it.child("title").getValue<String>().toString()
-//            photoUri = it.child("detectImage").getValue<String>()!!.toUri()
-//            capsuleContent = it.child("content").getValue<String>().toString()
             it.child("registerImage").children.forEach {
-                Log.i("infoTest", it.getValue().toString())
-
                 CapsuleDataList.add(ShowCapsuleData(it.getValue().toString().toUri()))
             }
-
             initRecycler(uid)
         }
     }
