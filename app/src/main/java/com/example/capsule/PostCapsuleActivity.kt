@@ -240,11 +240,11 @@ class PostCapsuleActivity : AppCompatActivity() {
                 Log.d(LOG,"push Successful, it : ${it}")
                 Toast.makeText(this,"캡슐 저장에 성공했습니다",Toast.LENGTH_SHORT).show()
 
-                //TODO 다은이랑 합치면 주석 풀기 ==> 추가된 캡슐키 넘겨줌
-//                val intent = Intent(this,ShowCapsuleActivity::class.java)
-//                intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
-//                startActivity(intent)
-//                finish()
+                //추가된 캡슐키 넘겨줌
+                val intent = Intent(this,ShowCapsuleActivity::class.java)
+                intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
+                startActivity(intent)
+                finish()
 
 
                 stopProgressBar()
