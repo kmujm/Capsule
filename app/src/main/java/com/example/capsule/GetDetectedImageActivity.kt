@@ -26,9 +26,8 @@ import java.util.jar.Manifest
 
 class GetDetectedImageActivity : Activity() {
     // keyword to detect
-    private val keyword : String by lazy{
-        intent.getStringExtra(ObjectDetectionActivity.INTENT_KEY_SELECTED_CATAGORY).toString()
-    }
+    private val keyword: String by lazy {
+        intent.getStringExtra(DetectedCatagoryActivity.INTENT_KEY_SELECTED_CATAGORY).toString()
 
     //사용자가 찍은 사진의 uri를 받아옴
     private val mainImageUri : Uri by lazy{
@@ -36,7 +35,7 @@ class GetDetectedImageActivity : Activity() {
     }
 
     companion object {
-        private const val READ_EXTERNAL_STORAGE_REQUEST = 0x1045
+        const val READ_EXTERNAL_STORAGE_REQUEST = 0x1045
         const val TAG = "GetDetectedImgActivity"
     }
 

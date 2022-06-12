@@ -1,30 +1,39 @@
 package com.example.capsule
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.util.jar.Manifest
 
 class ImageSelectActivity : AppCompatActivity() {
+    val imageUriList = mutableSetOf<String>()
+
     val TAG = "ImageSelectActivity"
-    val REQUEST_CODE = 200
-    private val Read_Permission = 101
 
     private lateinit var mAdapter: GalleryImageAdapter
     private lateinit var recyclerView: RecyclerView
+    private val backButton: Button by lazy {
+        findViewById(R.id.backBtn)
+    }
     private val submitButton: AppCompatButton by lazy {
         findViewById(R.id.submitButton)
     }
@@ -40,12 +49,12 @@ class ImageSelectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_select)
         recyclerView = findViewById(R.id.gallery_recyclerView)
-        Log.d(TAG, "나 실행됐음ㅎㅎ")
         val mData = intent.getStringArrayListExtra("imageList")
         Log.d(TAG, "$mData")
         if (mData != null) {
             uriArr.addAll(mData)
         }
+        initBackBtn()
         initView()
         initSubmitBtn()
         selectImage()
@@ -54,25 +63,38 @@ class ImageSelectActivity : AppCompatActivity() {
 
     private fun selectImage() {
         mAdapter.setOnItemClickListener(object : GalleryImageAdapter.onItemClickListener {
-            override fun onItemClick(position: Int, holder: ImageView) {
+            override fun onItemClick(position: Int, holder: ImageView, check: ImageView) {
                 if (position == 0) {
-                    openGalleryForImages()
+                    openGallery()
                 } else {
                     if (ImageList[position].selected) {
                         ImageList[position].selected = false
                         holder.clearColorFilter()
+                        check.visibility = ImageView.GONE
                     } else {
                         ImageList[position].selected = true
                         holder.setColorFilter(
                             Color.parseColor("#BDBDBD"),
                             PorterDuff.Mode.MULTIPLY
                         )
+                        check.visibility = ImageView.VISIBLE
                     }
 
                 }
             }
 
         })
+    }
+
+    private fun openGallery() {
+        val intent = Intent(this, SelectPicActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun initBackBtn() {
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initSubmitBtn() {
@@ -82,6 +104,7 @@ class ImageSelectActivity : AppCompatActivity() {
                     passData.add(item.contentUri)
                 }
             }
+            Log.d(TAG, "갤러리 테스트 $imageUriList")
             Log.d(TAG, "넘겨주는 값 $passData")
             val intent = Intent(this, PostCapsuleActivity::class.java).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.putStringArrayListExtra("passData", ArrayList(passData))
@@ -100,53 +123,5 @@ class ImageSelectActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 2)
     }
 
-    private fun openGalleryForImages() {
-
-        if (Build.VERSION.SDK_INT < 19) {
-            var intent = Intent()
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Choose Pictures"), REQUEST_CODE
-            )
-        } else { // For latest versions API LEVEL 19+
-            var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE);
-        }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val galleryImgSelectList = mutableSetOf<String>()
-
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-
-            // if multiple images are selected
-            if (data?.getClipData() != null) {
-                var count = data.clipData?.itemCount
-
-                for (i in 0..count!! - 1) {
-                    var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
-                    galleryImgSelectList.add(imageUri.toString())
-                }
-
-            } else if (data?.getData() != null) {
-                // if single image is selected
-
-                var imageUri: Uri = data.data!!
-                //   iv_image.setImageURI(imageUri) Here you can assign the picked image uri to your imageview
-
-            }
-        }
-    }
-
 }
-
-
-
 
