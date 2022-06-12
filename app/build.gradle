@@ -58,4 +58,6 @@ dependencies {
     //coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
+    //깃허브 EditText노트패드 라이브러리
+    implementation 'com.github.shivampip:LinedEditText:6e5e019dee'
 }
