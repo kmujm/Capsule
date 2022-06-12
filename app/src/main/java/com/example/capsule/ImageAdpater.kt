@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class ImageAdpater :
     ListAdapter<ImageItem, ImageAdpater.ViewHolder>(diffUtil) {
@@ -22,9 +25,10 @@ class ImageAdpater :
 
         fun bind(item : ImageItem){
             if(item.isMain) {
-                image.backgroundTintList = ColorStateList.valueOf(itemView.context.getResources().getColor(R.color.icon_transparnet_half))
+                image.setColorFilter(ContextCompat.getColor(itemView.context, R.color.icon_transparnet_half), android.graphics.PorterDuff.Mode.DARKEN);
                 mainTextView.isVisible = true
             }
+            image.setImageURI(item.uri.toUri())
 
             // 넘겨받은 uri로 이미지 매핑, 글라이드를 활용하면 좋지 않을까 ?
             // https://parkho79.tistory.com/168
@@ -48,7 +52,7 @@ class ImageAdpater :
             }
 
             override fun areContentsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
-                return oldItem.name == newItem.name
+                return oldItem.uri == newItem.uri
             }
         }
     }

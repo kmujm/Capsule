@@ -28,6 +28,10 @@ class GetDetectedImageActivity : Activity() {
     // keyword to detect
     private val keyword: String by lazy {
         intent.getStringExtra(DetectedCatagoryActivity.INTENT_KEY_SELECTED_CATAGORY).toString()
+
+    //사용자가 찍은 사진의 uri를 받아옴
+    private val mainImageUri : Uri by lazy{
+        intent.getParcelableExtra(ObjectDetectionActivity.INTENT_KEY_MAIN_IMAGE)!!
     }
 
     companion object {
@@ -102,8 +106,9 @@ class GetDetectedImageActivity : Activity() {
     }
 
     private fun passUri() {
-        val intent = Intent(this, ImageSelectActivity::class.java)
+        val intent = Intent(this, ImageSelectActivity::class.java).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.putStringArrayListExtra("imageList", ArrayList(imagesDetectedList))
+        intent.putExtra("mainImage", mainImageUri)
         startActivity(intent)
         this.finish()
     }

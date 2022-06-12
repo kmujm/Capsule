@@ -41,6 +41,10 @@ class ImageSelectActivity : AppCompatActivity() {
     var ImageList = mutableListOf<ImageData>()
     val passData = mutableSetOf<String>()
 
+    private val mainImageUri : Uri by lazy{
+        intent.getParcelableExtra("mainImage")!!
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_select)
@@ -102,8 +106,9 @@ class ImageSelectActivity : AppCompatActivity() {
             }
             Log.d(TAG, "갤러리 테스트 $imageUriList")
             Log.d(TAG, "넘겨주는 값 $passData")
-            val intent = Intent(this, PostCapsuleActivity::class.java)
+            val intent = Intent(this, PostCapsuleActivity::class.java).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.putStringArrayListExtra("passData", ArrayList(passData))
+            intent.putExtra("mainImage", mainImageUri)
             startActivity(intent)
             this.finish()
         }
