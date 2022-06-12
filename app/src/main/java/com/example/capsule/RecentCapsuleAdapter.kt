@@ -47,7 +47,7 @@ class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : Muta
         }
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecentCapsuleAdapter.CustomViewHolder, position: Int) {
         val item = RecentCapsuleList[position]
         holder.apply {
             bind(item, position)

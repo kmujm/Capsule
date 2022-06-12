@@ -128,7 +128,7 @@
         android:layout_height="3dp"
         android:layout_marginTop="5dp"
         android:background="#FFCC47"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent"
         app:layout_constraintEnd_toEndOf="@id/recent"
         app:layout_constraintStart_toStartOf="@id/recent"/>
 

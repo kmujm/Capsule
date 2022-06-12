@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
                     p0.child("registerImage").children.forEach(){
                         pictureList.add(Uri.parse(it.value as String))
                     }
-                    val capsule = RecentCapsuleItem(p0.child("date").value.toString(), p0.child("title").value.toString(), pictureList, p0.child("date").key.toString())
+                    val capsule = RecentCapsuleItem(p0.child("date").value.toString(), p0.child("title").value.toString(), pictureList, key)
                     recentCapsuleList.add(capsule)
 
                     if(++cnt == capsuleKey.size){
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         rv_recentCapsule.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
         rv_recentCapsule.setHasFixedSize(true)
 
-        Log.d("recentCapsuleList", recentCapsuleList.size.toString())
+        Log.d("recentCapsuleList", recentCapsuleList.toString())
         rv_recentCapsule.adapter = mAdapter
     }
 }
