@@ -108,7 +108,7 @@ class ImageSelectActivity : AppCompatActivity() {
             Log.d(TAG, "넘겨주는 값 $passData")
             val intent = Intent(this, PostCapsuleActivity::class.java).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.putStringArrayListExtra("passData", ArrayList(passData))
-            intent.putExtra("mainImage", mainImageUri)
+            intent.putExtra("mainImage", mainImageUri.toString())
             startActivity(intent)
             this.finish()
         }

@@ -95,6 +95,7 @@ class PostCapsuleActivity : AppCompatActivity() {
         // 받아온 인탠트 리스트 만들어주기
         val mData = intent.getStringArrayListExtra("passData")
         mainImageFromIntent = intent.getStringExtra("mainImage").toString()
+        Log.d("mainImageUri", mainImageFromIntent)
         Log.d("받아온 값", mData.toString())
         // TODO 메인 이미지를 먼저 추가해줌
         imageListFromIntent = mutableListOf()
@@ -241,10 +242,10 @@ class PostCapsuleActivity : AppCompatActivity() {
                 Toast.makeText(this,"캡슐 저장에 성공했습니다",Toast.LENGTH_SHORT).show()
 
                 //추가된 캡슐키 넘겨줌
-                val intent = Intent(this,ShowCapsuleActivity::class.java)
-                intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
-                startActivity(intent)
-                finish()
+                //val intent = Intent(this,ShowCapsuleActivity::class.java)
+                //intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
+                //startActivity(intent)
+                //finish()
 
 
                 stopProgressBar()
