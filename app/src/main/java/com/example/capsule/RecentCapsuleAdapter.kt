@@ -1,12 +1,17 @@
 package com.example.capsule
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
+import java.security.AccessController.getContext
 
 class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : MutableList<RecentCapsuleItem>) : RecyclerView.Adapter<RecentCapsuleAdapter.CustomViewHolder>(){
 
@@ -17,6 +22,19 @@ class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : Muta
         val img1 = itemView.findViewById<ImageView>(R.id.img1)
         val img2 = itemView.findViewById<ImageView>(R.id.img2)
         val img3 = itemView.findViewById<ImageView>(R.id.img3)
+
+        fun bind(item : RecentCapsuleItem, position: Int){
+            capsuleDate.text = item.capsuleDate
+            capsuleTitle.text = item.capsuleTitle
+            morePicture.text = "+${item.pictureList.size-3}"
+            Glide.with(itemView).load(item.pictureList[0]).into(img1)
+            if(item.pictureList.size > 1){
+                Glide.with(itemView).load(item.pictureList[1]).into(img2)
+            }
+            if(item.pictureList.size > 2){
+                Glide.with(itemView).load(item.pictureList[2]).into(img3)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -30,12 +48,10 @@ class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : Muta
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.capsuleDate.text = RecentCapsuleList.get(position).capsuleDate
-        holder.capsuleTitle.text = RecentCapsuleList.get(position).capsuleTitle
-        holder.morePicture.text = "+${RecentCapsuleList.get(position).pictureList.size-3}"
-        holder.img1.setImageURI(RecentCapsuleList.get(position).pictureList[0])
-        holder.img2.setImageURI(RecentCapsuleList.get(position).pictureList[1])
-        holder.img3.setImageURI(RecentCapsuleList.get(position).pictureList[2])
+        val item = RecentCapsuleList[position]
+        holder.apply {
+            bind(item, position)
+        }
     }
 
     override fun getItemCount(): Int {

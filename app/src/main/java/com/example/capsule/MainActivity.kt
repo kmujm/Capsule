@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock.sleep
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -46,7 +47,11 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.greeting)
     }
 
-    private lateinit var username :String
+    private val mAdapter : RecentCapsuleAdapter by lazy{
+        RecentCapsuleAdapter(this, recentCapsuleList)
+    }
+
+    private var username = "USERNAME"
 
     private val objectDetectionButton : Button by lazy{
         findViewById(R.id.objectDetectionButton)
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         initGreeting()
         initObjectDetectionButton()
-        initRecyclerView()
+        getCapsuleKeys()
     }
 
     private fun initObjectDetectionButton(){
@@ -74,19 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initGreeting(){
-        val user = Firebase.auth.currentUser
-        if(user != null){
-            userId = Firebase.auth.currentUser!!.uid
-            database.child("Users").child(userId).child("Info").child("nickname").get().addOnSuccessListener {
-                username = it.value.toString()
-            }.addOnFailureListener {
-                Log.d("firebase", "Fail getting user nickname data", it)
-            }
-        } else{
-            username = "USERNAME"
-        }
-
+    private fun userGreeting(){
         val content = "${username} 님,\n오늘도 캡슐하세요!"
         val spannableString = SpannableString(content)
         val start_idx = 0
@@ -97,15 +90,24 @@ class MainActivity : AppCompatActivity() {
         greeting.text = spannableString
     }
 
-    private fun initRecyclerView(){
-        val rv_recentCapsule :RecyclerView = findViewById(R.id.rv_recentCapsule)
+    private fun initGreeting(){
+        userGreeting()
 
-        rv_recentCapsule.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-        rv_recentCapsule.setHasFixedSize(true)
+        val user = 1//Firebase.auth.currentUser
+        if(user != null){
+            userId = "asdfifeiofjn1233"//Firebase.auth.currentUser!!.uid
+            database.child("Users").child(userId).child("Info").child("nickname").get().addOnSuccessListener {
+                username = it.value.toString()
+                userGreeting()
+                Log.d("firebase", "Success getting user nickname data")
+            }.addOnFailureListener {
+                Log.d("firebase", "Fail getting user nickname data", it)
+            }
+        }
+    }
 
-        val mAdapter = RecentCapsuleAdapter(this, recentCapsuleList)
-        rv_recentCapsule.adapter = mAdapter
-
+    private fun getCapsuleKeys(){
+        Log.d("userId", userId)
         val myRef = database.child("Users").child(userId)
         // 각 유저 데이터베이스 밑에 존재하는 캡슐 키를 가져오는 코드
         val capsuleKey = mutableListOf<String>()
@@ -113,22 +115,33 @@ class MainActivity : AppCompatActivity() {
             it.children.forEach{
                 if(it.key.toString() != "Info" && capsuleKey.size < 5){
                     capsuleKey.add(it.key.toString())
+                } else{
+                    Log.d("DB", it.key.toString())
                 }
             }
+            Log.d("capsuleKey", capsuleKey.toString())
+            setCapsuleData(capsuleKey)
+        }.addOnFailureListener {
+            //
         }
+    }
 
-        // 가져온 캡슐 키로 캡슐을 조회하여 recyclerView에 보여주는는 코드
-       for(key in capsuleKey){
-            myRef.child(key).addValueEventListener(object : ValueEventListener {
+    private fun setCapsuleData(capsuleKey : MutableList<String>){
+        // 가져온 캡슐 키로 캡슐을 조회하여 recyclerView의 아이템에 세팅
+        var cnt = 0
+        recentCapsuleList.clear()
+        for(key in capsuleKey){
+            database.child("Users").child(userId).child(key).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
-                    recentCapsuleList.clear()
-                    for(data in p0.children){
-                        val pictureList = mutableListOf<Uri>()
-                        p0.child("registerImage").children.forEach(){
-                            pictureList.add(it as Uri)
-                        }
-                        val capsule = RecentCapsuleItem(data.child("date").value.toString(), data.child("title").value.toString(), pictureList, data.child("date").key.toString())
-                        recentCapsuleList.add(capsule)
+                    val pictureList = mutableListOf<Uri>()
+                    p0.child("registerImage").children.forEach(){
+                        pictureList.add(Uri.parse(it.value as String))
+                    }
+                    val capsule = RecentCapsuleItem(p0.child("date").value.toString(), p0.child("title").value.toString(), pictureList, p0.child("date").key.toString())
+                    recentCapsuleList.add(capsule)
+
+                    if(++cnt == capsuleKey.size){
+                        initRecyclerView()
                     }
                     mAdapter.notifyDataSetChanged()
                 }
@@ -138,5 +151,15 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun initRecyclerView(){
+        val rv_recentCapsule :RecyclerView = findViewById(R.id.rv_recentCapsule)
+
+        rv_recentCapsule.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        rv_recentCapsule.setHasFixedSize(true)
+
+        Log.d("recentCapsuleList", recentCapsuleList.size.toString())
+        rv_recentCapsule.adapter = mAdapter
     }
 }
