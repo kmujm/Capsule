@@ -29,14 +29,11 @@ class SelectPicActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var totalSelectText: TextView
     private lateinit var completeBtn: TextView
+    private lateinit var backBtn: ImageView
     private var selectCnt = 0
 
     var Images = mutableListOf<ImageData>()
     val passData = mutableSetOf<String>()
-    var selectedviewList = arrayListOf<View>()
-    var selectedimageUrlList = arrayListOf<String>() //선택된 이미지 리스트
-    var selectCount = 0 //오른쪽 상단에 선택된 이미지의 개수
-    var uriArr = arrayListOf<String>() // 갤러리에 있는 모든 사진 uri
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +42,10 @@ class SelectPicActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rv_gallery)
         totalSelectText = findViewById(R.id.select_count)
         completeBtn = findViewById(R.id.complete_button)
+        backBtn = findViewById(R.id.back_button)
         openMediaStore()
         initCompleteButton()
+        initBackBtn()
     }
 
     private fun openMediaStore() {
@@ -112,8 +111,6 @@ class SelectPicActivity : AppCompatActivity() {
     private fun showImages() {
         CoroutineScope(Dispatchers.Main).launch {
             Images = queryImages()
-            Log.d(TAG, "엿머거라 ${Images}")
-            Log.d(TAG, "뭐가 더 먼저 된나ㅣ$Images")
             mAdapter = SelectPicAdapter(this, Images)
             initView()
             pickImages()
@@ -123,6 +120,12 @@ class SelectPicActivity : AppCompatActivity() {
     private fun initView() {
         recyclerView.adapter = mAdapter
         recyclerView.layoutManager = GridLayoutManager(this, 3)
+    }
+
+    private fun initBackBtn() {
+        backBtn.setOnClickListener {
+            finish()
+        }
     }
 
     private suspend fun queryImages(): MutableList<ImageData> {

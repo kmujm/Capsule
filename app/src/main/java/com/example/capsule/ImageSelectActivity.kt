@@ -25,12 +25,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ImageSelectActivity : AppCompatActivity() {
-    private val PICK_IMAGE_MULTIPLE = 1
     val imageUriList = mutableSetOf<String>()
 
     val TAG = "ImageSelectActivity"
-    val REQUEST_CODE = 200
-    private val Read_Permission = 101
 
     private lateinit var mAdapter: GalleryImageAdapter
     private lateinit var recyclerView: RecyclerView
