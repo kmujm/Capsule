@@ -128,12 +128,12 @@
         android:layout_height="3dp"
         android:layout_marginTop="5dp"
         android:background="#FFCC47"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent"
         app:layout_constraintEnd_toEndOf="@id/recent"
         app:layout_constraintStart_toStartOf="@id/recent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/rv_recentCapsule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
