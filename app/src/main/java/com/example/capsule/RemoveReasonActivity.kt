@@ -53,7 +53,7 @@ class RemoveReasonActivity : AppCompatActivity() {
                 R.id.ReasonCheck4 -> cnt -= 1
             }
         }
-        if(cnt >= 1) {
+        if (cnt >= 1) {
             nextBtn.isEnabled = true
             nextBtn.background = getDrawable(R.drawable.red_button_background)
         } else {
@@ -72,9 +72,9 @@ class RemoveReasonActivity : AppCompatActivity() {
 
     private fun initNextButton() {
         nextBtn.setOnClickListener {
-
+            val reasonFromUser = inputReason.text.toString()
+            // 다음 페이지로 넘어가기 코드 추가 부분
         }
-
     }
 
 

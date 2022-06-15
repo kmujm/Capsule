@@ -83,10 +83,12 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
     }
 
     private fun setAutoLoginCheck() {
-        autoLoginCheck.setOnClickListener {
-            // 체크 되면 배경 active,체크 블랙 // 체크 해제시 inactive
-            Toast.makeText(this, "Check", Toast.LENGTH_SHORT).show()
-            autoLoginCheck.isChecked = !autoLoginCheck.isChecked
+        autoLoginCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                Toast.makeText(this, "체크", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "해제", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

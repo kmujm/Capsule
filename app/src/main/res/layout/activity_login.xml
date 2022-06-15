@@ -88,26 +88,31 @@
         app:layout_constraintStart_toStartOf="@+id/loginPassword"
         app:layout_constraintTop_toTopOf="@+id/loginPassword" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/autoLoginCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="297dp"
         android:layout_marginBottom="40dp"
-        android:button="@drawable/checkbox_before"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="setAutoLoginCheck"
-        android:padding="12dp"
-        android:text="자동 로그인"
-        android:textColor="@color/text"
-        android:textSize="12sp"
+        android:background="@drawable/custom_check"
+        android:button="@null"
         app:layout_constraintBottom_toTopOf="@id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/loginButton"
         app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:gravity="center"
+        android:text="자동 로그인"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/autoLoginCheckbox"
+        app:layout_constraintStart_toEndOf="@id/autoLoginCheckbox"
+        app:layout_constraintTop_toTopOf="@+id/autoLoginCheckbox" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginButton"
