@@ -58,7 +58,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RemoveInfo" />
 
-    <EditText
+    <TextView
         android:id="@+id/RemoveUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/RemoveProfileImage"
         tools:text="USERNAME" />
 
-    <EditText
+    <TextView
         android:id="@+id/RemoveEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@+id/RemoveUserName"
         tools:text="user@naver.com" />
 
-    <EditText
+    <TextView
         android:id="@+id/MyCapusuleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/RemoveEmail" />
 
-    <EditText
+    <TextView
         android:id="@+id/MyCapusuleNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
         app:layout_constraintStart_toEndOf="@id/MyCapusuleTitle"
         app:layout_constraintTop_toTopOf="@id/RemoveEmail" />
 
-    <EditText
+    <TextView
         android:id="@+id/CapsuleTimeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
         app:layout_constraintStart_toEndOf="@+id/RemoveVL"
         app:layout_constraintTop_toTopOf="@+id/RemoveEmail" />
 
-    <EditText
+    <TextView
         android:id="@+id/CapusuleTimeNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
