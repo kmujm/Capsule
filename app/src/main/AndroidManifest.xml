@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capsule">
         <activity
+            android:name=".ShowCapsuleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CapsuleListActivity"
+            android:exported="false" />
+        <activity
             android:name=".GetDetectedImageActivity"
             android:exported="true" />
         <activity
@@ -28,7 +34,6 @@
         <activity
             android:name=".SelectPicActivity"
             android:exported="true" />
-
         <activity
             android:name=".DetectedCatagoryActivity"
             android:exported="true" />

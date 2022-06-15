@@ -32,4 +32,5 @@
     <string name="string_post_edit_text_hint">캡슐로 등록할 사진들을 확인한 후 \n나의경험, 느낀 점 등을 글로 정리해보세요.</string>
     <string name="string_button_complete">완료</string>
     <string name="string_main">MAIN</string>
+    <string name="capsule_list_hint_string"><font size="14">검색</font></string>
 </resources>
