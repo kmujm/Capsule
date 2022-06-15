@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_RemoveBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="318dp"
+        android:background="@drawable/back_button"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/RemoveTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="224dp"
+        android:text="회원탈퇴"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_RemoveBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/RemoveInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="127dp"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RemoveTitle"
+        tools:text="USERNAME 님의 \n계정과 캡슐 NN개가 \n사라집니다." />
+
+    <ImageView
+        android:id="@+id/RemoveProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:src="@drawable/basic_profile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RemoveInfo" />
+
+    <EditText
+        android:id="@+id/RemoveUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RemoveProfileImage"
+        tools:text="USERNAME" />
+
+    <EditText
+        android:id="@+id/RemoveEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@null"
+        android:gravity="center"
+        android:textColor="@color/secondary"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RemoveUserName"
+        tools:text="user@naver.com" />
+
+    <EditText
+        android:id="@+id/MyCapusuleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="224dp"
+        android:text="My 캡슐"
+        android:textColor="@color/secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/RemoveEmail" />
+
+    <EditText
+        android:id="@+id/MyCapusuleNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:gravity="center"
+        android:textColor="@color/text"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/MyCapusuleTitle"
+        app:layout_constraintStart_toStartOf="@id/MyCapusuleTitle"
+        app:layout_constraintTop_toBottomOf="@id/MyCapusuleTitle"
+        tools:text="NN 개" />
+
+    <ImageView
+        android:id="@+id/RemoveVL"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/vertical_line"
+        app:layout_constraintStart_toEndOf="@id/MyCapusuleTitle"
+        app:layout_constraintTop_toTopOf="@id/RemoveEmail" />
+
+    <EditText
+        android:id="@+id/CapsuleTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="85dp"
+        android:text="캡슐한 시간"
+        android:textColor="@color/secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/RemoveVL"
+        app:layout_constraintTop_toTopOf="@+id/RemoveEmail" />
+
+    <EditText
+        android:id="@+id/CapusuleTimeNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:gravity="center"
+        android:textColor="@color/text"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/CapsuleTimeTitle"
+        app:layout_constraintStart_toStartOf="@id/CapsuleTimeTitle"
+        app:layout_constraintTop_toBottomOf="@id/CapsuleTimeTitle"
+        tools:text="NN h" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_RemoveAccount"
+        android:layout_width="297dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/red_button_background"
+        android:gravity="center"
+        android:text="회원탈퇴"
+        android:textColor="@color/BG"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MyCapusuleNum" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_RemoveCancel"
+        android:layout_width="297dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/inactivate_button_background"
+        android:gravity="center"
+        android:text="취소"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_RemoveAccount" />
+</androidx.constraintlayout.widget.ConstraintLayout>
