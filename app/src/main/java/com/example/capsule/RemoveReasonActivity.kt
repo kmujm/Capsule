@@ -2,8 +2,12 @@ package com.example.capsule
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.CompoundButton
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckBox
 
 class RemoveReasonActivity : AppCompatActivity() {
@@ -21,6 +25,14 @@ class RemoveReasonActivity : AppCompatActivity() {
 
     private val myCheck4: AppCompatCheckBox by lazy {
         findViewById(R.id.ReasonCheck4)
+    }
+
+    private val inputReason: EditText by lazy {
+        findViewById(R.id.ReasonInput)
+    }
+
+    private val nextBtn: AppCompatButton by lazy {
+        findViewById(R.id.btn_ReasonNext)
     }
 
     private var cnt = 0
@@ -41,6 +53,13 @@ class RemoveReasonActivity : AppCompatActivity() {
                 R.id.ReasonCheck4 -> cnt -= 1
             }
         }
+        if(cnt >= 1) {
+            nextBtn.isEnabled = true
+            nextBtn.background = getDrawable(R.drawable.red_button_background)
+        } else {
+            nextBtn.isEnabled = false
+            nextBtn.background = getDrawable(R.drawable.inactivate_button_background)
+        }
     }
 
 
@@ -48,6 +67,13 @@ class RemoveReasonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_remove_reason)
         initCheckBox()
+        initNextButton()
+    }
+
+    private fun initNextButton() {
+        nextBtn.setOnClickListener {
+
+        }
 
     }
 
@@ -58,4 +84,5 @@ class RemoveReasonActivity : AppCompatActivity() {
         myCheck3.setOnCheckedChangeListener(listener)
         myCheck4.setOnCheckedChangeListener(listener)
     }
+
 }

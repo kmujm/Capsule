@@ -181,14 +181,14 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_RemoveCancel"
+        android:id="@+id/btn_ReasonNext"
         android:layout_width="297dp"
         android:layout_height="40dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/inactivate_button_background"
         android:gravity="center"
-        android:text="취소"
+        android:text="다음"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
