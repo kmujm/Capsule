@@ -1,7 +1,9 @@
 package com.example.capsule
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +29,10 @@ class ResetProgressActivity : AppCompatActivity() {
                     removeCapsule("ResetTestUser", it.key.toString())
                 }
             }
+            // capsule 삭제 완료시 완료 화면으로 이동
+            val intent = Intent(this, ResetCompleteActivity::class.java)
+            Handler().postDelayed({ startActivity(intent)}, 1000L)
+
         }
     }
 
