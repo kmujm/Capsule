@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 
 class SettingActivity : AppCompatActivity() {
     private val infoButton: Button by lazy {
@@ -25,6 +26,7 @@ class SettingActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+
     }
 
 }
