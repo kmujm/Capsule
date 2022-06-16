@@ -121,12 +121,20 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
     }
 
     private fun setDialog(curNickname: String) {
+        val dialogView = View.inflate(this, R.layout.nickname_dialog, null)
+        val nickTitle = dialogView.findViewById<TextView>(R.id.title)
+        val nickText = dialogView.findViewById<TextView>(R.id.message)
+        nickTitle.text = "닉네임 설정"
+        nickText.text = "${curNickname}은 \n사용 불가능한 닉네임이에요!"
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("닉네임 설정")
-            .setMessage("${curNickname}은 사용 불가능한 닉네임이에요!")
-            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-            })
-        builder.show()
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val dialogOkButton: AppCompatButton = dialogView.findViewById(R.id.positiveButton)
+        dialogOkButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun checkNickname(curNickname: String) {
