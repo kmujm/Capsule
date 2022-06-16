@@ -1,6 +1,7 @@
 package com.example.capsule
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -82,7 +83,7 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
 
     private fun initCompleteButton() {
         btnComplete.setOnClickListener {
-            if (clickable) {
+            if (clickable) {   // 완료 버튼이 활성화인 경우
                 checkPW()
             }
         }
@@ -97,7 +98,7 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
 
             var inputPW = pw.text.toString()
             if (inputPW != userPW) {   // 잘못된 비밀번호를 입력한 경우
-                initDialog()
+                setDialog()
                 clear = false
                 // 버튼 비활성화 + 라인 색 변경
                 btnComplete.background = getDrawable(R.drawable.inactivate_button_background)
@@ -106,6 +107,9 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
 
                 // 입력창 터치하면 다 지워지고 처음상태로 변경
                 resetPw()
+            } else {
+                val intent = Intent(this, ResetProgressActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -120,7 +124,7 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
         }
     }
 
-    private fun initDialog() {
+    private fun setDialog() {
         val dlg = Dialog(this)
         dlg.setContentView(R.layout.pw_check_dialog)
         dlg.setCancelable(false)
