@@ -85,7 +85,8 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
                     Log.d("UID!!!!!", UID)
                     val user = hashMapOf(
                         "email" to email,
-                        "nickname" to nicknameText
+                        "nickname" to nicknameText,
+                        "password" to password
                     )
                     database.child("Users").child(UID).child("Info").setValue(user)
                         .addOnSuccessListener {
