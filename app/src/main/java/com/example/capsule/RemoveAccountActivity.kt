@@ -83,8 +83,6 @@ class RemoveAccountActivity : AppCompatActivity() {
         var cnt = 0
         UID = "asdfifeiofjn1233"//Firebase.auth.currentUser!!.uid
         val myRef = database.child("Users").child(UID)
-        // 각 유저 데이터베이스 밑에 존재하는 캡슐 키를 가져오는 코드
-        val capsuleKey = mutableListOf<String>()
         myRef.get().addOnSuccessListener {
             it.children.forEach {
                 if (it.key.toString() != "Info") {

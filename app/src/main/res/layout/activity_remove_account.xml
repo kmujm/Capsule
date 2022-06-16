@@ -40,6 +40,7 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="127dp"
+        android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
