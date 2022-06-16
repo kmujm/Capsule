@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import com.jakewharton.threetenabp.AndroidThreeTen
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
+
 
 class ResetCompleteActivity : AppCompatActivity() {
     private val resetDate: TextView by lazy {
@@ -15,6 +17,7 @@ class ResetCompleteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_complete)
+        AndroidThreeTen.init(this);
 
         setResetDateMsg()
     }
