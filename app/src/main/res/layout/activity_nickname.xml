@@ -13,6 +13,7 @@
         android:layout_marginEnd="344dp"
         android:layout_marginBottom="32dp"
         android:src="@drawable/back_button"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@id/signupText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,13 +92,13 @@
         android:textColor="@color/secondary"
         android:textSize="12sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintBottom_toTopOf="@id/NicknameSubmitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickname" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/submitButton"
+        android:id="@+id/NicknameSubmitButton"
         android:layout_width="297dp"
         android:layout_height="40dp"
         android:layout_marginStart="31dp"
