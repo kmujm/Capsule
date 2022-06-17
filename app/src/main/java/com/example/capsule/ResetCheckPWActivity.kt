@@ -90,26 +90,27 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
     }
 
     private fun checkPW() {
-        // var uid = user!!.uid
-        // Todo: uid로 변경
-        // 로그인한 유저의 password 가져옴
-        myRef.child("asdfifeiofjn1233").child("Info").get().addOnSuccessListener {
-            userPW = it.child("password").getValue<String>().toString()
+        if (user!=null) {
+            var uid = user!!.uid
+            // 로그인한 유저의 password 가져옴
+            myRef.child(uid).child("Info").get().addOnSuccessListener {
+                userPW = it.child("password").getValue<String>().toString()
 
-            var inputPW = pw.text.toString()
-            if (inputPW != userPW) {   // 잘못된 비밀번호를 입력한 경우
-                setDialog()
-                clear = false
-                // 버튼 비활성화 + 라인 색 변경
-                btnComplete.background = getDrawable(R.drawable.inactivate_button_background)
-                clickable = false
-                pw.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.cost)
+                var inputPW = pw.text.toString()
+                if (inputPW != userPW) {   // 잘못된 비밀번호를 입력한 경우
+                    setDialog()
+                    clear = false
+                    // 버튼 비활성화 + 라인 색 변경
+                    btnComplete.background = getDrawable(R.drawable.inactivate_button_background)
+                    clickable = false
+                    pw.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.cost)
 
-                // 입력창 터치하면 다 지워지고 처음상태로 변경
-                resetPw()
-            } else {
-                val intent = Intent(this, ResetProgressActivity::class.java)
-                startActivity(intent)
+                    // 입력창 터치하면 다 지워지고 처음상태로 변경
+                    resetPw()
+                } else {
+                    val intent = Intent(this, ResetProgressActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }

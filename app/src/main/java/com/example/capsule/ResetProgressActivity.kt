@@ -9,6 +9,7 @@ import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.getValue
 
 class ResetProgressActivity : AppCompatActivity() {
     private val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -22,17 +23,23 @@ class ResetProgressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_progress)
 
-        // capsule 삭제
-        myRef.child("ResetTestUser").get().addOnSuccessListener {
-            it.children.forEach {
-                if (it.key.toString() != "Info") {
-                    removeCapsule("ResetTestUser", it.key.toString())
-                }
-            }
-            // capsule 삭제 완료시 완료 화면으로 이동
-            val intent = Intent(this, ResetCompleteActivity::class.java)
-            Handler().postDelayed({ startActivity(intent)}, 1000L)
+    }
+    override fun onResume() {
+        super.onResume()
 
+        if (user!=null) {
+            var uid = user!!.uid
+            // capsule 삭제
+            myRef.child(uid).get().addOnSuccessListener {
+                it.children.forEach {
+                    if (it.key.toString() != "Info") {
+                        removeCapsule(uid, it.key.toString())
+                    }
+                }
+                // capsule 삭제 완료시 완료 화면으로 이동
+                val intent = Intent(this, ResetCompleteActivity::class.java)
+                Handler().postDelayed({ startActivity(intent)}, 1000L)
+            }
         }
     }
 
