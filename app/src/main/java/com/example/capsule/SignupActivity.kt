@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.capsule.databinding.ActivitySignupBinding
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
@@ -25,7 +27,7 @@ class SignupActivity : AppCompatActivity() {
     private var isEmailPass = false
     private var isPasswordPass = false
     private var isStateShowingPassword = true
-    private val db = Firebase.firestore
+    private lateinit var db: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,10 @@ class SignupActivity : AppCompatActivity() {
         // view binding
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = Firebase.database.reference
+
+
         initDetctEmailEditText()
         initCheckPasswordPattern()
         initView()
@@ -116,33 +122,31 @@ class SignupActivity : AppCompatActivity() {
         binding.checkEmailButton.setOnClickListener {
             val curEmail = binding.emailEditText.text.toString()
 
-            db.collection("users")
-                .whereEqualTo("Email", curEmail)
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (doc in documents) {
-                        Log.d(TAG, "${doc.id} => ${doc.data}")
-                        if (doc.data.get("Email").toString() == curEmail) {
-//                            Toast.makeText(this, "사용 불가능한 이메일 입니다", Toast.LENGTH_SHORT).show()
-                            // 중복일 시
-                            showEmailCheckErrorMessage()
-                            showEmailEditTextAlertIcon()
-                            offCheckEmailButton()
-                            offSubmitButton()
-                            isEmailPass = false
-                            return@addOnSuccessListener
-                        }
+            db.child("Users").get().addOnSuccessListener {
+//                Log.d(TAG, it.toString())
+                it.children.forEach {
+//                    Log.d(TAG, it.toString())
+                    val userInfo = it.child("Info").value as HashMap<*, *>
+//                    Log.d(TAG, userInfo.toString())
+                    Log.d(TAG, userInfo.get("email").toString())
+                    if (userInfo.get("email").toString() == curEmail) {
+                        Log.d(TAG, "${curEmail}은 이미 존재합니다")
+                        showEmailCheckErrorMessage()
+                        showEmailEditTextAlertIcon()
+                        offCheckEmailButton()
+                        offSubmitButton()
+                        isEmailPass = false
+                        return@addOnSuccessListener
                     }
-                    // 중복이 아닐 시
-//                    Toast.makeText(this, "사용 가능한 이메일 입니다", Toast.LENGTH_SHORT).show()
-                    isEmailPass = true
-                    showEmailCheckPassMessage()
-                    onCheckEamilButton()
                 }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "Error getting documents: ", exception)
-                    return@addOnFailureListener
-                }
+                Toast.makeText(this, "사용 가능한 이메일 입니다", Toast.LENGTH_SHORT).show()
+                isEmailPass = true
+                showEmailCheckPassMessage()
+                onCheckEamilButton()
+            }.addOnFailureListener { exception ->
+                Log.d("에러다", exception.toString())
+                return@addOnFailureListener
+            }
         }
     }
 
@@ -273,8 +277,6 @@ class SignupActivity : AppCompatActivity() {
 
                 // 배경색 원위치
                 binding.emailEditText.background = getDrawable(R.drawable.edittext_background)
-
-                Log.d(TAG, isEmailPass.toString())
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

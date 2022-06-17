@@ -69,12 +69,20 @@ class MainActivity : AppCompatActivity() {
 
         initGreeting()
         initObjectDetectionButton()
+        initCapsuleListButton()
         getCapsuleKeys()
     }
 
     private fun initObjectDetectionButton(){
         objectDetectionButton.setOnClickListener {
             val intent = Intent(this, ObjectDetectionActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun initCapsuleListButton(){
+        CapsuleListButton.setOnClickListener {
+            val intent = Intent(this, CapsuleListActivity::class.java)
             startActivity(intent)
         }
     }
@@ -137,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     p0.child("registerImage").children.forEach(){
                         pictureList.add(Uri.parse(it.value as String))
                     }
-                    val capsule = RecentCapsuleItem(p0.child("date").value.toString(), p0.child("title").value.toString(), pictureList, key)
+                    val capsule = RecentCapsuleItem(p0.child("date").value.toString(), p0.child("title").value.toString(), pictureList, key, p0.child("detectImage").value.toString(), p0.child("content").value.toString())
                     recentCapsuleList.add(capsule)
 
                     if(++cnt == capsuleKey.size){

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_ReasonBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="318dp"
+        android:background="@drawable/back_button"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ReasonTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="224dp"
+        android:text="회원탈퇴"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_ReasonBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ReasonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="79dp"
+        android:text="탈퇴 사유를 선택해주세요."
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReasonTitle" />
+
+    <TextView
+        android:id="@+id/ReasonMultiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="227dp"
+        android:text="*중복 선택 가능"
+        android:textColor="@color/secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ReasonText" />
+
+    <CheckBox
+        android:id="@+id/ReasonCheck1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="284dp"
+        android:background="@drawable/custom_check"
+        android:button="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ReasonMultiText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:gravity="center"
+        android:text="흥미가 떨어짐."
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/ReasonCheck1"
+        app:layout_constraintStart_toEndOf="@id/ReasonCheck1"
+        app:layout_constraintTop_toTopOf="@id/ReasonCheck1" />
+
+    <CheckBox
+        android:id="@+id/ReasonCheck2"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="284dp"
+        android:background="@drawable/custom_check"
+        android:button="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ReasonCheck1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:gravity="center"
+        android:text="조작이 불편함."
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/ReasonCheck2"
+        app:layout_constraintStart_toEndOf="@id/ReasonCheck2"
+        app:layout_constraintTop_toTopOf="@id/ReasonCheck2" />
+
+    <CheckBox
+        android:id="@+id/ReasonCheck3"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="284dp"
+        android:background="@drawable/custom_check"
+        android:button="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ReasonCheck2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:gravity="center"
+        android:text="하고싶은 마음이 들지 않음."
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/ReasonCheck3"
+        app:layout_constraintStart_toEndOf="@id/ReasonCheck3"
+        app:layout_constraintTop_toTopOf="@id/ReasonCheck3" />
+
+    <CheckBox
+        android:id="@+id/ReasonCheck4"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="284dp"
+        android:background="@drawable/custom_check"
+        android:button="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ReasonCheck3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:gravity="center"
+        android:text="기타"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/ReasonCheck4"
+        app:layout_constraintStart_toEndOf="@id/ReasonCheck4"
+        app:layout_constraintTop_toTopOf="@id/ReasonCheck4" />
+
+    <EditText
+        android:id="@+id/ReasonInput"
+        android:layout_width="252dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="54dp"
+        android:background="@drawable/reason_textbox"
+        android:gravity="top|left"
+        android:hint="100자 이내로 입력해주세요"
+        android:lines="5"
+        android:padding="12dp"
+        android:textColorHint="@color/secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ReasonCheck4" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_ReasonNext"
+        android:layout_width="297dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/inactivate_button_background"
+        android:gravity="center"
+        android:text="다음"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReasonInput" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

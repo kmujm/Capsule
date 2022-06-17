@@ -1,6 +1,7 @@
 package com.example.capsule
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.annotation.GlideModule
@@ -26,7 +28,9 @@ class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : Muta
         fun bind(item : RecentCapsuleItem, position: Int){
             capsuleDate.text = item.capsuleDate
             capsuleTitle.text = item.capsuleTitle
-            morePicture.text = "+${item.pictureList.size-3}"
+            if(item.pictureList.size > 3){
+                morePicture.text = "+${item.pictureList.size-3}"
+            }
             Glide.with(itemView).load(item.pictureList[0]).into(img1)
             if(item.pictureList.size > 1){
                 Glide.with(itemView).load(item.pictureList[1]).into(img2)
@@ -41,8 +45,18 @@ class RecentCapsuleAdapter (val mContext : Context, val RecentCapsuleList : Muta
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent_capsule, parent, false)
         return CustomViewHolder(view).apply{
             itemView.setOnClickListener {
-                // TODO 누르면 화면 전환
-                // TODO 2. 캡슐 보기 화면으로 인텐트에 캡슐키 담아 전환
+                val curPos = adapterPosition
+                val item = RecentCapsuleList.get(curPos)
+                // 누르면 화면 전환
+                val intent = Intent(mContext, ShowCapsuleActivity::class.java)
+                // 2. 캡슐 보기 화면으로 인텐트에 캡슐키 담아 전환
+                intent.putExtra("capsuleKey", item.capsuleKey)
+                intent.putExtra("capsuleTitle", item.capsuleTitle)
+                intent.putExtra("capsuleDate", item.capsuleDate)
+                intent.putExtra("capsulePhoto", item.detectImage)
+                intent.putExtra("capsuleContent", item.content)
+
+                mContext.startActivity(intent)
             }
         }
     }

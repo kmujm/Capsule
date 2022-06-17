@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
 
-
 class SettingActivity : AppCompatActivity() {
     private val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val myRef: DatabaseReference = mDatabase.getReference("Users")
@@ -59,6 +58,7 @@ class SettingActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+
     }
 
     private fun initLogoutButton() {

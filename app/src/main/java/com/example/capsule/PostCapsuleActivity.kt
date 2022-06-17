@@ -37,7 +37,6 @@ class PostCapsuleActivity : AppCompatActivity() {
     private lateinit var iAdapter: ImageAdpater
     private lateinit var nowTime: String
     private lateinit var db: DatabaseReference
-    private lateinit var auth: FirebaseAuth
     private lateinit var mainImageFromIntent : String
     private lateinit var imageListFromIntent : MutableList<ImageItem>
 
@@ -49,9 +48,8 @@ class PostCapsuleActivity : AppCompatActivity() {
     private val submitButton by lazy { findViewById<AppCompatButton>(R.id.pcSubmitAppCompatButton) }
     private val progressBar by lazy { findViewById<ProgressBar>(R.id.pcProgressBar) }
     private val backButton by lazy { findViewById<Button>(R.id.pcBackButton)}
-    private val storage by lazy {
-        Firebase.storage
-    }
+    private val storage by lazy { Firebase.storage }
+    private val auth by lazy { Firebase.auth.currentUser }
 
     private val uploadURLList = mutableListOf<String>()
 
@@ -64,8 +62,8 @@ class PostCapsuleActivity : AppCompatActivity() {
 
         // db and auth init
         // TODO auth 널체크후, db 레퍼런스 잡아주기
-        db = Firebase.database.reference.child("Users").child(GET_AUTH_ID)
-        auth = Firebase.auth
+        db = Firebase.database.reference.child("Users").child(auth!!.uid)
+
 
         // TODO 내가 넘겨받았다고 가정하는 데이터
         // 메인이미지uri와, 서브 이미지uri, -> 뭐가 메인이고 뭐가 서브인지 구분되게 들어와야함
@@ -153,13 +151,13 @@ class PostCapsuleActivity : AppCompatActivity() {
             Log.d(LOG, "submitBtn Clicked!!")
             // 제목 null 체크
             // TODO 로그인 구현시 널 체크
-//            if(auth.uid == null ) {
-//                // 로그인 상태가 아니기 때문에 에러 발생, 로그인 페이지로 돌림
-//                Toast.makeText(this,"로그인 정보가 올바르지 않습니다.",Toast.LENGTH_SHORT).show()
-//                val intent = Intent(this,LoginActivity::class.java)
-//                startActivity(intent)
-//                finish()
-//            }
+            if(auth?.uid == null ) {
+                // 로그인 상태가 아니기 때문에 에러 발생, 로그인 페이지로 돌림
+                Toast.makeText(this,"로그인 정보가 올바르지 않습니다.",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this,LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
             startProgressBar()
             if (titleEditText.text.isNullOrBlank()) {
                 Toast.makeText(this, "제목을 입력해 주세요", Toast.LENGTH_SHORT).show()
@@ -182,7 +180,7 @@ class PostCapsuleActivity : AppCompatActivity() {
 
     private fun uploadImageToStorage( index : Int, stringURI : String, mSuccessHandler: () -> Unit, mErrorHandler: () -> Unit) {
         Log.d(LOG, "uploadImageToStorage called !!")
-        val fileName = "${GET_AUTH_ID}_${System.currentTimeMillis()}"
+        val fileName = "${auth!!.uid}_${System.currentTimeMillis()}"
         storage.reference.child("object/photo").child(fileName)
             .putFile(stringURI.toUri())
             .addOnCompleteListener{
@@ -241,11 +239,11 @@ class PostCapsuleActivity : AppCompatActivity() {
                 Log.d(LOG,"push Successful, it : ${it}")
                 Toast.makeText(this,"캡슐 저장에 성공했습니다",Toast.LENGTH_SHORT).show()
 
-                //추가된 캡슐키 넘겨줌
-                //val intent = Intent(this,ShowCapsuleActivity::class.java)
-                //intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
-                //startActivity(intent)
-                //finish()
+//                추가된 캡슐키 넘겨줌
+                val intent = Intent(this,ShowCapsuleActivity::class.java)
+                intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
+                startActivity(intent)
+                finish()
 
 
                 stopProgressBar()
