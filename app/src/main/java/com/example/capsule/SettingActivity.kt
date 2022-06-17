@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -35,21 +36,30 @@ class SettingActivity : AppCompatActivity() {
     private val signDeleteButton: Button by lazy {
         findViewById(R.id.btn_SettingWithdrawal)
     }
+    private val resetButton:Button by lazy {
+        findViewById(R.id.btn_SettingCapsuleReset)
+    }
+    private val settingPWButton:Button by lazy {
+        findViewById(R.id.btn_SettingPW)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        var uid = user!!.uid
-        // 로그인한 유저의 email 가져옴
-        myRef.child("asdfifeiofjn1233").child("Info").get().addOnSuccessListener {
-            userEmail = it.child("email").getValue<String>().toString()
+        if (user!=null) {
+            var uid = user!!.uid
+            // 로그인한 유저의 email 가져옴
+            myRef.child(uid).child("Info").get().addOnSuccessListener {
+                userEmail = it.child("email").getValue<String>().toString()
+            }
         }
 
         initInfoButton()
         initBackButton()
         initLogoutButton()
         initSignDeleteButton()
+        initResetButton()
     }
 
     private fun initSignDeleteButton() {
@@ -76,6 +86,13 @@ class SettingActivity : AppCompatActivity() {
     private fun initLogoutButton() {
         logoutButton.setOnClickListener {
             initDialog()
+        }
+    }
+
+    private fun initResetButton() {
+        resetButton.setOnClickListener {
+            val intent = Intent(this, CapsuleResetActivity::class.java)
+            startActivity(intent)
         }
     }
 
