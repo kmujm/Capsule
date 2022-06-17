@@ -1,95 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.capsule">
+  package="com.example.capsule">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.CAMERA" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Capsule">
-        <activity
-            android:name=".ResetCompleteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ResetProgressActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ResetCheckPWActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CapsuleResetActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ShowCapsuleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CapsuleListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GetDetectedImageActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ImageSelectActivity"
-            android:exported="true" />
+  <application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.Capsule">
+    <activity
+        android:name=".ResetCompleteActivity"
+        android:exported="false" />
+    <activity
+        android:name=".ResetProgressActivity"
+        android:exported="false" />
+    <activity
+        android:name=".ResetCheckPWActivity"
+        android:exported="false" />
+    <activity
+        android:name=".CapsuleResetActivity"
+        android:exported="false" />
+    <activity
+        android:name=".RemoveReasonActivity"
+        android:exported="true" />
+    <activity
+        android:name=".RemoveAccountActivity"
+        android:exported="true" />
+    <activity
+      android:name=".ShowCapsuleActivity"
+      android:exported="false" />
+    <activity
+      android:name=".CapsuleListActivity"
+      android:exported="false" />
+    <activity
+      android:name=".GetDetectedImageActivity"
+      android:exported="true" />
+    <activity
+      android:name=".ImageSelectActivity"
+      android:exported="true" />
 
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/file_paths" />
+    <meta-data
+      android:name="com.google.android.actions"
+      android:resource="@xml/file_paths" />
 
-        <activity
-            android:name=".SelectPicActivity"
-            android:exported="true" />
-        <activity
-            android:name=".DetectedCatagoryActivity"
-            android:exported="true" />
-        <activity
-            android:name=".PostCapsuleActivity"
-            android:exported="true" />
-        <activity
-            android:name=".PrivacyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SettingActivity"
-            android:exported="true" />
-        <activity
-            android:name=".EditProfileActivity"
-            android:exported="true" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <activity
+      android:name=".SelectPicActivity"
+      android:exported="true" />
+    <activity
+      android:name=".DetectedCatagoryActivity"
+      android:exported="true" />
+    <activity
+      android:name=".PostCapsuleActivity"
+      android:exported="true" />
+    <activity
+      android:name=".PrivacyActivity"
+      android:exported="false" />
+    <activity
+      android:name=".SettingActivity"
+      android:exported="true" />
+    <activity
+      android:name=".EditProfileActivity"
+      android:exported="true" />
+    <activity
+      android:name=".LoginActivity"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ObjectDetectionActivity" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="true" />
-        <activity
-            android:name=".NicknameActivity"
-            android:exported="true" />
+    </activity>
+    <activity
+      android:name=".MainActivity"
+      android:exported="true">
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.capsule"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-    </application>
+    </activity>
 
+    <activity android:name=".ObjectDetectionActivity" />
+    <activity
+      android:name=".SignupActivity"
+      android:exported="true">
+
+    </activity>
+
+    <activity
+      android:name=".SignoutPasswordActivity"
+      android:exported="true">
+
+
+
+    </activity>
+
+    <activity android:name=".SignoutSuccessActivity"
+      android:exported="true">
+
+    </activity>
+
+    <activity
+      android:name=".NicknameActivity"
+      android:exported="true" />
+
+    <provider
+      android:name="androidx.core.content.FileProvider"
+      android:authorities="com.example.capsule"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+    </provider>
+  </application>
 </manifest>

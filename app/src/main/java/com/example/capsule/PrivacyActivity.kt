@@ -23,7 +23,7 @@ class PrivacyActivity : AppCompatActivity() {
     private val backButton: Button by lazy {
         findViewById(R.id.btn_PrivacyBack)
     }
-    private val privacyEditProfile : ImageButton by lazy{
+    private val privacyEditProfile : Button by lazy{
         findViewById(R.id.PrivacyEditProfile)
     }
 
