@@ -52,30 +52,26 @@ class ShowCapsuleActivity : AppCompatActivity() {
         val capsulePhoto = intent.getStringExtra("capsulePhoto") // capsule detectImage
         val capsuleContent = intent.getStringExtra("capsuleContent")
 
-        var uid = user!!.uid
-
-        // title, date, detect Image 띄워줌
+        // title, date, content, detect Image 띄워줌
         Ctitle.setText(capsuleTitle.toString())
         CDate.setText(capsuleDate.toString())
         content.setText(capsuleContent.toString())
         Glide.with(this).load(capsulePhoto?.toUri()).into(CPhoto);
 
-        // todo: .child(uid)로 수정
-        myRef.child("asdfifeiofjn1233").child(capsuleKey.toString()).get().addOnSuccessListener {
-            it.child("registerImage").children.forEach {
-                CapsuleDataList.add(ShowCapsuleData(it.getValue().toString().toUri()))
+        if (user!=null) {
+            var uid = user!!.uid
+            myRef.child(uid).child(capsuleKey.toString()).get().addOnSuccessListener {
+                it.child("registerImage").children.forEach {
+                    CapsuleDataList.add(ShowCapsuleData(it.getValue().toString().toUri()))
+                }
+                initRecycler()
             }
-            initRecycler(uid)
         }
 
-        // 뒤로가기 버튼 클릭시 캡슐 목록으로 이동
-        btnBack.setOnClickListener {
-            val intent = Intent(this, CapsuleListActivity::class.java)
-            startActivity(intent)
-        }
+        initBackButton()
     }
 
-    private fun initRecycler(uid: String) {
+    private fun initRecycler() {
         // adaper 와 recyclerView 연결
         val recyclerView: RecyclerView by lazy {
             findViewById(R.id.CapsuleShow)
@@ -83,8 +79,14 @@ class ShowCapsuleActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
-        // TODO: uid 전달로 변경
+
         val capsuleAdapter = ShowCapsuleAdapter(this, CapsuleDataList)
         recyclerView.adapter = capsuleAdapter
+    }
+
+    private fun initBackButton() {
+        btnBack.setOnClickListener {
+            finish()
+        }
     }
 }

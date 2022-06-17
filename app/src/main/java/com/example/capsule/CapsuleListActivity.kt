@@ -40,17 +40,6 @@ class CapsuleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capsule_list)
 
-        initBackButton()
-    }
-
-    private fun initBackButton() {
-        backButton.setOnClickListener {
-            finish()
-        }
-    }
-    override fun onResume() {
-        super.onResume()
-
         if (user != null) {
             var uid = user!!.uid
             // capsule key들만 모아놓은 배열 생성
@@ -62,6 +51,13 @@ class CapsuleListActivity : AppCompatActivity() {
                 }
                 initValue(uid)
             }
+        }
+        initBackButton()
+    }
+
+    private fun initBackButton() {
+        backButton.setOnClickListener {
+            finish()
         }
     }
 
