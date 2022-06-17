@@ -7,5 +7,7 @@ data class RecentCapsuleItem (
     val capsuleDate : String,
     val capsuleTitle : String,
     val pictureList : MutableList<Uri>,
-    val capsuleKey : String
+    val capsuleKey : String,
+    val detectImage : String,
+    val content : String
     )
