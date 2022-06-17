@@ -118,7 +118,7 @@ class LoginActivity : AppCompatActivity(), TextWatcher {
             auth.signInWithEmailAndPassword(emailFromUser, passWordFromUser)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val intent = Intent(this, SettingActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         initAlertDialog()
