@@ -71,6 +71,13 @@ class MainActivity : AppCompatActivity() {
         initObjectDetectionButton()
         initCapsuleListButton()
         getCapsuleKeys()
+        initSettingButton()
+    }
+    private fun initSettingButton(){
+        settingButton.setOnClickListener {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initObjectDetectionButton(){
@@ -101,9 +108,9 @@ class MainActivity : AppCompatActivity() {
     private fun initGreeting(){
         userGreeting()
 
-        val user = 1//Firebase.auth.currentUser
+        val user = Firebase.auth.currentUser
         if(user != null){
-            userId = "asdfifeiofjn1233"//Firebase.auth.currentUser!!.uid
+            userId = Firebase.auth.currentUser!!.uid
             database.child("Users").child(userId).child("Info").child("nickname").get().addOnSuccessListener {
                 username = it.value.toString()
                 userGreeting()

@@ -1,5 +1,6 @@
 package com.example.capsule
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -70,12 +71,15 @@ class RemoveAccountActivity : AppCompatActivity() {
     private fun initCancelBtn() {
         removeCancelBtn.setOnClickListener {
             // 취소 버튼 클릭시 동작
+            finish()
         }
     }
 
     private fun initAccountRemoveBtn() {
         removeAccountBtn.setOnClickListener {
             // 회원 탈퇴 버튼 클릭시 동작
+            val intent = Intent(this, RemoveReasonActivity::class.java)
+            startActivity(intent)
         }
     }
 

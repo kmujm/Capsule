@@ -32,6 +32,10 @@ class SettingActivity : AppCompatActivity() {
         findViewById(R.id.btn_SettingLogout)
     }
 
+    private val signDeleteButton: Button by lazy {
+        findViewById(R.id.btn_SettingWithdrawal)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
@@ -45,6 +49,14 @@ class SettingActivity : AppCompatActivity() {
         initInfoButton()
         initBackButton()
         initLogoutButton()
+        initSignDeleteButton()
+    }
+
+    private fun initSignDeleteButton() {
+        signDeleteButton.setOnClickListener {
+            val intent = Intent(this, RemoveAccountActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initInfoButton() {

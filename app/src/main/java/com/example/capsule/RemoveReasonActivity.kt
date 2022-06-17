@@ -1,5 +1,6 @@
 package com.example.capsule
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -73,7 +74,8 @@ class RemoveReasonActivity : AppCompatActivity() {
     private fun initNextButton() {
         nextBtn.setOnClickListener {
             val reasonFromUser = inputReason.text.toString()
-            // 다음 페이지로 넘어가기 코드 추가 부분
+            val intent = Intent(this, SignoutPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 
