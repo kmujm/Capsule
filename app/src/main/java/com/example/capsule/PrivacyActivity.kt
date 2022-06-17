@@ -5,12 +5,17 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 
 
 class PrivacyActivity : AppCompatActivity() {
@@ -26,35 +31,53 @@ class PrivacyActivity : AppCompatActivity() {
     private val privacyEditProfile : Button by lazy{
         findViewById(R.id.PrivacyEditProfile)
     }
+    private val myCapsuleButton : Button by lazy{
+        findViewById(R.id.PrivacyVideo)
+    }
 
-    private lateinit var auth: FirebaseAuth
-    private val db: FirebaseFirestore = Firebase.firestore
+    private val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val myRef: DatabaseReference = mDatabase.getReference("Users")
+
+    private var auth = FirebaseAuth.getInstance()
+    private var user = auth.currentUser    // 현재 로그인한 유저
+
+    private lateinit var Email:String
+    private lateinit var Nickname:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_privacy)
 
         initPrivacyEditProfileButton()
+        initBackButton()
+        initMyCapsuleButton()
+    }
 
+    private fun initBackButton() {
         backButton.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun initMyCapsuleButton() {
+        myCapsuleButton.setOnClickListener {
+            val intent = Intent(this, CapsuleListActivity::class.java)
+            startActivity(intent)
         }
     }
 
     override fun onResume() {
         super.onResume()
 
-        auth = Firebase.auth
-        val uid = auth.currentUser?.uid ?: "ProfileTest"
+        if (user!=null) {
+            var uid = user!!.uid
+            // 로그인한 유저의 email, nickname 가져옴
+            myRef.child(uid).child("Info").get().addOnSuccessListener {
+                Email = it.child("email").getValue<String>().toString()
+                Nickname = it.child("nickname").getValue<String>().toString()
 
-        db.document("users/${uid}").get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val document = task.result
-                val email = document.data?.get("Email")
-                val nickname = document.data?.get("Nickname")
-                // 개인정보에 이메일, 닉네임 보여줌
-                userEmail.setText(email.toString())
-                userName.setText(nickname.toString())
+                userEmail.setText(Email)
+                userName.setText(Nickname)
             }
         }
     }
