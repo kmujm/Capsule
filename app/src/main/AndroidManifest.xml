@@ -15,6 +15,18 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.Capsule">
     <activity
+        android:name=".ResetCompleteActivity"
+        android:exported="false" />
+    <activity
+        android:name=".ResetProgressActivity"
+        android:exported="false" />
+    <activity
+        android:name=".ResetCheckPWActivity"
+        android:exported="false" />
+    <activity
+        android:name=".CapsuleResetActivity"
+        android:exported="false" />
+    <activity
         android:name=".RemoveReasonActivity"
         android:exported="true" />
     <activity
@@ -104,5 +116,4 @@
         android:resource="@xml/file_paths" />
     </provider>
   </application>
-
 </manifest>
