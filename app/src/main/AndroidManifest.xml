@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capsule">
         <activity
+            android:name=".RemoveReasonActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RemoveAccountActivity"
+            android:exported="true" />
+        <activity
             android:name=".ShowCapsuleActivity"
             android:exported="false" />
         <activity
