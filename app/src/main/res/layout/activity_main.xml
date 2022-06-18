@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/smile_icon"
+        android:src="@drawable/capsule_icon"
         app:layout_constraintEnd_toEndOf="@+id/settings"
         app:layout_constraintStart_toStartOf="@id/alarm"
         app:layout_constraintTop_toTopOf="parent" />
