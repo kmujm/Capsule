@@ -302,6 +302,7 @@ class ObjectDetectionActivity : AppCompatActivity() {
             selectedGalleryActivity.putExtra(INTENT_KEY_SELECTED_CATAGORY,selectedCatagory)
             selectedGalleryActivity.putExtra(INTENT_KEY_MAIN_IMAGE, mCurrentPhotoUri) // 사용자가 찍은 사진의 uri를 넘겨줌
             startActivity(selectedGalleryActivity)
+            finish()
         }
         cRecyclerView.adapter = cAdapter
         cAdapter.submitList(catagoryList)
@@ -311,6 +312,17 @@ class ObjectDetectionActivity : AppCompatActivity() {
         retryTextButton.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("nowActivity","OnStoped!!!")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Detected","OnDestroyed!!")
     }
 
     companion object{
