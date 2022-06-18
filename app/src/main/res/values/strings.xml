@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">Capsule</string>
+    <string name="setting_title">설정</string>
+    <string name="setting_info">개인 정보</string>
+    <string name="setting_pw_reset">비밀번호 재설정</string>
+    <string name="setting_capsule_reset">캡슐 리셋</string>
+    <string name="setting_logout">로그아웃</string>
+    <string name="setting_withdrawal">회원 탈퇴</string>
+    <string name="privacy_title">개인정보</string>
+    <string name="privacy_my_capsule">MY 캡슐</string>
+    <string name="privacy_fav_capsule">최애 캡슐</string>
+    <string name="privacy_edit_profile">프로필 수정</string>
+    <string name="email_hint">이메일을 입력해주세요</string>
+    <string name="password_hint">비밀번호를 입력해주세요</string>
+    <string name="login_button">캡슐 시작하기</string>
+    <string name="login_signup">회원가입</string>
+    <string name="signup_title">회원가입</string>
+    <string name="signup_subtitle">캡슐과 오늘부터 1일</string>
+    <string name="signup_email_textview">이메일</string>
+    <string name="signup_checkemail_button">중복 확인</string>
+    <string name="singup_password_label_textview">비밀번호</string>
+    <string name="signup_password_hint_string">8~20자리 영문,숫자 조합</string>
+    <string name="signup_editText_hint_string">이메일을 입력해주세요</string>
+    <string name="signup_checkpassword_label_string">비밀번호 확인</string>
+    <string name="signup_submit_button_string">완료</string>
+    <string name="string_make_capsule">캡슐 만들기</string>
+    <string name="string_dc_subTitle">인식한 것</string>
+    <string name="string_dc_message">캡슐로 만들고 싶은 키워드를 터치해주세요.</string>
+    <string name="string_dc_endtitle">원하는 제품이 인식되지 않았나요?</string>
+    <string name="string_dc_retry"><u>다시 인식하기</u></string>
+    <string name="string_pc_title_hint">제목을 입력해주세요!</string>
+    <string name="string_post_edit_text_hint">캡슐로 등록할 사진들을 확인한 후 \n나의경험, 느낀 점 등을 글로 정리해보세요.</string>
+    <string name="string_button_complete">완료</string>
+    <string name="string_main">MAIN</string>
+    <string name="capsule_list_hint_string"><font size="14">검색</font></string>
+  <string name="sp_string_title">회원탈퇴</string>
+  <string name="sp_string_main_message">비밀번호를 입력하고\n완료 버튼을 눌러주세요.</string>
+  <string name="ss_main_message">회원탈퇴가 완료되었습니다.</string>
+  <string name="ss_sub_message">언제든 다시 캡슐을 찾아주세요!</string>
 </resources>
