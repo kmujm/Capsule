@@ -83,6 +83,9 @@ class PostCapsuleActivity : AppCompatActivity() {
     private fun initBackButton() {
         backButton.setOnClickListener {
             finish()
+//            val intent = Intent(this,MainActivity::class.java)
+//            finishAffinity()
+//            startActivity(intent)
         }
     }
 
