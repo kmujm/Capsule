@@ -31,7 +31,7 @@ class NicknameActivity : AppCompatActivity(), TextWatcher {
     private lateinit var database: DatabaseReference
     private var wordCount: Int = 0
     private lateinit var nicknameText: String
-    private val backButton: ImageButton by lazy {
+    private val backButton: Button by lazy {
         findViewById(R.id.backButton)
     }
     private val nickName: EditText by lazy {
