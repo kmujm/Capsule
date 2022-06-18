@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
         database = Firebase.database.reference
 
-        initGreeting()
         initObjectDetectionButton()
         initCapsuleListButton()
         initSettingButton()
@@ -75,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        initGreeting()
         getCapsuleKeys()
     }
 
