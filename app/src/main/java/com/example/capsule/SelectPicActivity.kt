@@ -35,6 +35,10 @@ class SelectPicActivity : AppCompatActivity() {
     var Images = mutableListOf<ImageData>()
     val passData = mutableSetOf<String>()
 
+    private val mainImageUri : Uri by lazy{
+        intent.getParcelableExtra("mainImage")!!
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -198,6 +202,7 @@ class SelectPicActivity : AppCompatActivity() {
             Log.d(TAG, "넘겨주는 값 $passData")
             val intent = Intent(this, PostCapsuleActivity::class.java)
             intent.putStringArrayListExtra("passData", ArrayList(passData))
+            intent.putExtra("mainImage", mainImageUri.toString())
             startActivity(intent)
             this.finish()
         }

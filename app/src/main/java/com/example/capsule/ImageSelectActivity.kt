@@ -87,7 +87,8 @@ class ImageSelectActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        val intent = Intent(this, SelectPicActivity::class.java)
+        val intent = Intent(this, SelectPicActivity::class.java).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.putExtra("mainImage", mainImageUri)
         startActivity(intent)
     }
 
