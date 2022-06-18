@@ -104,6 +104,7 @@
         </androidx.recyclerview.widget.RecyclerView>
         <com.shivampip.LinedEditText
             android:id="@+id/CapsuleContent"
+            android:enabled="false"
             android:padding="30dp"
             android:layout_width="365dp"
             android:layout_height="261dp"

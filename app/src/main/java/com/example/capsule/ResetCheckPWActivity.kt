@@ -3,6 +3,7 @@ package com.example.capsule
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,9 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -90,26 +93,27 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
     }
 
     private fun checkPW() {
-        // var uid = user!!.uid
-        // Todo: uid로 변경
-        // 로그인한 유저의 password 가져옴
-        myRef.child("asdfifeiofjn1233").child("Info").get().addOnSuccessListener {
-            userPW = it.child("password").getValue<String>().toString()
+        if (user!=null) {
+            var uid = user!!.uid
+            // 로그인한 유저의 password 가져옴
+            myRef.child(uid).child("Info").get().addOnSuccessListener {
+                userPW = it.child("password").getValue<String>().toString()
 
-            var inputPW = pw.text.toString()
-            if (inputPW != userPW) {   // 잘못된 비밀번호를 입력한 경우
-                setDialog()
-                clear = false
-                // 버튼 비활성화 + 라인 색 변경
-                btnComplete.background = getDrawable(R.drawable.inactivate_button_background)
-                clickable = false
-                pw.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.cost)
+                var inputPW = pw.text.toString()
+                if (inputPW != userPW) {   // 잘못된 비밀번호를 입력한 경우
+                    setDialog()
+                    clear = false
+                    // 버튼 비활성화 + 라인 색 변경
+                    btnComplete.background = getDrawable(R.drawable.inactivate_button_background)
+                    clickable = false
+                    pw.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.cost)
 
-                // 입력창 터치하면 다 지워지고 처음상태로 변경
-                resetPw()
-            } else {
-                val intent = Intent(this, ResetProgressActivity::class.java)
-                startActivity(intent)
+                    // 입력창 터치하면 다 지워지고 처음상태로 변경
+                    resetPw()
+                } else {
+                    val intent = Intent(this, ResetProgressActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }
@@ -148,5 +152,23 @@ class ResetCheckPWActivity : AppCompatActivity(), TextWatcher {
             dlg.dismiss()
         }
         dlg.show()
+    }
+
+    // 현재 포커스된 뷰의 영역이 아닌 다른 곳을 클릭 시 키보드를 내리고 포커스 해제
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val focusView = currentFocus
+        if (focusView != null) {
+            val rect = Rect()
+            focusView.getGlobalVisibleRect(rect)
+            val x = ev.x.toInt()
+            val y = ev.y.toInt()
+            if (!rect.contains(x, y)) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                if (imm != null) imm.hideSoftInputFromWindow(focusView.windowToken, 0)
+                focusView.clearFocus()
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }

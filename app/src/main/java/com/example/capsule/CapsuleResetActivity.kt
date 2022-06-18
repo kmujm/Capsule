@@ -24,7 +24,6 @@ class CapsuleResetActivity : AppCompatActivity() {
     private var auth = FirebaseAuth.getInstance()
     private var user = auth.currentUser    // 현재 로그인한 유저
 
-    private lateinit var uid:String
     private lateinit var userNickname:String
     private var userCount:Int = 0   // capsule 개수
 
@@ -49,7 +48,6 @@ class CapsuleResetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capsule_reset)
 
-        // uid = user!!.uid
         initUsername()
         initMessage()
         initProgressButton()
@@ -58,44 +56,50 @@ class CapsuleResetActivity : AppCompatActivity() {
     }
 
     private fun initUsername() {
-        myRef.child("asdfifeiofjn1233").child("Info").get().addOnSuccessListener {
-            userNickname = it.child("nickname").getValue<String>().toString()
+        if (user!=null) {
+            var uid = user!!.uid
+            myRef.child(uid).child("Info").get().addOnSuccessListener {
+                userNickname = it.child("nickname").getValue<String>().toString()
 
-            // 실제 Username 으로 바꿈
-            var content: String = tvUsername.text.toString()
-            content = content.replace("Username",userNickname)
-            val spannableString = SpannableString(content)
+                // 실제 Username 으로 바꿈
+                var content: String = tvUsername.text.toString()
+                content = content.replace("Username",userNickname)
+                val spannableString = SpannableString(content)
 
-            // Username 부분만 bold로 변경
-            val start = content.indexOf(userNickname)
-            val end = start + userNickname.length
+                // Username 부분만 bold로 변경
+                val start = content.indexOf(userNickname)
+                val end = start + userNickname.length
 
-            spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#000000")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#000000")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-            tvUsername.setText(spannableString)
+                tvUsername.setText(spannableString)
+            }
         }
     }
 
     private fun initMessage() {
-        myRef.child("asdfifeiofjn1233").get().addOnSuccessListener {
-            it.children.forEach {
-                if (it.key.toString() != "Info") userCount+=1
+        if (user!=null) {
+            var uid = user!!.uid
+            myRef.child(uid).get().addOnSuccessListener {
+                it.children.forEach {
+                    if (it.key.toString() != "Info") userCount+=1
+                }
+
+                // 실제 capsule 개수로 바꿈
+                var content: String = tvMessage.text.toString()
+                content = content.replace("28",userCount.toString())
+                val spannableString = SpannableString(content)
+
+                // capsule 개수 부분만 색 변경
+                val start = content.indexOf(userCount.toString())
+                val end = start + userCount.toString().length
+
+                spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#E04834")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                tvMessage.setText(spannableString)
             }
-
-            // 실제 capsule 개수로 바꿈
-            var content: String = tvMessage.text.toString()
-            content = content.replace("28",userCount.toString())
-            val spannableString = SpannableString(content)
-
-            // capsule 개수 부분만 색 변경
-            val start = content.indexOf(userCount.toString())
-            val end = start + userCount.toString().length
-
-            spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#E04834")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-            tvMessage.setText(spannableString)
         }
     }
 

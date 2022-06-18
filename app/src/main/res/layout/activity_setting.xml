@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:drawableEnd="@drawable/next_button"
-        android:text="@string/setting_capsule_reset"
+        android:text="추억 리셋"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -21,7 +22,9 @@ class CapsuleListActivity : AppCompatActivity() {
 
     private val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val myRef: DatabaseReference = mDatabase.getReference("Users")
-    private var user = FirebaseAuth.getInstance().currentUser    // 현재 로그인한 유저
+
+    private var auth = FirebaseAuth.getInstance()
+    private var user = auth.currentUser    // 현재 로그인한 유저
 
     lateinit var date:String     // capsule date
     lateinit var title:String    // capsule title
@@ -29,15 +32,18 @@ class CapsuleListActivity : AppCompatActivity() {
     lateinit var capsuleContent: String  // capsule content
     private var capsuleKey: MutableList<String> = mutableListOf()   // capsule key 들만 모아놓은 배열
 
+    private val backButton: Button by lazy {
+        findViewById(R.id.btn_CapsuleListBack)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capsule_list)
 
         if (user != null) {
             var uid = user!!.uid
-            // todo: .child(uid)로 수정
             // capsule key들만 모아놓은 배열 생성
-            myRef.child("asdfifeiofjn1233").get().addOnSuccessListener {
+            myRef.child(uid).get().addOnSuccessListener {
                 it.children.forEach {
                     if (it.key.toString() != "Info") {
                         capsuleKey.add(it.key.toString())
@@ -46,13 +52,20 @@ class CapsuleListActivity : AppCompatActivity() {
                 initValue(uid)
             }
         }
+        initBackButton()
+    }
+
+    private fun initBackButton() {
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initValue(uid:String) {
         var cnt = 0
         for (capsule in capsuleKey) {
             // todo: .child(uid)로 수정
-            myRef.child("asdfifeiofjn1233").child(capsule).get().addOnSuccessListener {
+            myRef.child(uid).child(capsule).get().addOnSuccessListener {
                 // capsule 별 date, title, detectImage 저장
                 date = it.child("date").getValue<String>().toString()
                 title = it.child("title").getValue<String>().toString()
@@ -75,8 +88,8 @@ class CapsuleListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView by lazy {
             findViewById(R.id.CapsuleList)
         }
-        // TODO: uid 전달로 변경
-        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList, capsuleKey, "asdfifeiofjn1233")
+
+        val capsuleAdapter = CapsuleDataAdapter(this, CapsuleList, capsuleKey, uid)
         recyclerView.adapter = capsuleAdapter
 
         // 리사이클러뷰에 스와이프, 드래그 기능 달기
