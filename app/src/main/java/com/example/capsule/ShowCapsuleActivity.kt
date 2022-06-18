@@ -86,7 +86,8 @@ class ShowCapsuleActivity : AppCompatActivity() {
 
     private fun initBackButton() {
         btnBack.setOnClickListener {
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }
