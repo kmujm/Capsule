@@ -82,8 +82,6 @@ class PostCapsuleActivity : AppCompatActivity() {
 
     private fun initBackButton() {
         backButton.setOnClickListener {
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
             finish()
         }
     }
@@ -238,15 +236,18 @@ class PostCapsuleActivity : AppCompatActivity() {
             if(it.isSuccessful) {
                 Log.d(LOG,"push Successful, it : ${it}")
                 Toast.makeText(this,"캡슐 저장에 성공했습니다",Toast.LENGTH_SHORT).show()
+                stopProgressBar()
 
-//                추가된 캡슐키 넘겨줌
                 val intent = Intent(this,ShowCapsuleActivity::class.java)
                 intent.putExtra(EXTRA_KEY_SHOWCAPSULE,newCapusuleKey)
+                intent.putExtra("capsuleTitle",forUploadObject.title)
+                intent.putExtra("capsuleDate",forUploadObject.date)
+                intent.putExtra("capsulePhoto",forUploadObject.detectImage) // capsule detectImage
+                intent.putExtra("capsuleContent",forUploadObject.content)
                 startActivity(intent)
                 finish()
 
 
-                stopProgressBar()
             }else {
                 Toast.makeText(this,"캡슐 저장에 실패했습니다",Toast.LENGTH_SHORT).show()
                 stopProgressBar()
