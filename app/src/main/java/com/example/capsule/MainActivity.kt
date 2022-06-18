@@ -70,9 +70,14 @@ class MainActivity : AppCompatActivity() {
         initGreeting()
         initObjectDetectionButton()
         initCapsuleListButton()
-        getCapsuleKeys()
         initSettingButton()
     }
+
+    override fun onResume() {
+        super.onResume()
+        getCapsuleKeys()
+    }
+
     private fun initSettingButton(){
         settingButton.setOnClickListener {
             val intent = Intent(this, SettingActivity::class.java)
