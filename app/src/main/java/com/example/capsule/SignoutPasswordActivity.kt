@@ -1,10 +1,17 @@
 package com.example.capsule
 
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -31,8 +38,16 @@ class SignoutPasswordActivity : AppCompatActivity() {
 
         // db 래퍼런스
         initSubmitButton()
+        initBackButton()
         db = Firebase.database.reference.child("Users").child(auth!!.uid)
 
+    }
+
+    private fun initBackButton() {
+        val backButton = findViewById<Button>(R.id.spBackButton)
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initSubmitButton() {
@@ -74,25 +89,33 @@ class SignoutPasswordActivity : AppCompatActivity() {
     }
 
     private fun setDialog() {
-        val dialogView = View.inflate(this, R.layout.nickname_dialog, null)
-        val nickTitle = dialogView.findViewById<TextView>(R.id.title)
-        val nickText = dialogView.findViewById<TextView>(R.id.message)
-        nickTitle.text = "실패"
-        nickText.text = "비밀번호를\n 다시 설정해주세요! "
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        val dialogOkButton: AppCompatButton = dialogView.findViewById(R.id.positiveButton)
-        dialogOkButton.setOnClickListener {
-            dialog.dismiss()
+        val dlg = Dialog(this)
+        dlg.setContentView(R.layout.pw_check_dialog)
+        dlg.setCancelable(false)
+        dlg.window?.setBackgroundDrawable(Drawable.createFromPath("@drawable/alert_dialog_background"))
+
+        // dialog message
+        var tvMessage : TextView = dlg.findViewById(R.id.content)
+        var message = tvMessage.text.toString()
+        val spannableString = SpannableString(message)
+
+        // 비밀번호 문자열만 bold 변경
+        var word = "비밀번호"
+        val start = message.indexOf(word)
+        val end = start + word.length
+
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tvMessage.text = spannableString
+
+        var btnOK : Button = dlg.findViewById(R.id.btn_ok)
+        btnOK.setOnClickListener {
+            dlg.dismiss()
         }
-        dialog.show()
+        dlg.show()
     }
 
 
     companion object {
-        const val TEMP_AUTH_UID = "asdfifeiofjn1233"
         const val TAG = "SignoutPasswordActivity"
         const val INFO = "Info"
     }

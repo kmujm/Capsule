@@ -76,6 +76,7 @@ class DetectedCatagoryActivity : AppCompatActivity(){
             val selectedGalleryActivity = Intent(this,MainActivity::class.java)
             selectedGalleryActivity.putExtra(INTENT_KEY_SELECTED_CATAGORY,selectedCatagory)
             startActivity(selectedGalleryActivity)
+
         }
         cRecyclerView.adapter = cAdapter
         cAdapter.submitList(catagoryList)
