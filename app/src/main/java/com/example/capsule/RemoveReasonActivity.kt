@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
@@ -12,6 +13,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckBox
 
 class RemoveReasonActivity : AppCompatActivity() {
+    private val backBtn: Button by lazy {
+        findViewById(R.id.btn_ReasonBack)
+    }
+
     private val myCheck1: AppCompatCheckBox by lazy {
         findViewById(R.id.ReasonCheck1)
     }
@@ -69,6 +74,13 @@ class RemoveReasonActivity : AppCompatActivity() {
         setContentView(R.layout.activity_remove_reason)
         initCheckBox()
         initNextButton()
+        initBackButton()
+    }
+
+    private fun initBackButton() {
+        backBtn.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initNextButton() {

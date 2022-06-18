@@ -12,17 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="30dp"
+        android:padding="20dp"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="닉네임 설정" />
 
     <TextView
-        android:gravity="center"
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:padding="30dp"
         android:textColor="#000000"
         tools:text="안녕은 사용 불가능한 닉네임이에요!" />
@@ -30,7 +30,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000"/>
+        android:background="#000000" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/positiveButton"

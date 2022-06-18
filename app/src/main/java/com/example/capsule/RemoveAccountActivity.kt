@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -46,6 +48,7 @@ class RemoveAccountActivity : AppCompatActivity() {
         findViewById(R.id.btn_RemoveCancel)
     }
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var UID: String
     private lateinit var userNickName: String
@@ -56,6 +59,7 @@ class RemoveAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_remove_account)
         database = Firebase.database.reference
+        auth = Firebase.auth
         initMyInfo()
         initAccountRemoveBtn()
         initCancelBtn()
@@ -65,6 +69,7 @@ class RemoveAccountActivity : AppCompatActivity() {
     private fun initBackBtn() {
         backBtn.setOnClickListener {
             // 뒤로가기 버튼 클릭시 동작
+            finish()
         }
     }
 
@@ -85,7 +90,7 @@ class RemoveAccountActivity : AppCompatActivity() {
 
     private fun initMyCapsule() {
         var cnt = 0
-        UID = "asdfifeiofjn1233"//Firebase.auth.currentUser!!.uid
+        UID = auth.currentUser!!.uid
         val myRef = database.child("Users").child(UID)
         myRef.get().addOnSuccessListener {
             it.children.forEach {
@@ -102,9 +107,9 @@ class RemoveAccountActivity : AppCompatActivity() {
     }
 
     private fun initMyInfo() {
-        val user = 1//Firebase.auth.currentUser
+        val user = auth.currentUser
         if (user != null) {
-            UID = "asdfifeiofjn1233"//Firebase.auth.currentUser!!.uid
+            UID = user.uid
             database.get().addOnSuccessListener {
                 val userInfo = it.child("Users").child(UID).child("Info").value as HashMap<*, *>
                 userNickName = userInfo.get("nickname").toString()
